@@ -68,10 +68,6 @@
 \subsection{Purpose}
 \label{sub:purpose}
 % Begin SubSection
-\begin{itemize}
-	\item Specify the purpose of the SRS.
-	\item Specify the intended audience for the SRS.
-\end{itemize}
 This Document is used to establish the requirements, performance, and intended behaviour/uses of the Smart City Environmental Monitoring and Alert System (SCEMAS).
 The intended audience of the SRS is the stakeholders of SCEMAS, including developers and testers.
 % End SubSection
@@ -145,16 +141,19 @@ The intended audience of the SRS is the stakeholders of SCEMAS, including develo
 \label{sub:product_functions}
 % Begin SubSection
 \begin{itemize}
-	\item Provide a \emph{summary} of the major functions that the software will perform.
-	\begin{itemize}
-		\item \textbf{Example}: An SRS for an accounting program may use this part to address customer account maintenance, customer statement, and invoice preparation without mentioning the vast amount of detail that each of those functions requires.
-	\end{itemize}
-	\item Functions should be organized in a way that makes the list of functions understandable to the customer or to anyone else reading the document for the first time 
-	\item Present the functions in a list format - each item should be one function, with a brief description of it
-	\item Textual or graphical methods can be used to show the different functions and their relationships
-	\begin{itemize}
-		\item Such a diagram is not intended to show a design of a product, but simply shows the logical relationships among variables
-	\end{itemize} 
+    \item Accurate data Processing: The data processed by the system must be accurate with an error rate of less than 1 percent.
+    \item Data Processing: The Data must validate each incoming message.
+    \item Efficient Storage: The system shall store data in a way that will support efficient querying.
+    \item Alert Engine: The system must have a configurable rule-based alert engine with definable alert rules based on specific thresholds.
+    \item Alert History: The System shall keep a comprehensive history of all alerts that have occurred.
+    \item Dashboard: The System shall have a dashboard that shows visual representations of metrics for city operators
+    \item Public Dashboard: The System shall provide access to non sensitive data for public use.
+    \item Role-based Permissions: Each user should have an assigned role that dictates what they may do with the system.
+    \item The system shall maintain an audit log of all significant events.
+    \item Authentication: The system shall authenticate all interacting entities before accessing data. 
+    \item Privacy: The System shall not collect, store, or process any personal identifiable information (PII) 
+    \item System Efficiency: The system shall provide efficient response times to api requests. 
+    
 \end{itemize}
 % End SubSection
 
