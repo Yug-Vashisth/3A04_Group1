@@ -229,9 +229,38 @@ Third-party developers request and interpret environmental data from the public 
 	\item List any other assumptions you made that, if it fails to hold, could require you to change the requirements
 	%\item List each of the factors that affect the requirements stated in the SRS
 	%\item These factors are not design constraints on the software but are, rather, any changes to them that can affect the requirements in the SRS
-	\begin{itemize}
-		\item \textbf{Example}: An assumption may be that a specific operating system will be available on the hardware designated for the software product. If, in fact, the operating system is not available, the SRS would then have to change accordingly.
-	\end{itemize}
+	\begin{enumerate}
+        \item IoT Sensors
+        \begin{enumerate}
+            \item Environmental Data
+            \begin{enumerate}
+                \item IoT sensors provide accurate environmental information to the web application.
+                \item IoT sensors provide data in real-time.
+            \end{enumerate}
+            \item Deployment
+            \begin{enumerate}
+                \item All IoT sensors have been already installed and require no setup.
+            \end{enumerate}
+            \item Messaging
+            \begin{enumerate}
+                \item All telemetry messages follow the predefined MQTT message schema agreed upon by the system.
+            \end{enumerate}
+        \end{enumerate}
+    
+        \item Assumptions
+        \begin{enumerate}
+            \item It is assumed that no PII will be collected or transmitted by IoT sensors.
+            \item It is assumed that the selected cloud provider provides sufficient uptime, scalability, and availability for development.
+            \item The system assumes that it has a database capable of efficiently storing and querying time-series data.
+        \end{enumerate}
+    
+        \item Scope Limitations
+        \begin{enumerate}
+            \item Dashboards and IoT Sensor Integration is limited to one city located in Canada.
+            \item The SCHEMAS dashboard shall display accurately on all web browsers.
+        \end{enumerate}
+    \end{enumerate}
+    
 \end{itemize}
 % End SubSection
 
