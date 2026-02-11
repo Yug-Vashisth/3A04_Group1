@@ -1196,7 +1196,14 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:appearance_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{LF-A}1. ]
-	\item 
+	\item The system shall use a cool, non-distracting background that does not draw visual focus away from the operational dashboard content.\\
+	\textbf{Rationale:} SCEMAS is intended for monitoring environmental conditions. A background with colours that are not warm such as bright red/yellow ensures that users’ attention is reserved for critical dashboard elements such as metrics, dashboards, and alerts.
+	\item The system should use a consistent font family across all screens.\\
+	\textbf{Rationale:} A standardized font enhances the user experience by providing a consistent experience across all screens making it easier to navigate.
+	\item Visual alert indicators shall be designed to clearly stand out from non-critical information.\\
+	\textbf{Rationale:} Environmental alerts often require immediate action. Distinct visual indicators ensure that critical conditions are quickly recognizable, even when operators are monitoring large volumes of data.
+	\item The system shall use a font size that is readable; the font size should also be consistent across all screens relative to the header type.\\
+	\textbf{Rationale:} This ensures that information can be categorized into classes such as title, heading, paragraph heading and paragraph body while being readable to users.
 \end{enumerate}
 % End SubSubSection
 
@@ -1204,11 +1211,19 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:style_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{LF-S}1. ]
-	\item 
+	\item The system shall adapt its layout to different screen resolutions.\\
+	\textbf{Rationale:} City operators may access the system from devices with varying screen sizes. Responsive layout behavior ensures a consistent experience across supported devices.
+	\item The system shall use a consistent layout that is the same for all dashboard views.\\
+	\textbf{Rationale:} A consistent layout structure helps users build familiarity with the interface, preventing unnecessary navigation or relearning on every new screen.
+	\item The system shall group related information and controls using spacing, alignment, and section boundaries.\\
+	\textbf{Rationale:} Clear visual grouping improves information organization and allows users to quickly identify related data.
+	\item The system shall limit the text density on each screen.\\
+	\textbf{Rationale:} Screens should be informative and require as little navigation as possible but not overwhelm the user with information cluttering the user experience.
 \end{enumerate}
 % End SubSubSection
 
 % End SubSection
+
 
 \subsection{Usability and Humanity Requirements}
 \label{sub:usability_and_humanity_requirements}
@@ -1218,7 +1233,16 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:ease_of_use_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-EOU}1. ]
-	\item 
+	\item The system should show brief tooltips for all major controls, indicators and buttons.\\
+	\textbf{Rationale:} Giving tooltips enhances user understanding and provides context for each element on the dashboard.
+	\item The system should allow users to report bugs to IT support.\\
+	\textbf{Rationale:} If users encounter a problem they should be able to receive a response from the SCHEMAS team to address their issue and implement fixes.
+	\item The system should maintain consistent terminology and terms throughout the interface.\\
+	\textbf{Rationale:} Consistent terminology improves learnability and prevents inconsistent descriptions across multiple screens.
+	\item The system shall cache user interface preferences, such as selected dashboards or view settings.\\
+	\textbf{Rationale:} A cache on the preference allows users to have a consistent configuration in which they view the dashboard which makes the screens tailor made for any particular user.
+	\item The system shall contain a Frequently Asked Question section.\\
+	\textbf{Rationale:} An FAQ section allows users to get quick and easy answers to commonly asked questions reducing the time required to get acclimated to the system \cite{faq_source}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1226,7 +1250,12 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:personalization_and_internationalization_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-PI}1. ]
-	\item 
+	\item The system shall allow users to configure personal interface preferences.\\
+	\textbf{Rationale:} Allowing users to change their default views, dashboard preference and interface preferences will help increase usability among users.
+	\item The system shall allow users to change their language preferences.\\
+	\textbf{Rationale:} All users should be able to understand the information on the screen. This is essential for all users to be able to view the system equally and accurately.
+	\item The system shall support internationalized measurement units, date formats and time zones.\\
+	\textbf{Rationale:} Environmental data must be able to be measured and accessed across all time zones. Supporting international viewing standards ensure data is accessible to people regardless of their location.
 \end{enumerate}
 % End SubSubSection
 
@@ -1234,7 +1263,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:learning_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-L}1. ]
-	\item 
+	\item Users shall be able to learn how to navigate the main dashboard and interpret key environmental metrics within 20 minutes of first use.\\
+	\textbf{Rationale:} Operators must quickly understand the core interface to respond to environmental events effectively. Limiting the learning time ensures the system is intuitive and reduces onboarding effort.
+	\item Users shall be able to configure personal preferences, such as measurement units, default dashboards, and theme settings, within 10 minutes of first use.\\
+	\textbf{Rationale:} Users should quickly learn how best to tailor the application to them. If they are able to personalize the system quickly it will make sure that the rest of their time using the system is more enjoyable.
 \end{enumerate}
 % End SubSubSection
 
@@ -1242,7 +1274,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:understandability_and_politeness_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-UP}1. ]
-	\item 
+	\item The system shall use professional and neutral wording in all user-facing communications.\\
+	\textbf{Rationale:} Maintaining a professional tone is important to ensure users are not offended by any terminology and allows users to strictly focus on the data.
+	\item The system shall avoid technical jargon or abbreviations in messages unless universally understood by target users.\\
+	\textbf{Rationale:} Using understandable and general knowledge ensures users of all levels of technicality can understand the information \cite{jargon_source}. This prevents confusion and ensures understandability.
 \end{enumerate}
 % End SubSubSection
 
@@ -1250,11 +1285,17 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:accessibility_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-A}1. ]
-	\item 
+	\item The system shall provide text-to-speech functionality for all essential interface elements.\\
+	\textbf{Rationale:} Text to speech allows users that are blind or low-vision to interpret environmental data.
+	\item The system shall provide captions or transcripts for all audio content, including notifications and messages.\\
+	\textbf{Rationale:} Users who are deaf or hard-of-hearing can access spoken information \cite{tts_source}.
+	\item The system shall use a color palette that is accessible to users with common forms of color vision deficiency.\\
+	\textbf{Rationale:} City-operated systems must be inclusive and accessible. 1/16 men and 1/240 women have some form of colour deficiency and therefore should be accommodated \cite{colorblind_source}. Colorblind-friendly design ensures that all operators can correctly interpret system states and alerts without relying solely on colour perception.
 \end{enumerate}
 % End SubSubSection
 
 % End SubSection
+
 
 \subsection{Performance Requirements}
 \label{sub:performance_requirements}
