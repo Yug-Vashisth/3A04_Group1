@@ -71,10 +71,8 @@
 \subsection{Purpose}
 \label{sub:purpose}
 % Begin SubSection
-\begin{itemize}
-	\item Specify the purpose of the SRS.
-	\item Specify the intended audience for the SRS.
-\end{itemize}
+This Document is used to establish the requirements, performance, and intended behaviour/uses of the Smart City Environmental Monitoring and Alert System (SCEMAS).
+The intended audience of the SRS is the stakeholders of SCEMAS, including developers and testers.
 % End SubSection
 
 \subsection{Scope}
@@ -146,17 +144,21 @@
 \label{sub:product_functions}
 % Begin SubSection
 \begin{itemize}
-	\item Provide a \emph{summary} of the major functions that the software will perform.
-	\begin{itemize}
-		\item \textbf{Example}: An SRS for an accounting program may use this part to address customer account maintenance, customer statement, and invoice preparation without mentioning the vast amount of detail that each of those functions requires.
-	\end{itemize}
-	\item Functions should be organized in a way that makes the list of functions understandable to the customer or to anyone else reading the document for the first time 
-	\item Present the functions in a list format - each item should be one function, with a brief description of it
-	\item Textual or graphical methods can be used to show the different functions and their relationships
-	\begin{itemize}
-		\item Such a diagram is not intended to show a design of a product, but simply shows the logical relationships among variables
-	\end{itemize} 
+    \item Accurate data Processing: The data processed by the system must be accurate with an error rate of less than 1 percent.
+    \item Data Processing: The Data must validate each incoming message.
+    \item Efficient Storage: The system shall store data in a way that will support efficient querying.
+    \item Alert Engine: The system must have a configurable rule-based alert engine with definable alert rules based on specific thresholds.
+    \item Alert History: The System shall keep a comprehensive history of all alerts that have occurred.
+    \item Dashboard: The System shall have a dashboard that shows visual representations of metrics for city operators
+    \item Public Dashboard: The System shall provide access to non sensitive data for public use.
+    \item Role-based Permissions: Each user should have an assigned role that dictates what they may do with the system.
+    \item The system shall maintain an audit log of all significant events.
+    \item Authentication: The system shall authenticate all interacting entities before accessing data. 
+    \item Privacy: The System shall not collect, store, or process any personal identifiable information (PII) 
+    \item System Efficiency: The system shall provide efficient response times to api requests. 
+    
 \end{itemize}
+
 % End SubSection
 
 \subsection{User Characteristics}
@@ -227,9 +229,38 @@ Third-party developers request and interpret environmental data from the public 
 	\item List any other assumptions you made that, if it fails to hold, could require you to change the requirements
 	%\item List each of the factors that affect the requirements stated in the SRS
 	%\item These factors are not design constraints on the software but are, rather, any changes to them that can affect the requirements in the SRS
-	\begin{itemize}
-		\item \textbf{Example}: An assumption may be that a specific operating system will be available on the hardware designated for the software product. If, in fact, the operating system is not available, the SRS would then have to change accordingly.
-	\end{itemize}
+	\begin{enumerate}
+        \item IoT Sensors
+        \begin{enumerate}
+            \item Environmental Data
+            \begin{enumerate}
+                \item IoT sensors provide accurate environmental information to the web application.
+                \item IoT sensors provide data in real-time.
+            \end{enumerate}
+            \item Deployment
+            \begin{enumerate}
+                \item All IoT sensors have been already installed and require no setup.
+            \end{enumerate}
+            \item Messaging
+            \begin{enumerate}
+                \item All telemetry messages follow the predefined MQTT message schema agreed upon by the system.
+            \end{enumerate}
+        \end{enumerate}
+    
+        \item Assumptions
+        \begin{enumerate}
+            \item It is assumed that no PII will be collected or transmitted by IoT sensors.
+            \item It is assumed that the selected cloud provider provides sufficient uptime, scalability, and availability for development.
+            \item The system assumes that it has a database capable of efficiently storing and querying time-series data.
+        \end{enumerate}
+    
+        \item Scope Limitations
+        \begin{enumerate}
+            \item Dashboards and IoT Sensor Integration is limited to one city located in Canada.
+            \item The SCHEMAS dashboard shall display accurately on all web browsers.
+        \end{enumerate}
+    \end{enumerate}
+    
 \end{itemize}
 % End SubSection
 
@@ -276,11 +307,29 @@ Third-party developers request and interpret environmental data from the public 
 	\item Red text below is just to highlight where you need to insert a scenario - don't actually write it all in red.
 \end{itemize}
 
-\noindent {\bf Main Business Events:} List out all the main business events you are presenting. If you sub-divided into smaller ones, you don't need to include the smaller ones in this list.\\
+\noindent {\bf Main Business Events:} The business events that relate to the system include:
+\begin{itemize}
+    \item BE1. Define new alert rule.
+    \item BE2. Update existing alert rule.
+    \item BE3. Remove or disable an alert rule.
+    \item BE4. Confirm alert.
+    \item BE5. Mark the alert as resolved
+    \item BE6. Request Access to Public API
+    \item BE7. Modify Account
+\end{itemize}
 
-\noindent {\bf Viewpoints:} List out all the viewpoints you will be considering.\\
 
-\noindent {\bf Interpretation:} Specify any liberties you took in interpreting business events, if necessary.\\
+\noindent {\bf Viewpoints:} The viewpoints the system considers include:
+\begin{itemize}
+    \item VP1. City Operators
+    \item VP2. Public Users
+    \item VP3. Administrators
+    \item VP4. Third Party Developers 
+    \item VP5. Environmental Monitoring Department
+    \item VP6. IT Support
+\end{itemize}
+
+\noindent {\bf Business Events:} 
 
 \begin{enumerate}[{\bf BE1.}]
 	\item Define a New Alert Rule. \#1 \\         
@@ -758,6 +807,290 @@ Third-party developers request and interpret environmental data from the public 
         	\end{quote}
 \end{enumerate}
 
+\begin{enumerate}[{\bf BE6.}]
+	\item Request Access to Public API
+		\begin{enumerate}[{\bf VP1.}]
+			\item City Operators \\
+				    N/A. City Operators have access to environmental data internally and do not require public API credentials.
+
+			\item Public Users \\
+                \textbf{Pre-condition}: User has a registered Public User SCHEMAS account and is logged in. \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item User selects ``Request Public API''.
+                        \item System redirects user to an information page.
+                        \item System informs user that public API access is unavailable and that an account modification to a Third-Party Developer account is required.
+                    \end{enumerate}
+                \end{quote}
+
+			\item Administrators \\
+                \textbf{Pre-condition}: User has a registered Administrator SCHEMAS account and is logged in. \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Administrator navigates to the admin dashboard.
+                        \item Administrator selects ``View API request tickets''.
+                        \item Administrator selects a ticket to view request details.
+                        \item Administrator adds review comments.
+                        \item Administrator approves the API access request.
+                        \item System generates API credentials with appropriate rate limits.
+                        \item System notifies the user that API access has been granted.
+                    \end{enumerate}
+                \end{quote}
+                \textbf{Secondary Scenario}
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{5i.}] Administrator rejects API access request.
+                        \begin{description}
+                            \item[\textmd{5i.1}] System records the rejected request.
+                            \item[\textmd{5i.2}] System notifies the user that the request has been rejected.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+
+			\item Third-Party Developers \\
+                \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in. \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item User selects ``Request Public API''.
+                        \item System displays the API access request form.
+                        \item User enters required information including project name, purpose, organization affiliation, expected request volume, and required endpoints.
+                        \item User submits the API access request form.
+                        \item System validates the submitted information.
+                        \item System stores the API access request record.
+                        \item User receives notification of approved API access.
+                        \item User opens the notification.
+                        \item System displays API credentials and a link to API documentation.
+                    \end{enumerate}
+                \end{quote}
+                \textbf{Secondary Scenario}
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{4i.}] System fails to create API access request.
+                        \begin{description}
+                            \item[\textmd{4i.1}] System displays a link to contact IT support.
+                            \item[\textmd{4i.2}] User navigates to the IT support ticket page.
+                            \item[\textmd{4i.3}] User creates a support ticket describing the issue.
+                            \item[\textmd{4i.4}] User submits the support ticket.
+                            \item[\textmd{4i.5}] IT Support responds with remediation instructions.
+                            \item[\textmd{4i.6}] User follows instructions and returns to BE6-3.
+                        \end{description}
+                        \item[\textmd{6i.}] User receives notification that API access request was rejected.
+                        \begin{description}
+                            \item[\textmd{6i.1}] User opens the rejection notification.
+                            \item[\textmd{6i.2}] System displays rejection reason and administrator comments.
+                            \item[\textmd{6i.3}] User reviews comments and returns to BE6-1.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+
+			\item Environmental Monitoring Department \\
+				    N/A.
+			\item IT Support \\
+                \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in. \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item IT Support navigates to the IT support ticket dashboard.
+                        \item IT Support selects a support ticket to view details.
+                        \item IT Support resolves the issue and documents actions taken.
+                        \item IT Support marks the ticket as resolved.
+                    \end{enumerate}
+                \end{quote}
+		\end{enumerate}
+
+        {\bf Global Scenario:}
+        \begin{quote}
+            \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in. \\
+            \textbf{Main Success Scenario}
+            \begin{quote}
+                \begin{enumerate}[1.]
+                    \item User selects ``Request Public API''.
+                    \item System displays the API access request form.
+                    \item User enters required project and usage information.
+                    \item User submits the API access request form.
+                    \item System validates and stores the request.
+                    \item Administrator reviews and approves the request.
+                    \item System generates API credentials with appropriate rate limits.
+                    \item System notifies the user that API access has been granted.
+                \end{enumerate}
+            \end{quote}
+            \textbf{Secondary Scenario}
+            \begin{quote}
+                \begin{description}
+                    \item[\textmd{4i.}] System fails to submit API access request form.
+                    \begin{description}
+                        \item[\textmd{4i.1}] System prompts user to contact IT support.
+                        \item[\textmd{4i.2}] User submits an IT support ticket.
+                        \item[\textmd{4i.3}] IT Support resolves the issue.
+                        \item[\textmd{4i.4}] User retries the API request.
+                    \end{description}
+                    \item[\textmd{5i.}] System detects invalid form fields.
+                    \begin{description}
+                        \item[\textmd{5i.1}] User is prompted to correct the form.
+                        \item[\textmd{5i.2}] User resubmits the request.
+                    \end{description}
+                    \item[\textmd{6i.}] Administrator rejects the request.
+                    \begin{description}
+                        \item[\textmd{6i.1}] User receives rejection notification.
+                        \item[\textmd{6i.2}] User reviews comments and returns to BE6-1.
+                    \end{description}
+                \end{description}
+            \end{quote}
+        \end{quote}
+\end{enumerate}
+
+\begin{enumerate}[{\bf BE7.}]
+	\item Modify Account
+		\begin{enumerate}[{\bf VP1.}]
+			\item City Operators \\
+				    N/A. City Operators do not have permission to modify user accounts.
+
+			\item Public Users \\
+                \textbf{Pre-condition}: User has a valid Public User SCHEMAS account and is logged in. \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item User selects ``Request Account Modification''.
+                        \item System displays an account modification page containing a request form.
+                        \item User enters the purpose of the request, organization affiliation, and developer credentials (if required).
+                        \item User submits the account modification request form.
+                        \item System records the account modification request.
+                        \item System notifies the user of the account modification decision.
+                        \item User opens the notification.
+                        \item System displays confirmation of the change, updated permission details, and administrator comments.
+                    \end{enumerate}
+                \end{quote}
+                \textbf{Secondary Scenario}
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{3i.}] User submits invalid or incomplete form details.
+                        \begin{description}
+                            \item[\textmd{3i.1}] System prompts the user to correct the form and retry submission.
+                        \end{description}
+                        \item[\textmd{4i.}] System prompts user to contact customer support.
+                        \begin{description}
+                            \item[\textmd{4i.1}] User navigates to the customer support ticket page.
+                            \item[\textmd{4i.2}] User submits a support ticket describing the issue.
+                            \item[\textmd{4i.3}] IT Support responds with remediation instructions.
+                            \item[\textmd{4i.4}] User follows instructions and returns to BE7-1.
+                        \end{description}
+                        \item[\textmd{6i.}] Administrator rejects the account modification request.
+                        \begin{description}
+                            \item[\textmd{6i.1}] User receives a rejection notification.
+                            \item[\textmd{6i.2}] User reviews comments and returns to BE7-1.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+
+			\item Administrators \\
+                \textbf{Pre-condition}: User has a valid Administrator SCHEMAS account and is logged in. \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Administrator navigates to the admin dashboard.
+                        \item Administrator selects ``View Account Modification Request Tickets''.
+                        \item Administrator selects a ticket to view request details.
+                        \item Administrator adds review comments.
+                        \item Administrator approves the account modification request.
+                    \end{enumerate}
+                \end{quote}
+
+			\item Third-Party Developers \\
+                \textbf{Pre-condition}: User has a valid Third-Party Developer SCHEMAS account and is logged in. \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Developer selects ``Request Account Modification''.
+                        \item System displays an account modification page containing a request form.
+                        \item Developer enters the purpose of the request, organization affiliation, and developer credentials (if required).
+                        \item Developer submits the account modification request form.
+                        \item System records the account modification request.
+                        \item System notifies the developer of the account modification decision.
+                        \item Developer opens the notification.
+                        \item System displays confirmation of the change, updated permission details, and administrator comments.
+                    \end{enumerate}
+                \end{quote}
+                \textbf{Secondary Scenario}
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{3i.}] Developer submits invalid or incomplete form details.
+                        \begin{description}
+                            \item[\textmd{3i.1}] System prompts the developer to correct the form and retry submission.
+                        \end{description}
+                        \item[\textmd{4i.}] System prompts developer to contact customer support.
+                        \begin{description}
+                            \item[\textmd{4i.1}] Developer navigates to the customer support ticket page.
+                            \item[\textmd{4i.2}] Developer submits a support ticket describing the issue.
+                            \item[\textmd{4i.3}] IT Support responds with remediation instructions.
+                            \item[\textmd{4i.4}] Developer follows instructions and returns to BE7-1.
+                        \end{description}
+                        \item[\textmd{6i.}] Administrator rejects the account modification request.
+                        \begin{description}
+                            \item[\textmd{6i.1}] Developer receives a rejection notification.
+                            \item[\textmd{6i.2}] Developer reviews comments and returns to BE7-1.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+
+			\item Environmental Monitoring Department \\
+				    N/A.
+
+			\item IT Support \\
+                \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in. \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item IT Support navigates to the IT support ticket dashboard.
+                        \item IT Support selects a support ticket to view details.
+                        \item IT Support resolves the issue and documents actions taken.
+                    \end{enumerate}
+                \end{quote}
+		\end{enumerate}
+
+        {\bf Global Scenario:}
+        \begin{quote}
+            \textbf{Pre-condition}: User has a valid Public User or Third-Party Developer SCHEMAS account and is logged in. \\
+            \textbf{Main Success Scenario}
+            \begin{quote}
+                \begin{enumerate}[1.]
+                    \item User selects ``Request Account Modification''.
+                    \item System displays the account modification request form.
+                    \item User submits required modification details.
+                    \item Administrator reviews the modification request.
+                    \item Administrator approves the request.
+                    \item System records the account modification.
+                    \item System notifies the user of the modification.
+                    \item User reviews confirmation and updated permissions.
+                \end{enumerate}
+            \end{quote}
+            \textbf{Secondary Scenario}
+            \begin{quote}
+                \begin{description}
+                    \item[\textmd{3i.}] User submits invalid or incomplete form details.
+                    \begin{description}
+                        \item[\textmd{3i.1}] User is prompted to retry submission.
+                    \end{description}
+                    \item[\textmd{4i.}] System prompts user to contact customer support.
+                    \begin{description}
+                        \item[\textmd{4i.1}] User submits a support ticket.
+                        \item[\textmd{4i.2}] IT Support resolves the issue.
+                        \item[\textmd{4i.3}] User retries the modification request.
+                    \end{description}
+                    \item[\textmd{9i.}] Administrator rejects the request.
+                    \begin{description}
+                        \item[\textmd{9i.1}] User receives rejection notification.
+                        \item[\textmd{9i.2}] User reviews comments and returns to BE7-1.
+                    \end{description}
+                \end{description}
+            \end{quote}
+        \end{quote}
+\end{enumerate}
+
+
+
 %	Below, we organize by Business Event.
 %	\begin{enumerate}[{BE}1.]
 %		\item Business Event name
@@ -892,7 +1225,14 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:appearance_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{LF-A}1. ]
-	\item 
+	\item The system shall use a cool, non-distracting background that does not draw visual focus away from the operational dashboard content.\\
+	\textbf{Rationale:} SCEMAS is intended for monitoring environmental conditions. A background with colours that are not warm such as bright red/yellow ensures that users’ attention is reserved for critical dashboard elements such as metrics, dashboards, and alerts.
+	\item The system should use a consistent font family across all screens.\\
+	\textbf{Rationale:} A standardized font enhances the user experience by providing a consistent experience across all screens making it easier to navigate.
+	\item Visual alert indicators shall be designed to clearly stand out from non-critical information.\\
+	\textbf{Rationale:} Environmental alerts often require immediate action. Distinct visual indicators ensure that critical conditions are quickly recognizable, even when operators are monitoring large volumes of data.
+	\item The system shall use a font size that is readable; the font size should also be consistent across all screens relative to the header type.\\
+	\textbf{Rationale:} This ensures that information can be categorized into classes such as title, heading, paragraph heading and paragraph body while being readable to users.
 \end{enumerate}
 % End SubSubSection
 
@@ -900,11 +1240,19 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:style_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{LF-S}1. ]
-	\item 
+	\item The system shall adapt its layout to different screen resolutions.\\
+	\textbf{Rationale:} City operators may access the system from devices with varying screen sizes. Responsive layout behavior ensures a consistent experience across supported devices.
+	\item The system shall use a consistent layout that is the same for all dashboard views.\\
+	\textbf{Rationale:} A consistent layout structure helps users build familiarity with the interface, preventing unnecessary navigation or relearning on every new screen.
+	\item The system shall group related information and controls using spacing, alignment, and section boundaries.\\
+	\textbf{Rationale:} Clear visual grouping improves information organization and allows users to quickly identify related data.
+	\item The system shall limit the text density on each screen.\\
+	\textbf{Rationale:} Screens should be informative and require as little navigation as possible but not overwhelm the user with information cluttering the user experience.
 \end{enumerate}
 % End SubSubSection
 
 % End SubSection
+
 
 \subsection{Usability and Humanity Requirements}
 \label{sub:usability_and_humanity_requirements}
@@ -914,7 +1262,16 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:ease_of_use_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-EOU}1. ]
-	\item 
+	\item The system should show brief tooltips for all major controls, indicators and buttons.\\
+	\textbf{Rationale:} Giving tooltips enhances user understanding and provides context for each element on the dashboard.
+	\item The system should allow users to report bugs to IT support.\\
+	\textbf{Rationale:} If users encounter a problem they should be able to receive a response from the SCHEMAS team to address their issue and implement fixes.
+	\item The system should maintain consistent terminology and terms throughout the interface.\\
+	\textbf{Rationale:} Consistent terminology improves learnability and prevents inconsistent descriptions across multiple screens.
+	\item The system shall cache user interface preferences, such as selected dashboards or view settings.\\
+	\textbf{Rationale:} A cache on the preference allows users to have a consistent configuration in which they view the dashboard which makes the screens tailor made for any particular user.
+	\item The system shall contain a Frequently Asked Question section.\\
+	\textbf{Rationale:} An FAQ section allows users to get quick and easy answers to commonly asked questions reducing the time required to get acclimated to the system \cite{faq_source}.
 \end{enumerate}
 % End SubSubSection
 
@@ -922,7 +1279,12 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:personalization_and_internationalization_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-PI}1. ]
-	\item 
+	\item The system shall allow users to configure personal interface preferences.\\
+	\textbf{Rationale:} Allowing users to change their default views, dashboard preference and interface preferences will help increase usability among users.
+	\item The system shall allow users to change their language preferences.\\
+	\textbf{Rationale:} All users should be able to understand the information on the screen. This is essential for all users to be able to view the system equally and accurately.
+	\item The system shall support internationalized measurement units, date formats and time zones.\\
+	\textbf{Rationale:} Environmental data must be able to be measured and accessed across all time zones. Supporting international viewing standards ensure data is accessible to people regardless of their location.
 \end{enumerate}
 % End SubSubSection
 
@@ -930,7 +1292,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:learning_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-L}1. ]
-	\item 
+	\item Users shall be able to learn how to navigate the main dashboard and interpret key environmental metrics within 20 minutes of first use.\\
+	\textbf{Rationale:} Operators must quickly understand the core interface to respond to environmental events effectively. Limiting the learning time ensures the system is intuitive and reduces onboarding effort.
+	\item Users shall be able to configure personal preferences, such as measurement units, default dashboards, and theme settings, within 10 minutes of first use.\\
+	\textbf{Rationale:} Users should quickly learn how best to tailor the application to them. If they are able to personalize the system quickly it will make sure that the rest of their time using the system is more enjoyable.
 \end{enumerate}
 % End SubSubSection
 
@@ -938,7 +1303,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:understandability_and_politeness_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-UP}1. ]
-	\item 
+	\item The system shall use professional and neutral wording in all user-facing communications.\\
+	\textbf{Rationale:} Maintaining a professional tone is important to ensure users are not offended by any terminology and allows users to strictly focus on the data.
+	\item The system shall avoid technical jargon or abbreviations in messages unless universally understood by target users.\\
+	\textbf{Rationale:} Using understandable and general knowledge ensures users of all levels of technicality can understand the information \cite{jargon_source}. This prevents confusion and ensures understandability.
 \end{enumerate}
 % End SubSubSection
 
@@ -946,11 +1314,17 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:accessibility_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{UH-A}1. ]
-	\item 
+	\item The system shall provide text-to-speech functionality for all essential interface elements.\\
+	\textbf{Rationale:} Text to speech allows users that are blind or low-vision to interpret environmental data.
+	\item The system shall provide captions or transcripts for all audio content, including notifications and messages.\\
+	\textbf{Rationale:} Users who are deaf or hard-of-hearing can access spoken information \cite{tts_source}.
+	\item The system shall use a color palette that is accessible to users with common forms of color vision deficiency.\\
+	\textbf{Rationale:} City-operated systems must be inclusive and accessible. 1/16 men and 1/240 women have some form of colour deficiency and therefore should be accommodated \cite{colorblind_source}. Colorblind-friendly design ensures that all operators can correctly interpret system states and alerts without relying solely on colour perception.
 \end{enumerate}
 % End SubSubSection
 
 % End SubSection
+
 
 \subsection{Performance Requirements}
 \label{sub:performance_requirements}
@@ -959,8 +1333,11 @@ Third-party developers request and interpret environmental data from the public 
 \subsubsection{Speed and Latency Requirements}
 \label{ssub:speed_and_latency_requirements}
 % Begin SubSubSection
-\begin{enumerate}[{PR-SL}1. ]
-	\item 
+\begin{enumerate}[{PR-SL}1.]
+	\item The web dashboard for city operators should have a load time of less than 1 second\\
+    \textbf{Rationale}: Having a fast-loading website will ensure users remain engaged. A study shows that 40\% of users will leave a website if it takes longer than 3 seconds to load [1].
+    \item The system should provide a REST API for public use with a response time of less than 1 second\\
+    \textbf{Rationale}: APIs with lower response time lead to many benefits, like enhancing user satisfaction and increasing cost effectiveness of the system by allowing fewer resources to be used. tied up in operations [2]. longer API response times will likely result in user frustration and abandonment[2].
 \end{enumerate}
 % End SubSubSection
 
@@ -968,7 +1345,8 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:safety_critical_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-SC}1. ]
-	\item 
+	\item The system should ensure that alerts are posted in less than 5 seconds of the internal system finding a threshold broken.\\
+    \textbf{Rationale}: A rapid alert system allows operations to respond to any alerts within a timely manner, staging interventions or putting out city wide alerts where possible. 
 \end{enumerate}
 % End SubSubSection
 
@@ -976,7 +1354,8 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:precision_or_accuracy_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-PA}1. ]
-	\item 
+	\item For each environmental indicator (air quality, noise levels, temperature, humidity) the system shall have a standard deviation of less than 15\%.\\
+    \textbf{Rationale}: Inaccurate data could lead to a false sense of security or a false sense of urgency when trying to address the implications of the measurement[4], its important for the measurement to remain accurate to avoid these situations.
 \end{enumerate}
 % End SubSubSection
 
@@ -984,7 +1363,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:reliability_and_availability_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-RA}1. ]
-	\item 
+	\item The database should have an up time of at least 99\%\\
+    \textbf{Rationale}: This allows any authentication requests to properly go through and avoids cases where users cannot use the system due to authentication requests.
+    \item The system should ensure that alerts have a false positive rating of less than 1\%
+    \textbf{Rationale}: A high false positive rating can lead to improper use of resources, impaired efficiency and a loss of trust of users [5]. Its important to have a low false positive rate to avoid taking unnecessary measures to correct a false issue.
 \end{enumerate}
 % End SubSubSection
 
@@ -992,7 +1374,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:robustness_or_fault_tolerance_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-RFT}1. ]
-	\item 
+	\item The System should not fail if one component of it fails.\\
+    \textbf{Rationale}: This is to ensure that the system stays functional even if a sensor fails, meaning the system will continue to collect data from the other sensors.
+    \item The system should detect and log any errors in under 5 seconds\\
+    \textbf{Rationale}: This is to ensure that all errors are properly logged as well as properly addressed within a timely manner.
 \end{enumerate}
 % End SubSubSection
 
@@ -1000,7 +1385,8 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:capacity_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-C}1. ]
-	\item 
+	\item The system should be able handle and store information from at least 150 sensors across the city.\\
+    \textbf{Rationale}: A mid sized city requires 150 sensors[6] to allow the system to collect accurate data for accurate measurements. Ensuring the whole city is covered allows us to take action where its needed.
 \end{enumerate}
 % End SubSubSection
 
@@ -1008,7 +1394,8 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:scalability_or_extensibility_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-SE}1. ]
-	\item 
+	\item The internal code of our system should follow SOLID design principles to ensure scalability.\\ 
+    \textbf{Rationale}: The Solid design principles are a set of principles that help developers write clean, maintainable, and scalable code [3]. Adopting these principles in the system's design allows our system to be scalable and extensible. 
 \end{enumerate}
 % End SubSubSection
 
@@ -1016,7 +1403,8 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:longevity_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-L}1. ]
-	\item 
+	\item The sensors should use sustainable materials that guarantee a lifespan of at least 2 years\\
+    \textbf{Rationale}: This is to ensure that each sensor can work optimally without the need to constantly replace them to ensure proper data collection.
 \end{enumerate}
 % End SubSubSection
 
@@ -1244,6 +1632,9 @@ Third-party developers request and interpret environmental data from the public 
 % End SubSection
 
 % End Section
+\section{Innovative Feature}
+\label{sec:innovative_feature}
+An innovative feature that could be added is an included simulation feature that would allow city operators to adjust environmental parameters and observe the projected outcome in a visual dashboard overlaid on top of the city. This would help city operators plan response strategies, visualize worst case outcomes, and help train employees without impacting live data.
 
 \appendix
 \section{Division of Labour}
