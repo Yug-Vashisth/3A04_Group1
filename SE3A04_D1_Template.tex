@@ -360,7 +360,7 @@ Third-party developers request and interpret environmental data from the public 
                         \item Administrator selects \textit{Create New Alert Rule}.
                         \item System displays the alert rule setup form.
                         \item Administrator enters the new alert rule information.
-                        \item Administrator adds the alert rule to the system.
+                        \item Administrator submits the alert rule to be added to the system.
                         \item System validates the form.
                         \item System stores the new alert rule.
                         \item System reports to administrator that the alert has been successfully created.
@@ -371,19 +371,30 @@ Third-party developers request and interpret environmental data from the public 
                     \begin{description}
                         \item[\textmd{4i.}] System fails to authenticate the administrator.
                         \begin{description}
-                            \item[\textmd{4i.1}] System displays an authentication failure message.
-                            \item[\textmd{4i.2}] Defining a new alert rule fails.
+                            \item[\textmd{4i.1}] System rejects the authentication attempt.
+                            \item[\textmd{4i.2}] System displays an authentication failure message.
+                            \item[\textmd{4i.3}] System prompts the administrator to re-enter credentials.
+                            \item[\textmd{4i.4}] Administrator selects try again.
+                            \item[\textmd{4i.5}] System tracks the number of consecutive failed sign-in attempts.
+                            \item[\textmd{4i.6}] Return to BE1-3.
                         \end{description}
-                        \item[\textmd{12i.}] System detects invalid data, or missing information.
+                        \item[\textmd{4ii.}] Maximum amount of sign-in attempts have been reached. 
                         \begin{description}
-                            \item[\textmd{12i.1}] System displays error message to administrator.
-                            \item[\textmd{12i.2}] System highlights section that needs to changed.
-                            \item[\textmd{12i.3}] Defining a new alert rule fails.
+                            \item[\textmd{4ii.1}] System temporarily locks the account.
+                            \item[\textmd{4ii.2}] System displays a message indicating that access is restricted.
+                            \item[\textmd{4ii.3}] System provides instructions for contacting IT Support to resolve the issue.
+                        \end{description}
+                        \item[\textmd{12i.}] System detects invalid or incomplete data.
+                        \begin{description}
+                            \item[\textmd{12i.1}] System prevents the alert rule from being submitted.
+                            \item[\textmd{12i.2}] System displays an error message describing the issue.
+                            \item[\textmd{12i.3}] System highlights the section(s) that need to be changed.
+                            \item[\textmd{12i.4}] Return to BE1-10.
                         \end{description}
                         \item[\textmd{13i.}] System fails to store the added alert rule.
                         \begin{description}
-                            \item[\textmd{13i.1}] System displays error message to administrator.
-                            \item[\textmd{13i.2}] Defining a new alert rule fails.
+                            \item[\textmd{13i.1}] System displays an error message that the alert rule could not be created.
+                            \item[\textmd{13i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -399,32 +410,61 @@ Third-party developers request and interpret environmental data from the public 
 				\end{quote}
 
 			\item IT Support \#6 
-                \item[\textmd{13i}] IT support should be notified about the error through system logs.
+                \item[\textmd{4ii}] System should allow IT Support to restore administrator access after verifying their identity.
+                \item[\textmd{13i}] System should provide IT Support with error logs to resolve the alert rule storage failures.
 		\end{enumerate}
         
         {\bf Global Scenario:}
         	\begin{quote}
-        	    \textbf{Pre-condition}: pre-condition desc. \\
+        	    \textbf{Pre-condition}: Define a New Alert Rule.. \\
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Step 1
-                        \item Step 2
-                        \item Step 3
+                        \item Administrator opens the dashboard.
+                        \item System prompts the administrator to log in.
+                        \item Administrator enters login information.
+                        \item System authenticates the administrator.
+                        \item System displays the dashboard.
+                        \item Administrator selects \textit{Manage Alerts} tab
+                        \item System displays the existing alert rules, and the option to create a new rule.
+                        \item Administrator selects \textit{Create New Alert Rule}.
+                        \item System displays the alert rule setup form.
+                        \item Administrator enters the new alert rule information.
+                        \item Administrator submits the alert rule to be added to the system.
+                        \item System validates the form.
+                        \item System stores the new alert rule.
+                        \item System reports to administrator that the alert has been successfully created.
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{Xi.}] Main
+                        \item[\textmd{4i.}] System fails to authenticate the administrator.
                         \begin{description}
-                            \item[\textmd{Xi.1}] Sub 1
-                            \item[\textmd{Xi.2}] Sub 2
+                            \item[\textmd{4i.1}] System rejects the authentication attempt.
+                            \item[\textmd{4i.2}] System displays an authentication failure message.
+                            \item[\textmd{4i.3}] System prompts the administrator to re-enter credentials.
+                            \item[\textmd{4i.4}] Administrator selects try again.
+                            \item[\textmd{4i.5}] System tracks the number of consecutive failed sign-in attempts.
+                            \item[\textmd{4i.6}] Return to BE1-3.
                         \end{description}
-                        \item[\textmd{Yi.}] Main 
+                        \item[\textmd{4ii.}] Maximum amount of sign-in attempts have been reached. 
                         \begin{description}
-                            \item[\textmd{Yi.1}] Sub 1
-                            \item[\textmd{Yi.2}] Sub 2
+                            \item[\textmd{4ii.1}] System temporarily locks the account.
+                            \item[\textmd{4ii.2}] System displays a message indicating that access is restricted.
+                            \item[\textmd{4ii.3}] System provides instructions for contacting IT Support.
+                        \end{description}
+                        \item[\textmd{12i.}] System detects invalid or incomplete data.
+                        \begin{description}
+                            \item[\textmd{12i.1}] System prevents the alert rule from being submitted.
+                            \item[\textmd{12i.2}] System displays an error message describing the issue.
+                            \item[\textmd{12i.3}] System highlights the section(s) that need to be changed.
+                            \item[\textmd{12i.4}] Return to BE1-10.
+                        \end{description}
+                        \item[\textmd{13i.}] System fails to store the added alert rule.
+                        \begin{description}
+                            \item[\textmd{13i.1}] System displays an error message that the alert rule could not be created.
+                            \item[\textmd{13i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -433,7 +473,7 @@ Third-party developers request and interpret environmental data from the public 
 
 \begin{enumerate}[{\bf BE2.}]
 	\item Update an Existing Alert Rule. \#2 \\         
-    \textbf{Pre-condition}: There must exist at least one alert rule in the system, and the administrator must be authenticated.
+    \textbf{Pre-condition}: There must exist at least one alert rule in the system. The administrator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1 
@@ -450,10 +490,6 @@ Third-party developers request and interpret environmental data from the public 
 				\textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Administrator opens the dashboard.
-                        \item System prompts the administrator to log in.
-                        \item Administrator enters login information.
-                        \item System authenticates the administrator.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules.
@@ -462,27 +498,23 @@ Third-party developers request and interpret environmental data from the public 
                         \item Administrator submits the updated alert rule.
                         \item System validates the updated alert rule.
                         \item System updates the alert rule in the systems database.
-                        \item System reports to administrator that the alert has been successfully created. 
+                        \item System reports to the administrator that the alert rule has been successfully updated.
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.}] System fails to authenticate the administrator.
+                        \item[\textmd{7i.}] Updated alert information is invalid or incomplete.
                         \begin{description}
-                            \item[\textmd{4i.1}] System displays an authentication failure message.
-                            \item[\textmd{4i.2}] Updating an alert rule fails.
+                            \item[\textmd{7i.1}] System prevents the updated alert rule from being submitted.
+                            \item[\textmd{7i.2}] System displays an error message describing the issue.
+                            \item[\textmd{7i.3}] System highlights the section(s) that need to be changed.
+                            \item[\textmd{7i.4}] Return to BE2-5.
                         \end{description}
-                        \item[\textmd{11i.}] Updated alert information is invalid.
+                        \item[\textmd{8i.}] System fails to update the alert rule.
                         \begin{description}
-                            \item[\textmd{11i.1}] System displays error message to administrator.
-                            \item[\textmd{11i.2}] System highlights section that needs to changed.
-                            \item[\textmd{11i.3}] Updating an alert rule fails.
-                        \end{description}
-                        \item[\textmd{12i.}] System fails to update the alert rule.
-                        \begin{description}
-                            \item[\textmd{12i.1}] System displays error message to administrator.
-                            \item[\textmd{12i.2}] Updating an alert rule fails.
+                            \item[\textmd{8i.1}] System displays an error message indicating that the alert rule update failed.
+                            \item[\textmd{8i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -499,34 +531,42 @@ Third-party developers request and interpret environmental data from the public 
 
 			\item IT Support \#6
             	\begin{quote}
-				    13i. IT support should be notified through system logs if the update failure persists.
+				    8i. System provides IT Support with error logs to resolve the alert rule update failures.
 				\end{quote}
 
 		\end{enumerate}
         
         {\bf Global Scenario:}
         	\begin{quote}
-        	    \textbf{Pre-condition}: pre-condition desc. \\
+        	    \textbf{Pre-condition}: There must exist at least one alert rule in the system. The administrator is authenticated and logged into the system. \\
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Step 1
-                        \item Step 2
-                        \item Step 3
+                        \item System displays the dashboard.
+                        \item Administrator selects \textit{Manage Alerts} tab
+                        \item System displays the existing alert rules.
+                        \item Administrator selects an alert rule to update.
+                        \item Administrator modifies the alert rule parameters.
+                        \item Administrator submits the updated alert rule.
+                        \item System validates the updated alert rule.
+                        \item System updates the alert rule in the systems database.
+                        \item System reports to the administrator that the alert rule has been successfully updated
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{Xi.}] Main
+                        \item[\textmd{7i.}] Updated alert information is invalid or incomplete.
                         \begin{description}
-                            \item[\textmd{Xi.1}] Sub 1
-                            \item[\textmd{Xi.2}] Sub 2
+                            \item[\textmd{7i.1}] System prevents the updated alert rule from being submitted.
+                            \item[\textmd{7i.2}] System displays an error message describing the issue.
+                            \item[\textmd{7i.3}] System highlights the section(s) that need to be changed.
+                            \item[\textmd{7i.4}] Return to BE2-5.
                         \end{description}
-                        \item[\textmd{Yi.}] Main 
+                        \item[\textmd{8i.}] System fails to update the alert rule.
                         \begin{description}
-                            \item[\textmd{Yi.1}] Sub 1
-                            \item[\textmd{Yi.2}] Sub 2
+                            \item[\textmd{8i.1}] System displays an error message that that the alert rule update failed.
+                            \item[\textmd{8i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -535,7 +575,7 @@ Third-party developers request and interpret environmental data from the public 
 
 \begin{enumerate}[{\bf BE3.}]
 	\item Remove or Disable an Alert Rule \#3 \\         
-    \textbf{Pre-condition}: There must exist at least one alert rule in the system, and the administrator must be authenticated.
+    \textbf{Pre-condition}: There must exist at least one alert rule in the system. The administrator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1 
@@ -552,32 +592,28 @@ Third-party developers request and interpret environmental data from the public 
 				\textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Administrator opens the dashboard.
-                        \item System prompts the administrator to log in.
-                        \item Administrator enters login information.
-                        \item System authenticates the administrator.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules.
                         \item Administrator selects an alert rule to remove or disable.
-                        \item System prompts user for confirmation.
+                        \item System prompts the administrator for confirmation.
                         \item Administrator confirms the action.
                         \item System removes or disables the alert rule.
-                        \item System reports to administrator that the alert has been successfully removed or disabled.
+                        \item System reports that the alert has been successfully removed or disabled.
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.}] System fails to authenticate the administrator.
+                        \item[\textmd{6i.}] Administrator cancels the confirmation.
                         \begin{description}
-                            \item[\textmd{4i.1}] System displays an authentication failure message.
-                            \item[\textmd{4i.2}] Updating an alert rule fails.
+                            \item[\textmd{6i.1}] System does not remove or disable the alert rule.
+                            \item[\textmd{6i.2}] System returns to the list of existing alert rules.
                         \end{description}
-                        \item[\textmd{11i.}] Updated alert information is invalid.
+                        \item[\textmd{7i.}] System fails to remove or disable the alert rule.
                         \begin{description}
-                            \item[\textmd{11i.1}] System displays error message to administrator.
-                            \item[\textmd{11i.2}] Removing an alert rule fails.
+                            \item[\textmd{7i.1}] System displays an error message that the action failed.
+                            \item[\textmd{7i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -593,32 +629,37 @@ Third-party developers request and interpret environmental data from the public 
 				\end{quote}
 
 			\item IT Support \#6
-                \item[\textmd{11i}] IT support should be notified through system logs if the rule removal fails.
+                \item[\textmd{7i}] System provides IT Support with system logs to investigate and resolve alert rule removal or disable failures.
 		\end{enumerate}
         
         {\bf Global Scenario:}
         	\begin{quote}
-        	    \textbf{Pre-condition}: pre-condition desc. \\
+        	    \textbf{Pre-condition}: There must exist at least one alert rule in the system. The administrator is authenticated and logged into the system. \\
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Step 1
-                        \item Step 2
-                        \item Step 3
+                        \item System displays the dashboard.
+                        \item Administrator selects \textit{Manage Alerts} tab
+                        \item System displays the existing alert rules.
+                        \item Administrator selects an alert rule to remove or disable.
+                        \item System prompts user for confirmation.
+                        \item Administrator confirms the action.
+                        \item System removes or disables the alert rule.
+                        \item System reports that the alert has been successfully removed or disabled.
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{Xi.}] Main
+                        \item[\textmd{6i.}] Administrator cancels the confirmation.
                         \begin{description}
-                            \item[\textmd{Xi.1}] Sub 1
-                            \item[\textmd{Xi.2}] Sub 2
+                            \item[\textmd{6i.1}] System does not remove or disable the alert rule.
+                            \item[\textmd{6i.2}] System returns to the list of existing alert rules.
                         \end{description}
-                        \item[\textmd{Yi.}] Main 
+                        \item[\textmd{7i.}] System fails to remove or disable the alert rule.
                         \begin{description}
-                            \item[\textmd{Yi.1}] Sub 1
-                            \item[\textmd{Yi.2}] Sub 2
+                            \item[\textmd{7i.1}] System displays an error message that the action failed.
+                            \item[\textmd{7i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -627,7 +668,7 @@ Third-party developers request and interpret environmental data from the public 
 
 \begin{enumerate}[{\bf BE4.}]
 	\item City Operator Acknowledges an Alert \#4 \\      
-    \textbf{Pre-condition}: An alert has been generated by the system and is marked as "Active"
+    \textbf{Pre-condition}: An alert has been generated by the system and is marked as \textit{Active}. The city operator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1 
@@ -644,14 +685,10 @@ Third-party developers request and interpret environmental data from the public 
 				\textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item City operator opens the dashboard.
-                        \item System prompts the administrator to log in.
-                        \item City operator enters login information.
-                        \item System authenticates the city operator.
-                        \item System displays the dashboard the active alerts on the dashboard.
-                        \item City operator selects an alert.
+                        \item System displays the dashboard showing the active alerts.
+                        \item City operator selects an active alert from the dashboard.
                         \item System displays the alert details.
-                        \item City operator acknowledges the alert.
+                        \item City operator selects the option to acknowledge the alert.
                         \item System updates the alert status to \textit{Acknowledged}.
                         \item System confirms that the alert has been acknowledged. 
                     \end{enumerate}
@@ -659,15 +696,16 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.}] System fails to authenticate the city operator.
+                        \item[\textmd{4i.}] Alert has already been acknowledged by another operator.
                         \begin{description}
-                            \item[\textmd{4i.1}] System displays an authentication failure message.
-                            \item[\textmd{4i.2}] Alert failed to be acknowledged. 
+                            \item[\textmd{4i.1}] System refreshes the alert status.
+                            \item[\textmd{4i.2}] System informs the city operator that the alert is already acknowledged.
                         \end{description}
-                        \item[\textmd{9i.}] System fails to update the alert status.
+                        \item[\textmd{5i.}] System fails to update the alert status.
                         \begin{description}
-                            \item[\textmd{9i.1}] System displays error message to city operator.
-                            \item[\textmd{9i.2}] Alert failed to be acknowledged. 
+                            \item[\textmd{5i.1}] System displays an error message to city operator.
+                            \item[\textmd{5i.2}] Alert remains in \textit{Active} status.
+                            \item[\textmd{5i.3}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -683,32 +721,36 @@ Third-party developers request and interpret environmental data from the public 
 				\end{quote}
 
 			\item IT Support \#6
-                \item[\textmd{9i}] IT support should be notified through system logs if the alert cannot be acknowledged. 
+                \item[\textmd{5i}] System provides IT Support with system logs to investigate and resolve alert acknowledgment issues.
 		\end{enumerate}
         
         {\bf Global Scenario:}
         	\begin{quote}
-        	    \textbf{Pre-condition}: pre-condition desc. \\
+        	    \textbf{Pre-condition}: An alert has been generated by the system and is marked as \textit{Active}. The city operator is authenticated and logged into the system. \\
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Step 1
-                        \item Step 2
-                        \item Step 3
+                        \item System displays the dashboard showing the active alerts.
+                        \item City operator selects an active alert from the dashboard.
+                        \item System displays the alert details.
+                        \item City operator selects the option to acknowledge the alert.
+                        \item System updates the alert status to \textit{Acknowledged}.
+                        \item System confirms that the alert has been acknowledged. 
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{Xi.}] Main
+                        \item[\textmd{4i.}] Alert got acknowledged by another operator.
                         \begin{description}
-                            \item[\textmd{Xi.1}] Sub 1
-                            \item[\textmd{Xi.2}] Sub 2
+                            \item[\textmd{4i.1}] System refreshes the alert status.
+                            \item[\textmd{4i.2}] System informs the city operator that the alert is already acknowledged.
                         \end{description}
-                        \item[\textmd{Yi.}] Main 
+                        \item[\textmd{5i.}] System fails to update the alert status.
                         \begin{description}
-                            \item[\textmd{Yi.1}] Sub 1
-                            \item[\textmd{Yi.2}] Sub 2
+                            \item[\textmd{5i.1}] System displays an error message to city operator.
+                            \item[\textmd{5i.2}] Alert remains in \textit{Active} status.
+                            \item[\textmd{5i.3}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -717,7 +759,7 @@ Third-party developers request and interpret environmental data from the public 
 
 \begin{enumerate}[{\bf BE5.}]
 	\item City Operator Resolves an Alert \#5 \\      
-    \textbf{Pre-condition}: An alert has been generated by the system and has been acknowledged by a city operator.
+    \textbf{Pre-condition}: An alert has been generated by the system and has been acknowledged by a city operator. The city operator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1 
@@ -734,11 +776,7 @@ Third-party developers request and interpret environmental data from the public 
 				\textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item City operator opens the dashboard.
-                        \item System prompts the administrator to log in.
-                        \item City operator enters login information.
-                        \item System authenticates the city operator.
-                        \item System displays the dashboard the active alerts on the dashboard.
+                        \item System displays the dashboard showing the active alerts.
                         \item City operator selects an alert.
                         \item System displays the alert details.
                         \item City operator marks the alert as resolved.
@@ -751,15 +789,16 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.}] System fails to authenticate the city operator.
+                        \item[\textmd{4i.}] Alert got resolved by another operator
                         \begin{description}
-                            \item[\textmd{4i.1}] System displays an authentication failure message.
-                            \item[\textmd{4i.2}] Alert failed to be resolved.
+                            \item[\textmd{4i.1}] System refreshes the alert status.
+                            \item[\textmd{4i.2}] System informs the city operator that the alert is already acknowledged.
                         \end{description}
-                        \item[\textmd{9i.}] System fails to update the alert status.
+                        \item[\textmd{5i.}] System fails to update the alert status.
                         \begin{description}
-                            \item[\textmd{9i.1}] System displays error message to city operator.
-                            \item[\textmd{9i.2}] Alert failed to be acknowledged. 
+                            \item[\textmd{5i.1}] System displays an error message to city operator.
+                            \item[\textmd{5i.2}] Alert remains in \textit{Acknowledged} status.
+                            \item[\textmd{5i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -775,32 +814,38 @@ Third-party developers request and interpret environmental data from the public 
 				\end{quote}
 
 			\item IT Support \#6
-                \item[\textmd{9i}] IT support should be notified through system logs if the alert cannot be resolved. 
+                \item[\textmd{5i}] System provides IT Support with system logs to investigate and resolve alert resolution failures or audit logging issues.
 		\end{enumerate}
         
         {\bf Global Scenario:}
         	\begin{quote}
-        	    \textbf{Pre-condition}: pre-condition desc. \\
+        	    \textbf{Pre-condition}: An alert has been generated by the system and has been acknowledged by a city operator. The city operator is authenticated and logged into the system. \\
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Step 1
-                        \item Step 2
-                        \item Step 3
+                        \item System displays the dashboard showing the active alerts.
+                        \item City operator selects an alert.
+                        \item System displays the alert details.
+                        \item City operator marks the alert as resolved.
+                        \item System updates the alert status to \textit{Resolved}.
+                        \item System records the time and the operators details.
+                        \item System moves the alert to the \textit{Completed} page.
+                        \item System confirms that the alert has been resolved.
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{Xi.}] Main
+                        \item[\textmd{4i.}] Alert got resolved by another operator
                         \begin{description}
-                            \item[\textmd{Xi.1}] Sub 1
-                            \item[\textmd{Xi.2}] Sub 2
+                            \item[\textmd{4i.1}] System refreshes the alert status.
+                            \item[\textmd{4i.2}] System informs the city operator that the alert is already acknowledged.
                         \end{description}
-                        \item[\textmd{Yi.}] Main 
+                        \item[\textmd{5i.}] System fails to update the alert status.
                         \begin{description}
-                            \item[\textmd{Yi.1}] Sub 1
-                            \item[\textmd{Yi.2}] Sub 2
+                            \item[\textmd{5i.1}] System displays an error message to city operator.
+                            \item[\textmd{5i.2}] Alert remains in \textit{Acknowledged} status.
+                            \item[\textmd{5i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
