@@ -187,7 +187,6 @@ The general public and citizens can access non-sensitive environmental informati
 \end{itemize}
 
 \subsubsection{User III: Administrators}
-*****ASK GROUP ABOUT
 System administrators are responsible for building and maintaining the system. Their role focuses specifically on ensuring the system operates securely, behaves correctly, and is maintainable over time.
 \begin{itemize}
     \item \textbf{Education Level}: System administrators should have at least a post-secondary education in software engineering, computer science, or another similar technical field.
@@ -196,7 +195,6 @@ System administrators are responsible for building and maintaining the system. T
 \end{itemize}
 
 \subsubsection{User IV: Third-Party Developer}
-*****ASK GROUP ABOUT
 Third-party developers request and interpret environmental data from the public API to help build external applications. 
 \begin{itemize}
     \item \textbf{Education Level}: Developers should have a post-secondary education in software engineering, computer science, or equivalent professional experience.
@@ -1459,7 +1457,20 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:access_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{SR-AC}1. ]
-	\item 
+	\item The system must require all users of the dashboard to authenticate using an email/username and password, being granted access to the system. \\
+    \textbf{Rationale}: This ensures that only people who are authorized can access the system, which prevents the risk of authorized individuals to alter environmental data [https://www.cyber.gc.ca/en/guidance/user-authentication-guidance-information-technology-systems-itsp30031-v3].
+
+    \item The system must support multi-factor authentication (MFA) for administrative accounts. \\
+    \textbf{Rationale}: MFA helps by eliminating the possibility of compromising the credentials of an administrators account. This is crucial, since the administrator is a high-privilege user who can define alert rules, and view sensitive system information [https://www.cyber.gc.ca/en/guidance/secure-your-accounts-and-devices-multi-factor-authentication-itsap30030].
+
+    \item The system must enforce Role-Base Access Control (RBAC) to distinguish between the different user groups, such as administrator, city operator, and read-only public users. \\
+    \textbf{Rationale}: Enforcing an RBAC policy ensures that each user group can only perform actions that are appropriate to their respective role. This helps to reduce accidental misuse of the systems functions. 
+
+    \item The system must lock out a user account after five consecutive failed login attempts. \\
+    \textbf{Rationale}: Protects against repeated attempts of trying to login to an account that does not belong to the respective individual [https://www.cyber.gc.ca/en/guidance/user-authentication-guidance-information-technology-systems-itsp30031-v3].
+
+    \item All IoT devices must be authenticated with a unique key before sending telemetry data to the system. \\
+    \textbf{Rationale}: Prevents harmful telemetry to be injection into the system, by limiting entering data to registered and authorized sensors [https://www.cyber.gc.ca/en/guidance/internet-things-iot-security-itsap00012].
 \end{enumerate}
 % End SubSubSection
 
@@ -1467,7 +1478,17 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:integrity_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{SR-INT}1. ]
-	\item 
+    \item Any data transmitted between IoT devices, and the system must be encrypted, and include integrity protection. \\
+    \textbf{Rationale}: Ensures that telemetry is protected, and cannot be changed during transmission. As a result, this helps maintain confidentiality and integrity [https://www.cyber.gc.ca/en/guidance/using-encryption-keep-your-sensitive-data-secure-itsap40016].
+    
+	\item All incoming sensor telemetry must be validated against a defined schema and acceptable value ranges before being stored. \\
+    \textbf{Rationale}: Ensures that only correct and meaningful data is allowed to enter the system. This restricts any corrupted/malicious data from affecting any environmental analytics and alerts. 
+
+    \item The system must maintain an audit log to keep track of any data modification, such as alert rule updates, or alert status changes. \\
+    \textbf{Rationale}: An audit log is essential to provide traceability to identify any potential modifications made accidentally, or by unauthorized personnel [https://www.researchgate.net/publication/352745109\_Audit\_Logs\_Management\_and\_Security\_-\_A\_Survey].
+
+    \item The system should use cryptographic hashing for any alert generated, to ensure that the alert data remains secure, and unaltered after generation. \\
+    \textbf{Rationale}: Enforces data integrity, and prevents city operators from receiving false notifications [https://www.cyber.gc.ca/en/guidance/guidance-securely-configuring-network-protocols-itsp40062].
 \end{enumerate}
 % End SubSubSection
 
@@ -1475,7 +1496,15 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:privacy_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{SR-P}1. ]
-	\item 
+	\item The system will not collect or store any personally identifiable information from public users. \\
+    \textbf{Rationale}: Protects individual privacy, and ensures compliance with PIPEDA regulations [https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/p\_principle/principles/p\_collection/]
+
+    \item The system shall only collect environmental data at the level of general city zones. \\
+    \textbf{Rationale}: Ensures citizen privacy by preventing sensor data from tracking individual residents
+
+    \item Public APIs should only provide non-sensitive data to public citizens and third-party developers. \\
+    \textbf{Rationale}: Prevents misuse of the API, and protects privacy.
+    
 \end{enumerate}
 % End SubSubSection
 
@@ -1483,7 +1512,18 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:audit_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{SR-AU}1. ]
-	\item 
+	\item The system shall log all user login attempts, including the timestamp, their distinct identification number, and the location of the request. \\
+    \textbf{Rationale}: Ensures accountability for access attempts [https://www.researchgate.net/publication/352745109\_Audit\_Logs\_Management\_and\_Security\_-\_A\_Survey].
+
+    \item The system shall log all access to sensitive data, and data modification such as updating, adding or deleting rule alerts, or registering new sensors or accounts. \\
+    \textbf{Rationale}: Ensures sensitive data is properly handled, and traceability of critical changes.[https://www.secoda.co/glossary/audit-traceability-audit-logs].
+
+    \item All audit logs should be retained for at least 1 years. \\
+    \textbf{Rationale}: Ensures there is enough time look at incidents, or check compliance [https://auditboard.com/blog/security-log-retention-best-practices-guide].
+
+    \item All audit logs should be protected with access controls to ensure that only authorized security can view or extract information from them. \\
+    \textbf{Rationale}: Prevents critical information from being shared without authorization.[https://auditboard.com/blog/security-log-retention-best-practices-guide].
+    
 \end{enumerate}
 % End SubSubSection
 
@@ -1491,7 +1531,13 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:immunity_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{SR-IM}1. ]
-	\item 
+	\item The system shall keep receiving and storing sensor data even when the real-time processing system is down. \\
+    \textbf{Rationale}: Makes sure no sensor data is lost if part of the system stops.    [https://www.cyber.gc.ca/en/cyber-security-readiness/cyber-security-readiness-goals-securing-our-most-critical-systems].
+
+    \item The system shall immediately try again when sending sensor data fails.\\
+    \textbf{Rationale}: Ensures that sensor data eventually reaches the system, even in the case of network problems.    [https://www.cyber.gc.ca/en/cyber-security-readiness/cyber-security-readiness-goals-securing-our-most-critical-systems].
+
+
 \end{enumerate}
 % End SubSubSection
 
@@ -1505,7 +1551,17 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:cultural_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{CP-C}1. ]
-	\item 
+	\item The system shall not allow users to create an account with an inappropriate or discriminatory name. \\
+    \textbf{Rationale}:
+
+    \item The system shall support display of all dashboards of alerts in both French and English. \\
+    \textbf{Rationale}:
+    
+    \item The system shall not use any symbols, colours, and icons in the dashboards that can be considered offensive based one ones religion, ethnicity, disability or sexual orientation.  \\
+    \textbf{Rationale}:
+
+    \item The system shall not use any symbols, colours, and icons in the dashboards that can be considered offensive based one ones religion, ethnicity, disability or sexual orientation.  \\
+    \textbf{Rationale}:
 \end{enumerate}
 % End SubSubSection
 
@@ -1513,11 +1569,16 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:political_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{CP-P}1. ]
-	\item 
+	\item The system shall comply with all federal, provincial, and municipal regulations regarding environmental monitoring and data sharing [https://www.canada.ca/en/environment-climate-change/services/canadian-environmental-protection-act-registry/monitoring-reporting-research/monitoring.html]. \\
+    \textbf{Rationale}: Ensures legal compliance and helps to avoid political conflicts.
+    	
+    \item The system shall be transparent in how it collects and stores data by giving government authorities access to such data and system reports [https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=28108]. \\
+    \textbf{Rationale}: Enables accountability to political authorities. 
+        	
+    \item The system shall provide ways to share environmental data to other authorized groups. \\
+    \textbf{Rationale}: Supports collaboration between government organizations.
 \end{enumerate}
 % End SubSubSection
-
-% End SubSection
 
 \subsection{Legal Requirements}
 \label{sub:legal_requirements}
