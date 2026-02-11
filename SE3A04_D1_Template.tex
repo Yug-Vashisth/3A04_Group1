@@ -283,24 +283,479 @@ Third-party developers request and interpret environmental data from the public 
 \noindent {\bf Interpretation:} Specify any liberties you took in interpreting business events, if necessary.\\
 
 \begin{enumerate}[{\bf BE1.}]
-	\item Business Event Name \#1
+	\item Define a New Alert Rule. \#1 \\         
+    \textbf{Pre-condition}: The administrator has an authenticated account and there is no alert rule that already exists for the same threshold.
+    
 		\begin{enumerate}[{\bf VP1.}]
-			\item Viewpoint Name \#1 \\
-				\textcolor{red}{Insert Scenario Here}
-			\item Viewpoint Name \#2 \\
-				\textcolor{red}{Insert Scenario Here}
+			\item City Operators \#1 
+                \begin{quote}
+                    N/A
+                \end{quote}
+                
+			\item Public Users \#2 
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Administrators \#3 \\
+				\textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Administrator opens the dashboard.
+                        \item System prompts the administrator to log in.
+                        \item Administrator enters login information.
+                        \item System authenticates the administrator.
+                        \item System displays the dashboard.
+                        \item Administrator selects \textit{Manage Alerts} tab
+                        \item System displays the existing alert rules, and the option to create a new rule.
+                        \item Administrator selects \textit{Create New Alert Rule}.
+                        \item System displays the alert rule setup form.
+                        \item Administrator enters the new alert rule information.
+                        \item Administrator adds the alert rule to the system.
+                        \item System validates the form.
+                        \item System stores the new alert rule.
+                        \item System reports to administrator that the alert has been successfully created.
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{4i.}] System fails to authenticate the administrator.
+                        \begin{description}
+                            \item[\textmd{4i.1}] System displays an authentication failure message.
+                            \item[\textmd{4i.2}] Defining a new alert rule fails.
+                        \end{description}
+                        \item[\textmd{12i.}] System detects invalid data, or missing information.
+                        \begin{description}
+                            \item[\textmd{12i.1}] System displays error message to administrator.
+                            \item[\textmd{12i.2}] System highlights section that needs to changed.
+                            \item[\textmd{12i.3}] Defining a new alert rule fails.
+                        \end{description}
+                        \item[\textmd{13i.}] System fails to store the added alert rule.
+                        \begin{description}
+                            \item[\textmd{13i.1}] System displays error message to administrator.
+                            \item[\textmd{13i.2}] Defining a new alert rule fails.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+                
+			\item Third-Party Developers \#4 
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Environmental Monitoring Department \#5 
+				\begin{quote}
+				    N/A
+				\end{quote}
+
+			\item IT Support \#6 
+                \item[\textmd{13i}] IT support should be notified about the error through system logs.
 		\end{enumerate}
-		{\bf Global Scenario:}\\
-		\textcolor{red}{Insert Scenario Here}
-	\item Business Event Name \#2
-	\begin{enumerate}[{\bf VP1.}]
-		\item Viewpoint Name \#1 \\
-		\textcolor{red}{Insert Scenario Here}
-		\item Viewpoint Name \#2 \\
-		\textcolor{red}{Insert Scenario Here}
-	\end{enumerate}
-	{\bf Global Scenario:}\\
-	\textcolor{red}{Insert Scenario Here}
+        
+        {\bf Global Scenario:}
+        	\begin{quote}
+        	    \textbf{Pre-condition}: pre-condition desc. \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Step 1
+                        \item Step 2
+                        \item Step 3
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{Xi.}] Main
+                        \begin{description}
+                            \item[\textmd{Xi.1}] Sub 1
+                            \item[\textmd{Xi.2}] Sub 2
+                        \end{description}
+                        \item[\textmd{Yi.}] Main 
+                        \begin{description}
+                            \item[\textmd{Yi.1}] Sub 1
+                            \item[\textmd{Yi.2}] Sub 2
+                        \end{description}
+                    \end{description}
+                \end{quote}
+        	\end{quote}
+\end{enumerate}
+
+\begin{enumerate}[{\bf BE2.}]
+	\item Update an Existing Alert Rule. \#2 \\         
+    \textbf{Pre-condition}: There must exist at least one alert rule in the system, and the administrator must be authenticated.
+    
+		\begin{enumerate}[{\bf VP1.}]
+			\item City Operators \#1 
+                \begin{quote}
+                    N/A
+                \end{quote}
+                
+			\item Public Users \#2 
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Administrators \#3 \\
+				\textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Administrator opens the dashboard.
+                        \item System prompts the administrator to log in.
+                        \item Administrator enters login information.
+                        \item System authenticates the administrator.
+                        \item System displays the dashboard.
+                        \item Administrator selects \textit{Manage Alerts} tab
+                        \item System displays the existing alert rules.
+                        \item Administrator selects an alert rule to update.
+                        \item Administrator modifies the alert rule parameters.
+                        \item Administrator submits the updated alert rule.
+                        \item System validates the updated alert rule.
+                        \item System updates the alert rule in the systems database.
+                        \item System reports to administrator that the alert has been successfully created. 
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{4i.}] System fails to authenticate the administrator.
+                        \begin{description}
+                            \item[\textmd{4i.1}] System displays an authentication failure message.
+                            \item[\textmd{4i.2}] Updating an alert rule fails.
+                        \end{description}
+                        \item[\textmd{11i.}] Updated alert information is invalid.
+                        \begin{description}
+                            \item[\textmd{11i.1}] System displays error message to administrator.
+                            \item[\textmd{11i.2}] System highlights section that needs to changed.
+                            \item[\textmd{11i.3}] Updating an alert rule fails.
+                        \end{description}
+                        \item[\textmd{12i.}] System fails to update the alert rule.
+                        \begin{description}
+                            \item[\textmd{12i.1}] System displays error message to administrator.
+                            \item[\textmd{12i.2}] Updating an alert rule fails.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+                
+			\item Third-Party Developers \#4
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Environmental Monitoring Department \#5
+				\begin{quote}
+				    N/A
+				\end{quote}
+
+			\item IT Support \#6
+            	\begin{quote}
+				    13i. IT support should be notified through system logs if the update failure persists.
+				\end{quote}
+
+		\end{enumerate}
+        
+        {\bf Global Scenario:}
+        	\begin{quote}
+        	    \textbf{Pre-condition}: pre-condition desc. \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Step 1
+                        \item Step 2
+                        \item Step 3
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{Xi.}] Main
+                        \begin{description}
+                            \item[\textmd{Xi.1}] Sub 1
+                            \item[\textmd{Xi.2}] Sub 2
+                        \end{description}
+                        \item[\textmd{Yi.}] Main 
+                        \begin{description}
+                            \item[\textmd{Yi.1}] Sub 1
+                            \item[\textmd{Yi.2}] Sub 2
+                        \end{description}
+                    \end{description}
+                \end{quote}
+        	\end{quote}
+\end{enumerate}
+
+\begin{enumerate}[{\bf BE3.}]
+	\item Remove or Disable an Alert Rule \#3 \\         
+    \textbf{Pre-condition}: There must exist at least one alert rule in the system, and the administrator must be authenticated.
+    
+		\begin{enumerate}[{\bf VP1.}]
+			\item City Operators \#1 
+                \begin{quote}
+                    N/A
+                \end{quote}
+                
+			\item Public Users \#2 
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Administrators \#3 \\
+				\textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Administrator opens the dashboard.
+                        \item System prompts the administrator to log in.
+                        \item Administrator enters login information.
+                        \item System authenticates the administrator.
+                        \item System displays the dashboard.
+                        \item Administrator selects \textit{Manage Alerts} tab
+                        \item System displays the existing alert rules.
+                        \item Administrator selects an alert rule to remove or disable.
+                        \item System prompts user for confirmation.
+                        \item Administrator confirms the action.
+                        \item System removes or disables the alert rule.
+                        \item System reports to administrator that the alert has been successfully removed or disabled.
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{4i.}] System fails to authenticate the administrator.
+                        \begin{description}
+                            \item[\textmd{4i.1}] System displays an authentication failure message.
+                            \item[\textmd{4i.2}] Updating an alert rule fails.
+                        \end{description}
+                        \item[\textmd{11i.}] Updated alert information is invalid.
+                        \begin{description}
+                            \item[\textmd{11i.1}] System displays error message to administrator.
+                            \item[\textmd{11i.2}] Removing an alert rule fails.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+                
+			\item Third-Party Developers \#4
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Environmental Monitoring Department \#5
+				\begin{quote}
+				    N/A
+				\end{quote}
+
+			\item IT Support \#6
+                \item[\textmd{11i}] IT support should be notified through system logs if the rule removal fails.
+		\end{enumerate}
+        
+        {\bf Global Scenario:}
+        	\begin{quote}
+        	    \textbf{Pre-condition}: pre-condition desc. \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Step 1
+                        \item Step 2
+                        \item Step 3
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{Xi.}] Main
+                        \begin{description}
+                            \item[\textmd{Xi.1}] Sub 1
+                            \item[\textmd{Xi.2}] Sub 2
+                        \end{description}
+                        \item[\textmd{Yi.}] Main 
+                        \begin{description}
+                            \item[\textmd{Yi.1}] Sub 1
+                            \item[\textmd{Yi.2}] Sub 2
+                        \end{description}
+                    \end{description}
+                \end{quote}
+        	\end{quote}
+\end{enumerate}
+
+\begin{enumerate}[{\bf BE4.}]
+	\item City Operator Acknowledges an Alert \#4 \\      
+    \textbf{Pre-condition}: An alert has been generated by the system and is marked as "Active"
+    
+		\begin{enumerate}[{\bf VP1.}]
+			\item City Operators \#1 
+                \begin{quote}
+                    N/A
+                \end{quote}
+                
+			\item Public Users \#2 
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Administrators \#3 \\
+				\textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item City operator opens the dashboard.
+                        \item System prompts the administrator to log in.
+                        \item City operator enters login information.
+                        \item System authenticates the city operator.
+                        \item System displays the dashboard the active alerts on the dashboard.
+                        \item City operator selects an alert.
+                        \item System displays the alert details.
+                        \item City operator acknowledges the alert.
+                        \item System updates the alert status to \textit{Acknowledged}.
+                        \item System confirms that the alert has been acknowledged. 
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{4i.}] System fails to authenticate the city operator.
+                        \begin{description}
+                            \item[\textmd{4i.1}] System displays an authentication failure message.
+                            \item[\textmd{4i.2}] Alert failed to be acknowledged. 
+                        \end{description}
+                        \item[\textmd{9i.}] System fails to update the alert status.
+                        \begin{description}
+                            \item[\textmd{9i.1}] System displays error message to city operator.
+                            \item[\textmd{9i.2}] Alert failed to be acknowledged. 
+                        \end{description}
+                    \end{description}
+                \end{quote}
+                
+			\item Third-Party Developers \#4
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Environmental Monitoring Department \#5
+				\begin{quote}
+				    N/A
+				\end{quote}
+
+			\item IT Support \#6
+                \item[\textmd{9i}] IT support should be notified through system logs if the alert cannot be acknowledged. 
+		\end{enumerate}
+        
+        {\bf Global Scenario:}
+        	\begin{quote}
+        	    \textbf{Pre-condition}: pre-condition desc. \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Step 1
+                        \item Step 2
+                        \item Step 3
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{Xi.}] Main
+                        \begin{description}
+                            \item[\textmd{Xi.1}] Sub 1
+                            \item[\textmd{Xi.2}] Sub 2
+                        \end{description}
+                        \item[\textmd{Yi.}] Main 
+                        \begin{description}
+                            \item[\textmd{Yi.1}] Sub 1
+                            \item[\textmd{Yi.2}] Sub 2
+                        \end{description}
+                    \end{description}
+                \end{quote}
+        	\end{quote}
+\end{enumerate}
+
+\begin{enumerate}[{\bf BE5.}]
+	\item City Operator Resolves an Alert \#5 \\      
+    \textbf{Pre-condition}: An alert has been generated by the system and has been acknowledged by a city operator.
+    
+		\begin{enumerate}[{\bf VP1.}]
+			\item City Operators \#1 
+                \begin{quote}
+                    N/A
+                \end{quote}
+                
+			\item Public Users \#2 
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Administrators \#3 \\
+				\textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item City operator opens the dashboard.
+                        \item System prompts the administrator to log in.
+                        \item City operator enters login information.
+                        \item System authenticates the city operator.
+                        \item System displays the dashboard the active alerts on the dashboard.
+                        \item City operator selects an alert.
+                        \item System displays the alert details.
+                        \item City operator marks the alert as resolved.
+                        \item System updates the alert status to \textit{Resolved}.
+                        \item System records the time and the operators details.
+                        \item System moves the alert to the \textit{Completed} page.
+                        \item System confirms that the alert has been resolved.
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{4i.}] System fails to authenticate the city operator.
+                        \begin{description}
+                            \item[\textmd{4i.1}] System displays an authentication failure message.
+                            \item[\textmd{4i.2}] Alert failed to be resolved.
+                        \end{description}
+                        \item[\textmd{9i.}] System fails to update the alert status.
+                        \begin{description}
+                            \item[\textmd{9i.1}] System displays error message to city operator.
+                            \item[\textmd{9i.2}] Alert failed to be acknowledged. 
+                        \end{description}
+                    \end{description}
+                \end{quote}
+                
+			\item Third-Party Developers \#4
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Environmental Monitoring Department \#5
+				\begin{quote}
+				    N/A
+				\end{quote}
+
+			\item IT Support \#6
+                \item[\textmd{9i}] IT support should be notified through system logs if the alert cannot be resolved. 
+		\end{enumerate}
+        
+        {\bf Global Scenario:}
+        	\begin{quote}
+        	    \textbf{Pre-condition}: pre-condition desc. \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Step 1
+                        \item Step 2
+                        \item Step 3
+                    \end{enumerate}
+                    \end{quote}
+                \textbf{Secondary Scenario} 
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{Xi.}] Main
+                        \begin{description}
+                            \item[\textmd{Xi.1}] Sub 1
+                            \item[\textmd{Xi.2}] Sub 2
+                        \end{description}
+                        \item[\textmd{Yi.}] Main 
+                        \begin{description}
+                            \item[\textmd{Yi.1}] Sub 1
+                            \item[\textmd{Yi.2}] Sub 2
+                        \end{description}
+                    \end{description}
+                \end{quote}
+        	\end{quote}
 \end{enumerate}
 
 %	Below, we organize by Business Event.
