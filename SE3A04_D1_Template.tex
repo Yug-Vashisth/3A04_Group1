@@ -10,6 +10,7 @@
 \usepackage{fancyhdr}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage{longtable}
 %\usepackage{extarrows}
 %\usepackage{setspace}
 %\usepackage{xcolor}
@@ -143,21 +144,116 @@ The intended audience of the SRS is the stakeholders of SCEMAS, including develo
 \subsection{Product Functions}
 \label{sub:product_functions}
 % Begin SubSection
+\begin{longtable}{|p{3cm}|p{12cm}|}
+\hline
+\textbf{Module} & \textbf{Functions} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Module} & \textbf{Functions} \\
+\hline
+\endhead
+
+User Module &
 \begin{itemize}
-    \item Accurate data Processing: The data processed by the system must be accurate with an error rate of less than 1 percent.
-    \item Data Processing: The Data must validate each incoming message.
-    \item Efficient Storage: The system shall store data in a way that will support efficient querying.
-    \item Alert Engine: The system must have a configurable rule-based alert engine with definable alert rules based on specific thresholds.
-    \item Alert History: The System shall keep a comprehensive history of all alerts that have occurred.
-    \item Dashboard: The System shall have a dashboard that shows visual representations of metrics for city operators
-    \item Public Dashboard: The System shall provide access to non sensitive data for public use.
-    \item Role-based Permissions: Each user should have an assigned role that dictates what they may do with the system.
-    \item The system shall maintain an audit log of all significant events.
-    \item Authentication: The system shall authenticate all interacting entities before accessing data. 
-    \item Privacy: The System shall not collect, store, or process any personal identifiable information (PII) 
-    \item System Efficiency: The system shall provide efficient response times to api requests. 
-    
+    \item Create an account
+        \begin{itemize}
+            \item Allow the user to create an account.
+        \end{itemize}
+    \item Login
+        \begin{itemize}
+            \item Allow the sign in to their account.
+        \end{itemize}
+    \item Account Permissions
+        \begin{itemize}
+            \item Assigns each user with a role controlling their permissions.
+        \end{itemize}
+    \item Modify Account
+        \begin{itemize}
+            \item Allow administrators to modify user accounts.
+        \end{itemize}
 \end{itemize}
+\\[5pt]
+\hline
+
+Alert System &
+\begin{itemize}
+    \item Alert Rules
+        \begin{itemize}
+            \item Allow administrators to define rules based on thresholds.
+        \end{itemize}
+    \item Evaluate Alert Conditions
+        \begin{itemize}
+            \item Continuously evaluate incoming data with the defined alert rules.
+        \end{itemize}
+    \item Alert Triggers
+        \begin{itemize}
+            \item Trigger an alert upon rule violation.
+        \end{itemize}
+    \item Alert Status
+        \begin{itemize}
+            \item Keep a status indicator of each alert between active, acknowledged, or resolved.
+        \end{itemize}
+    \item Alert Log
+        \begin{itemize}
+            \item Keep a log of all alerts that occur.
+        \end{itemize}
+\end{itemize}
+\\[5pt]
+\hline
+
+Data Handling & 
+\begin{itemize}
+    \item Receiving data
+        \begin{itemize}
+            \item Receives IoT data.
+        \end{itemize}
+    \item Message validation
+        \begin{itemize}
+            \item Incoming messages are validated for correct format.
+        \end{itemize}
+    \item Data storage
+        \begin{itemize}
+            \item All valid data is persistently stored.
+        \end{itemize}
+    \item Real time aggregation
+        \begin{itemize}
+            \item Aggregates incoming data into measurements for predefined graphical zones within the city.
+        \end{itemize}
+\end{itemize}
+\\[5pt]
+\hline
+
+Private Dashboard & 
+\begin{itemize}
+    \item Display real-time visualizations
+        \begin{itemize}
+            \item Display any sensor locations, charts of environmental metrics, etc.
+        \end{itemize}
+    \item Display real-time visualizations
+        \begin{itemize}
+            \item Provides overview of system health, active alerts, and access to historical data trends.
+        \end{itemize}
+    \item Display real-time visualizations
+        \begin{itemize}
+            \item Ability to manage sensors including adding and deleting them.
+        \end{itemize}
+\end{itemize}
+\\[5pt]
+\hline
+Public Dashboard & 
+\begin{itemize}
+    \item Public Rest API
+        \begin{itemize}
+            \item Exposes aggregated non confidential information for public users.
+        \end{itemize}
+\end{itemize}
+\\[5pt]
+\hline
+
+\end{longtable}
+
 
 % End SubSection
 
