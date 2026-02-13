@@ -128,12 +128,22 @@ The remainder of this Software Requirements Specification (SRS) is organized as 
 \subsection{Product Perspective}
 \label{sub:product_perspective}
 % Begin SubSection
-\begin{itemize}
-	\item Put the product into perspective with other related products, i.e., context
-	\item If the product is independent and totally self-contained, it should be stated here
-	\item If the SRS defines a product that is a component of a larger system, then this subsection should relate the requirements of that larger system to the functionality of the software being developed. Identify interfaces between that larger system and the software to be developed.
-	\item A block diagram showing the major components of the larger system, interconnections, and external interfaces can be helpful
-\end{itemize}
+
+SCEMAS is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (CESI) (X) interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, SCEMAS is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. SCEMAS addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
+
+At a high level, SCEMAS sits between a network of environmental sensing devices and the people or systems that need environmental insights. During development and testing, the sensors act like real devices by publishing telemetry messages into the platform. Incoming telemetry is accepted through an MQTT-based ingestion entry point, then passed through a validation and ingestion component that checks message structure and plausible value ranges before storing the data in persistent time-series storage.
+
+Once data is stored, SCEMAS performs real-time aggregation to produce useful summaries for monitoring and reporting. A configurable, rule-based alerting engine continuously evaluates these readings and aggregates to detect threshold violations and track alert status over time. When an alert is triggered, SCEMAS can notify external subscriber systems, while also presenting the situation to operators through a secure web dashboard that includes maps, charts, current values, active alerts, system health, and historical trends.
+
+SCEMAS also has a read-only REST API which can be provided to approved third-party organizations upon request. The API returns aggregated, non-sensitive environmental data, and can be paired with a simple demonstration client showing how to consume the endpoints. Potential consumers include mapping applications (e.g., Google Maps overlays) and external organizations that want to display SCEMAS data for their own users or services. To ensure secure administration and accountability, the platform includes role-based access control (RBAC) and audit logging across operator-facing functions and administrative actions.
+
+\begin{figure}[1]
+    \centering
+    \includegraphics[width=0.95\linewidth]{F1Block_D.png}
+    \caption{SCEMAS high-level block diagram and external interfaces.}
+    \label{fig:scemas_block_diagram}
+\end{figure}
+
 % End SubSection
 
 \subsection{Product Functions}
