@@ -10,6 +10,7 @@
 \usepackage{fancyhdr}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
+
 %\usepackage{extarrows}
 %\usepackage{setspace}
 %\usepackage{xcolor}
@@ -1006,49 +1007,51 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 
 \begin{enumerate}[{\bf BE6.}]
-	\item Request Access to Public API
-		\begin{enumerate}[{\bf VP1.}]
-			\item City Operators \\
-				    N/A. City Operators have access to environmental data internally and do not require public API credentials.
+    \item Request Access to Public API
+        \begin{enumerate}[{\bf VP1.}]
+            \item City Operators \\
+                N/A. City Operators have access to environmental data internally and do not require public API credentials.
 
-			\item Public Users \\
-                \textbf{Pre-condition}: User has a registered Public User SCHEMAS account and is logged in. \\
+            \item Public Users \\
+                \textbf{Pre-condition}: User has a registered Public User SCHEMAS account and is logged in.\\
                 \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item User selects ``Request Public API''.
-                        \item System redirects user to an information page.
-                        \item System informs user that public API access is unavailable and that an account modification to a Third-Party Developer account is required.
-                    \end{enumerate}
-                \end{quote}
-
-			\item Administrators \\
-                \textbf{Pre-condition}: User has a registered Administrator SCHEMAS account and is logged in. \\
-                \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item Administrator navigates to the admin dashboard.
-                        \item Administrator selects ``View API request tickets''.
-                        \item Administrator selects a ticket to view request details.
-                        \item Administrator adds review comments.
-                        \item Administrator approves the API access request.
-                        \item System generates API credentials with appropriate rate limits.
-                        \item System notifies the user that API access has been granted.
-                    \end{enumerate}
-                \end{quote}
-                \textbf{Secondary Scenario}
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{5i.}] Administrator rejects API access request.
+                        \item[\textmd{5i.}] System informs user that public API access is unavailable and that an account modification to a Third-Party Developer account is required.
                         \begin{description}
                             \item[\textmd{5i.1}] System records the rejected request.
-                            \item[\textmd{5i.2}] System notifies the user that the request has been rejected.
                         \end{description}
                     \end{description}
                 \end{quote}
 
-			\item Third-Party Developers \\
-                \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in. \\
+            \item Administrators \\
+                \textbf{Pre-condition}: User has a registered Administrator SCHEMAS account and is logged in viewing admin dashboard.\\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{6.}] Administrator Views Request
+                        \begin{description}
+                            \item[\textmd{6.1}] Administrator adds review comments.
+                            \item[\textmd{6.2}] Administrator approves the API access request.
+                            \item[\textmd{6.3}] System generates API credentials with appropriate rate limits.
+                            \item[\textmd{6.4}] System notifies the user that API access has been granted.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+
+                \textbf{Secondary Scenario}
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{6i.}] Administrator rejects API access request.
+                        \begin{description}
+                            \item[\textmd{6i.1}] System records the rejected request.
+                            \item[\textmd{6i.2}] System notifies the user that the request has been rejected.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+
+            \item Third-Party Developers \\
+                \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -1063,6 +1066,7 @@ Third-party developers request and interpret environmental data from the public 
                         \item System displays API credentials and a link to API documentation.
                     \end{enumerate}
                 \end{quote}
+
                 \textbf{Secondary Scenario}
                 \begin{quote}
                     \begin{description}
@@ -1084,61 +1088,62 @@ Third-party developers request and interpret environmental data from the public 
                     \end{description}
                 \end{quote}
 
-			\item Environmental Monitoring Department \\
-				    N/A.
-			\item IT Support \\
-                \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in. \\
+            \item Environmental Monitoring Department \\
+                N/A.
+
+            \item IT Support \\
+    \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in.\\
+    \textbf{Main Success Scenario}
+    \begin{quote}
+        \begin{description}
+            \item[\textmd{4i.}] System fails to submit API access request form.
+            \begin{description}
+                \item[\textmd{4i.1}] System displays link to customer support page.
+            \end{description}
+        \end{description}
+    \end{quote}
+
+
+        \end{enumerate}
+        {\bf Global Scenario:} \\
+                \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
-                        \item IT Support navigates to the IT support ticket dashboard.
-                        \item IT Support selects a support ticket to view details.
-                        \item IT Support resolves the issue and documents actions taken.
-                        \item IT Support marks the ticket as resolved.
+                        \item User selects ``Request Public API''.
+                        \item System displays the API access request form.
+                        \item User enters required project and usage information.
+                        \item User submits the API access request form.
+                        \item System validates and stores the request.
+                        \item Administrator reviews and approves the request.
+                        \item System generates API credentials with appropriate rate limits.
+                        \item System notifies the user that API access has been granted.
                     \end{enumerate}
                 \end{quote}
-		\end{enumerate}
 
-        {\bf Global Scenario:}
-        \begin{quote}
-            \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in. \\
-            \textbf{Main Success Scenario}
-            \begin{quote}
-                \begin{enumerate}[1.]
-                    \item User selects ``Request Public API''.
-                    \item System displays the API access request form.
-                    \item User enters required project and usage information.
-                    \item User submits the API access request form.
-                    \item System validates and stores the request.
-                    \item Administrator reviews and approves the request.
-                    \item System generates API credentials with appropriate rate limits.
-                    \item System notifies the user that API access has been granted.
-                \end{enumerate}
-            \end{quote}
-            \textbf{Secondary Scenario}
-            \begin{quote}
-                \begin{description}
-                    \item[\textmd{4i.}] System fails to submit API access request form.
+                \textbf{Secondary Scenario}
+                \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.1}] System prompts user to contact IT support.
-                        \item[\textmd{4i.2}] User submits an IT support ticket.
-                        \item[\textmd{4i.3}] IT Support resolves the issue.
-                        \item[\textmd{4i.4}] User retries the API request.
+                        \item[\textmd{4i.}] System fails to submit API access request form.
+                        \begin{description}
+                            \item[\textmd{4i.1}] System prompts user to contact IT support.
+                        \end{description}
+
+                        \item[\textmd{5i.}] System detects invalid form fields.
+                        \begin{description}
+                            \item[\textmd{5i.1}] User is prompted to correct the form.
+                            \item[\textmd{5i.2}] User resubmits the request.
+                        \end{description}
+
+                        \item[\textmd{6i.}] Administrator rejects the request.
+                        \begin{description}
+                            \item[\textmd{6i.1}] User receives rejection notification.
+                            \item[\textmd{6i.2}] User reviews comments and returns to BE6-1.
+                        \end{description}
                     \end{description}
-                    \item[\textmd{5i.}] System detects invalid form fields.
-                    \begin{description}
-                        \item[\textmd{5i.1}] User is prompted to correct the form.
-                        \item[\textmd{5i.2}] User resubmits the request.
-                    \end{description}
-                    \item[\textmd{6i.}] Administrator rejects the request.
-                    \begin{description}
-                        \item[\textmd{6i.1}] User receives rejection notification.
-                        \item[\textmd{6i.2}] User reviews comments and returns to BE6-1.
-                    \end{description}
-                \end{description}
-            \end{quote}
-        \end{quote}
+                \end{quote}
 \end{enumerate}
+
 
 \begin{enumerate}[{\bf BE7.}]
 	\item Modify Account
@@ -1153,10 +1158,10 @@ Third-party developers request and interpret environmental data from the public 
                     \begin{enumerate}[1.]
                         \item User selects ``Request Account Modification''.
                         \item System displays an account modification page containing a request form.
-                        \item User enters the purpose of the request, organization affiliation, and developer credentials (if required).
+                        \item User enters the purpose of the request and organization affiliation.
                         \item User submits the account modification request form.
                         \item System records the account modification request.
-                        \item System notifies the user of the account modification decision.
+                        \item System notifies the user of successful account modification decision.
                         \item User opens the notification.
                         \item System displays confirmation of the change, updated permission details, and administrator comments.
                     \end{enumerate}
@@ -1169,16 +1174,9 @@ Third-party developers request and interpret environmental data from the public 
                             \item[\textmd{3i.1}] System prompts the user to correct the form and retry submission.
                         \end{description}
                         \item[\textmd{4i.}] System prompts user to contact customer support.
+                        \item[\textmd{6i.}] User receives a rejection notification.
                         \begin{description}
-                            \item[\textmd{4i.1}] User navigates to the customer support ticket page.
-                            \item[\textmd{4i.2}] User submits a support ticket describing the issue.
-                            \item[\textmd{4i.3}] IT Support responds with remediation instructions.
-                            \item[\textmd{4i.4}] User follows instructions and returns to BE7-1.
-                        \end{description}
-                        \item[\textmd{6i.}] Administrator rejects the account modification request.
-                        \begin{description}
-                            \item[\textmd{6i.1}] User receives a rejection notification.
-                            \item[\textmd{6i.2}] User reviews comments and returns to BE7-1.
+                            \item[\textmd{6i.1}] User reviews comments and returns to BE7-1.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -1187,14 +1185,16 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Pre-condition}: User has a valid Administrator SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item Administrator navigates to the admin dashboard.
-                        \item Administrator selects ``View Account Modification Request Tickets''.
-                        \item Administrator selects a ticket to view request details.
-                        \item Administrator adds review comments.
-                        \item Administrator approves the account modification request.
-                    \end{enumerate}
-                \end{quote}
+    \begin{description}
+        \item[\textmd{5.}] Administrator navigates to the admin dashboard.
+        \item[\textmd{6.}] Administrator selects ``View Account Modification Request Tickets''.
+        \item[\textmd{7.}] Administrator selects a ticket to view request details.
+        \item[\textmd{8.}] Administrator adds review comments.
+        \item[\textmd{9.}] Administrator approves the account modification request.
+        \item[\textmd{9i.}] Administrator rejects the request.
+    \end{description}
+\end{quote}
+
 
 			\item Third-Party Developers \\
                 \textbf{Pre-condition}: User has a valid Third-Party Developer SCHEMAS account and is logged in. \\
@@ -1203,7 +1203,7 @@ Third-party developers request and interpret environmental data from the public 
                     \begin{enumerate}[1.]
                         \item Developer selects ``Request Account Modification''.
                         \item System displays an account modification page containing a request form.
-                        \item Developer enters the purpose of the request, organization affiliation, and developer credentials (if required).
+                        \item Developer enters the purpose of the request, organization affiliation, and developer credentials.
                         \item Developer submits the account modification request form.
                         \item System records the account modification request.
                         \item System notifies the developer of the account modification decision.
@@ -1219,16 +1219,9 @@ Third-party developers request and interpret environmental data from the public 
                             \item[\textmd{3i.1}] System prompts the developer to correct the form and retry submission.
                         \end{description}
                         \item[\textmd{4i.}] System prompts developer to contact customer support.
+                        \item[\textmd{6i.}] Developer receives a rejection notification.
                         \begin{description}
-                            \item[\textmd{4i.1}] Developer navigates to the customer support ticket page.
-                            \item[\textmd{4i.2}] Developer submits a support ticket describing the issue.
-                            \item[\textmd{4i.3}] IT Support responds with remediation instructions.
-                            \item[\textmd{4i.4}] Developer follows instructions and returns to BE7-1.
-                        \end{description}
-                        \item[\textmd{6i.}] Administrator rejects the account modification request.
-                        \begin{description}
-                            \item[\textmd{6i.1}] Developer receives a rejection notification.
-                            \item[\textmd{6i.2}] Developer reviews comments and returns to BE7-1.
+                            \item[\textmd{6i.1}] Developer reviews comments and returns to BE7-1.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -1240,13 +1233,17 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item IT Support navigates to the IT support ticket dashboard.
-                        \item IT Support selects a support ticket to view details.
-                        \item IT Support resolves the issue and documents actions taken.
-                    \end{enumerate}
-                \end{quote}
-		\end{enumerate}
+    \begin{description}
+        \item[\textmd{4i.}] System displays link to customer support page.
+        \begin{description}
+            \item[\textmd{4i.1}] IT Support navigates to the IT support ticket dashboard.
+            \item[\textmd{4i.2}] IT Support selects a support ticket to view details.
+            \item[\textmd{4i.3}] IT Support resolves the issue and documents actions taken.
+            \item[\textmd{4i.4}] IT Support closes the support ticket.
+        \end{description}
+    \end{description}
+\end{quote}
+
 
         {\bf Global Scenario:}
         \begin{quote}
@@ -1272,20 +1269,17 @@ Third-party developers request and interpret environmental data from the public 
                         \item[\textmd{3i.1}] User is prompted to retry submission.
                     \end{description}
                     \item[\textmd{4i.}] System prompts user to contact customer support.
-                    \begin{description}
-                        \item[\textmd{4i.1}] User submits a support ticket.
-                        \item[\textmd{4i.2}] IT Support resolves the issue.
-                        \item[\textmd{4i.3}] User retries the modification request.
-                    \end{description}
                     \item[\textmd{9i.}] Administrator rejects the request.
                     \begin{description}
                         \item[\textmd{9i.1}] User receives rejection notification.
                         \item[\textmd{9i.2}] User reviews comments and returns to BE7-1.
                     \end{description}
-                \end{description}
+                    \end{description}
             \end{quote}
         \end{quote}
 \end{enumerate}
+\end{enumerate}
+
 
 
 
