@@ -1622,7 +1622,11 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:expected_physical_environment}
 % Begin SubSubSection
 \begin{enumerate}[{OE-EPE}1. ]
-	\item 
+	\item SCEMAS shall operate in a cloud-hosted environment using commodity server infrastructure (virtual machines/containers) and shall not require any specialized physical hardware.\\
+    \textbf{Rationale:} The system should be deployable using free-tier or educational cloud resources, and sensor hardware is simulated rather than physically deployed.
+    
+	\item SCEMAS shall support operation over standard internet connections and tolerate intermittent connectivity from simulated sensor publishers by continuing to run and ingest telemetry once connectivity resumes.\\
+    \textbf{Rationale:} IoT-style telemetry publishers may disconnect; the system should remain stable and continue ingesting when publishers reconnect.
 \end{enumerate}
 % End SubSubSection
 
@@ -1630,7 +1634,14 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:requirements_for_interfacing_with_adjacent_systems}
 % Begin SubSubSection
 \begin{enumerate}[{OE-IA}1. ]
-	\item 
+	\item SCEMAS shall ingest sensor telemetry through the MQTT protocol and validate each incoming message against a defined schema and plausible value ranges before storage.\\
+    \textbf{Rationale:} MQTT ingestion and validation are core requirements for reliable telemetry processing.
+    
+	\item SCEMAS shall expose a read-only REST API for public/third-party consumption that returns aggregated, non-sensitive environmental data.\\
+    \textbf{Rationale:} The public-facing API must be read-only and provide aggregated data rather than sensitive/raw details.
+    
+	\item When an alert is triggered, SCEMAS shall notify subscribed external systems through a dedicated notification API endpoint.\\
+    \textbf{Rationale:} External notifications on alert triggers are a required system capability.
 \end{enumerate}
 % End SubSubSection
 
@@ -1638,7 +1649,11 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:productization_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{OE-P}1. ]
-	\item 
+	\item SCEMAS shall provide configuration-driven deployment for thresholds, zone definitions, and alert rules so the same build can be used across environments (dev/test/demo).\\
+    \textbf{Rationale:} Configuration-based behavior supports different setups without rebuilding code and better fits a reusable platform.
+    
+	\item SCEMAS shall include clear operator and developer documentation, including public API documentation sufficient for a competent third-party developer to request and interpret data within two hours.\\
+    \textbf{Rationale:} Good documentation is required so external developers can successfully use the API quickly.
 \end{enumerate}
 % End SubSubSection
 
@@ -1646,11 +1661,16 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:release_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{OE-R}1. ]
-	\item 
+	\item SCEMAS shall support separate deployment profiles for (at minimum) development and demonstration/staging, with distinct configuration for database endpoints, authentication secrets, and rate limits.\\
+    \textbf{Rationale:} Separating environments reduces demo risk and avoids mixing secrets/data across deployments.
+    
+	\item Each SCEMAS release shall be versioned and include a rollback strategy for the dashboard and API services.\\
+    \textbf{Rationale:} Cloud deployments can fail; rollback supports service continuity.
 \end{enumerate}
 % End SubSubSection
 
 % End SubSection
+
 
 \subsection{Maintainability and Support Requirements}
 \label{sub:maintainability_and_support_requirements}
@@ -1660,7 +1680,11 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:maintenance_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{MS-M}1. ]
-	\item 
+	\item SCEMAS shall be designed as modular services/components (e.g., ingestion, alerting, storage, dashboard/API) so that changes to one component do not require rewriting unrelated components.\\
+    \textbf{Rationale:} Modularity reduces regression risk and makes future extensions (new metrics, new rules) easier.
+    
+	\item SCEMAS shall maintain automated logs for major runtime events (telemetry ingestion failures, validation rejections, alert triggers, and admin actions) to support debugging and ongoing maintenance.\\
+    \textbf{Rationale:} Logs are essential for diagnosing issues in distributed systems and supporting ongoing maintenance.
 \end{enumerate}
 % End SubSubSection
 
@@ -1668,7 +1692,11 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:supportability_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{MS-S}1. ]
-	\item 
+	\item SCEMAS shall provide a support-facing troubleshooting view or documented runbook steps that allow IT Support/Administrators to identify common failures (database unreachable, API rate-limit triggered) and the recommended recovery action.\\
+    \textbf{Rationale:} Support needs a fast way to narrow down what broke in a multi-component system (ingestion + storage + dashboards + API).
+    
+	\item SCEMAS shall provide user-facing error messages on the dashboard/API that are actionable (what happened + what to try next) without exposing sensitive internal details.\\
+    \textbf{Rationale:} Clear errors reduce support load, and avoiding internal details supports secure operations.
 \end{enumerate}
 % End SubSubSection
 
@@ -1676,7 +1704,11 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:adaptability_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{MS-A}1. ]
-	\item 
+	\item SCEMAS shall allow new sensor types/metrics to be introduced by extending the telemetry schema and validation rules, without changing the operator dashboard’s core navigation or authentication flow.\\
+    \textbf{Rationale:} Monitoring evolves; the system should adapt to new indicators while keeping the operator experience stable.
+    
+	\item SCEMAS shall be adaptable to multiple deployment providers (or local containers for demos) by avoiding provider-specific hard dependencies in core logic.\\
+    \textbf{Rationale:} Teams may switch hosting/deployment options; portability reduces rework.
 \end{enumerate}
 % End SubSubSection
 
