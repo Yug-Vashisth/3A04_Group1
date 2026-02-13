@@ -100,18 +100,16 @@ The intended audience of the SRS is the stakeholders of SCEMAS, including develo
 \subsection{References}
 \label{sub:references}
 % Begin SubSection
-\begin{itemize}
-	\item Provide a complete list of all documents referenced elsewhere in the SRS.
-	\item Identify each document by title, report number (if applicable), date, and publishing organization.
-	\item Specify the sources from which the references can be obtained.
-	\item Order this list in some sensible manner (alphabetical by author, or something else that makes more sense).
-\end{itemize}
+
+\renewcommand{\refname}{} % removes the Reference title
+\vspace{-2.5em}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
 % End SubSection
 
 \subsection{Overview}
 \label{sub:overview}
 The remainder of this Software Requirements Specification (SRS) is organized as follows. Section 2 provides an overall description of SCEMAS, including its context, major functions, intended users, constraints, and assumptions. Section 3 presents the system’s use case diagram. Section 4 outlines the functional requirements using the main business events and viewpoint-based scenarios, ending with a consolidated global scenario. Section 5 describes the non-functional requirements, including usability, performance, operational/environmental constraints, maintainability/support, security, cultural/political, and legal considerations. Finally, the Appendix includes the division of labor and any supporting material required by the course template.
-\end{itemize}
 % End SubSection
 
 % End Section
@@ -1463,7 +1461,7 @@ Third-party developers request and interpret environmental data from the public 
 	\item The system shall cache user interface preferences, such as selected dashboards or view settings.\\
 	\textbf{Rationale:} A cache on the preference allows users to have a consistent configuration in which they view the dashboard which makes the screens tailor made for any particular user.
 	\item The system shall contain a Frequently Asked Question section.\\
-	\textbf{Rationale:} An FAQ section allows users to get quick and easy answers to commonly asked questions reducing the time required to get acclimated to the system [1] (https://masterful-marketing.com/website-faq-benefits-best-practices/).
+	\textbf{Rationale:} An FAQ section allows users to get quick and easy answers to commonly asked questions reducing the time required to get acclimated to the system \cite{murphy2025}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1504,7 +1502,7 @@ Third-party developers request and interpret environmental data from the public 
 	\item The system shall use professional and neutral wording in all user-facing communications.\\
 	\textbf{Rationale:} Maintaining a professional tone is important to ensure users are not offended by any terminology and allows users to strictly focus on the data.
 	\item The system shall avoid technical jargon or abbreviations in messages unless universally understood by target users.\\
-	\textbf{Rationale:} Using understandable and general knowledge ensures users of all levels of technicality can understand the information [2] https://www.nngroup.com/articles/technical-jargon/. This prevents confusion and ensures understandability.
+	\textbf{Rationale:} Using understandable and general knowledge ensures users of all levels of technicality can understand the information \cite{moran2023}. This prevents confusion and ensures understandability.
 \end{enumerate}
 % End SubSubSection
 
@@ -1515,9 +1513,9 @@ Third-party developers request and interpret environmental data from the public 
 	\item The system shall provide text-to-speech functionality for all essential interface elements.\\
 	\textbf{Rationale:} Text to speech allows users that are blind or low-vision to interpret environmental data.
 	\item The system shall provide captions or transcripts for all audio content, including notifications and messages.\\
-	\textbf{Rationale:} Users who are deaf or hard-of-hearing should be able to  access spoken information like any other able user and a viable way to do this is using text-to-speech [3]. https://voxpow.com/blog/what-is-text-to-speech/.
+	\textbf{Rationale:} Users who are deaf or hard-of-hearing should be able to  access spoken information like any other able user and a viable way to do this is using text-to-speech \cite{voxpow2020}.
 	\item The system shall use a color palette that is accessible to users with common forms of color vision deficiency.\\
-	\textbf{Rationale:} City-operated systems must be inclusive and accessible. 1/16 men and 1/240 women have some form of colour deficiency and therefore should be accommodated [4] \texttt{https://davidmathlogic.com/colorblind/\#D81B60-\#1E88E5-\#FFC107-\#004D40}. Colorblind-friendly design ensures that all operators can correctly interpret system states and alerts without relying solely on colour perception.
+	\textbf{Rationale:} City-operated systems must be inclusive and accessible. 1/16 men and 1/240 women have some form of colour deficiency and therefore should be accommodated \cite{davidmath}. Colorblind-friendly design ensures that all operators can correctly interpret system states and alerts without relying solely on colour perception.
 \end{enumerate}
 % End SubSubSection
 
@@ -1532,10 +1530,11 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:speed_and_latency_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-SL}1.]
-	\item The web dashboard for city operators should have a load time of less than 1 second\\
-    \textbf{Rationale}: Having a fast-loading website will ensure users remain engaged. A study shows that 40\% of users will leave a website if it takes longer than 3 seconds to load [https://www.browserstack.com/guide/how-fast-should-a-website-load].
-    \item The system should provide a REST API for public use with a response time of less than 1 second\\
-    \textbf{Rationale}: APIs with lower response time lead to many benefits, like enhancing user satisfaction and increasing cost effectiveness of the system by allowing fewer resources to be used. tied up in operations [https://odown.com/blog/what-is-a-good-api-response-time/#why-api-response-time-matters]. longer API response times will likely result in user frustration and abandonment[https://odown.com/blog/what-is-a-good-api-response-time/#why-api-response-time-matters].
+	\item The web dashboard for city operators should have a load time of less than 1 second. \\
+    \textbf{Rationale}: Having a fast-loading website will ensure users remain engaged. A study shows that 40\% of users will leave a website if it takes longer than 3 seconds to load \cite{browserstack}.
+    
+    \item The system should provide a REST API for public use with a response time of less than 1 second. \\
+    \textbf{Rationale}: APIs with lower response time lead to many benefits, like enhancing user satisfaction and increasing cost effectiveness of the system by allowing fewer resources to be used. tied up in operations \cite{farouk2024}. longer API response times will likely result in user frustration and abandonment \cite{farouk2024}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1553,7 +1552,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{PR-PA}1. ]
 	\item For each environmental indicator (air quality, noise levels, temperature, humidity) the system shall have a standard deviation of less than 15\%.\\
-    \textbf{Rationale}: Inaccurate data could lead to a false sense of security or a false sense of urgency when trying to address the implications of the measurement[https://pollution.sustainability-directory.com/term/environmental-monitoring-precision/], its important for the measurement to remain accurate to avoid these situations.
+    \textbf{Rationale}: Inaccurate data could lead to a false sense of security or a false sense of urgency when trying to address the implications of the measurement \cite{envmon}, its important for the measurement to remain accurate to avoid these situations.
 \end{enumerate}
 % End SubSubSection
 
@@ -1564,7 +1563,7 @@ Third-party developers request and interpret environmental data from the public 
 	\item The database should have an up time of at least 99\%\\
     \textbf{Rationale}: This allows any authentication requests to properly go through and avoids cases where users cannot use the system due to authentication requests.
     \item The system should ensure that alerts have a false positive rating of less than 1\%\\
-    \textbf{Rationale}: A high false positive rating can lead to improper use of resources, impaired efficiency and a loss of trust of users [https://vwo.com/glossary/false-positive-rate/]. Its important to have a low false positive rate to avoid taking unnecessary measures to correct a false issue.
+    \textbf{Rationale}: A high false positive rating can lead to improper use of resources, impaired efficiency and a loss of trust of users \cite{vwo}. Its important to have a low false positive rate to avoid taking unnecessary measures to correct a false issue.
 \end{enumerate}
 % End SubSubSection
 
@@ -1584,7 +1583,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{PR-C}1. ]
 	\item The system should be able handle and store information from at least 150 sensors across the city.\\
-    \textbf{Rationale}: A mid sized city requires 150 sensors[https://pmc.ncbi.nlm.nih.gov/articles/PMC8991303/] to allow the system to collect accurate data for accurate measurements. Ensuring the whole city is covered allows us to take action where its needed.
+    \textbf{Rationale}: A mid sized city requires 150 sensors \cite{english2020} to allow the system to collect accurate data for accurate measurements. Ensuring the whole city is covered allows us to take action where its needed.
 \end{enumerate}
 % End SubSubSection
 
@@ -1593,7 +1592,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{PR-SE}1. ]
 	\item The internal code of our system should follow SOLID design principles to ensure scalability.\\ 
-    \textbf{Rationale}: The Solid design principles are a set of principles that help developers write clean, maintainable, and scalable code [https://medium.com/@ucgorai/the-solid-approach-principles-for-maintainable-and-scalable-code-1208473e1bf2]. Adopting these principles in the system's design allows our system to be scalable and extensible. 
+    \textbf{Rationale}: The Solid design principles are a set of principles that help developers write clean, maintainable, and scalable code \cite{gorai2024}. Adopting these principles in the system's design allows our system to be scalable and extensible. 
 \end{enumerate}
 % End SubSubSection
 
@@ -1717,19 +1716,19 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{SR-AC}1. ]
 	\item The system must require all users of the dashboard to authenticate using an email/username and password, being granted access to the system. \\
-    \textbf{Rationale}: This ensures that only people who are authorized can access the system, which prevents the risk of authorized individuals to alter environmental data [https://www.cyber.gc.ca/en/guidance/user-authentication-guidance-information-technology-systems-itsp30031-v3].
+    \textbf{Rationale}: This ensures that only people who are authorized can access the system, which prevents the risk of authorized individuals to alter environmental data \cite{canUserAuth}.
 
     \item The system must support multi-factor authentication (MFA) for administrative accounts. \\
-    \textbf{Rationale}: MFA helps by eliminating the possibility of compromising the credentials of an administrators account. This is crucial, since the administrator is a high-privilege user who can define alert rules, and view sensitive system information [https://www.cyber.gc.ca/en/guidance/secure-your-accounts-and-devices-multi-factor-authentication-itsap30030].
+    \textbf{Rationale}: MFA helps by eliminating the possibility of compromising the credentials of an administrators account. This is crucial, since the administrator is a high-privilege user who can define alert rules, and view sensitive system information \cite{canSecure}.
 
     \item The system must enforce Role-Base Access Control (RBAC) to distinguish between the different user groups, such as administrator, city operator, and read-only public users. \\
     \textbf{Rationale}: Enforcing an RBAC policy ensures that each user group can only perform actions that are appropriate to their respective role. This helps to reduce accidental misuse of the systems functions. 
 
     \item The system must lock out a user account after five consecutive failed login attempts. \\
-    \textbf{Rationale}: Protects against repeated attempts of trying to login to an account that does not belong to the respective individual [https://www.cyber.gc.ca/en/guidance/user-authentication-guidance-information-technology-systems-itsp30031-v3].
+    \textbf{Rationale}: Protects against repeated attempts of trying to login to an account that does not belong to the respective individual \cite{canUserAuth}.
 
     \item All IoT devices must be authenticated with a unique key before sending telemetry data to the system. \\
-    \textbf{Rationale}: Prevents harmful telemetry to be injection into the system, by limiting entering data to registered and authorized sensors [https://www.cyber.gc.ca/en/guidance/internet-things-iot-security-itsap00012].
+    \textbf{Rationale}: Prevents harmful telemetry to be injection into the system, by limiting entering data to registered and authorized sensors \cite{canIoT}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1738,16 +1737,16 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{SR-INT}1. ]
     \item Any data transmitted between IoT devices, and the system must be encrypted, and include integrity protection. \\
-    \textbf{Rationale}: Ensures that telemetry is protected, and cannot be changed during transmission. As a result, this helps maintain confidentiality and integrity [https://www.cyber.gc.ca/en/guidance/using-encryption-keep-your-sensitive-data-secure-itsap40016].
+    \textbf{Rationale}: Ensures that telemetry is protected, and cannot be changed during transmission. As a result, this helps maintain confidentiality and integrity \cite{canEncrypt}.
     
 	\item All incoming sensor telemetry must be validated against a defined schema and acceptable value ranges before being stored. \\
     \textbf{Rationale}: Ensures that only correct and meaningful data is allowed to enter the system. This restricts any corrupted/malicious data from affecting any environmental analytics and alerts. 
 
     \item The system must maintain an audit log to keep track of any data modification, such as alert rule updates, or alert status changes. \\
-    \textbf{Rationale}: An audit log is essential to provide traceability to identify any potential modifications made accidentally, or by unauthorized personnel [https://www.researchgate.net/publication/352745109\_Audit\_Logs\_Management\_and\_Security\_-\_A\_Survey].
+    \textbf{Rationale}: An audit log is essential to provide traceability to identify any potential modifications made accidentally, or by unauthorized personnel \cite{ali2021}.
 
     \item The system should use cryptographic hashing for any alert generated, to ensure that the alert data remains secure, and unaltered after generation. \\
-    \textbf{Rationale}: Enforces data integrity, and prevents city operators from receiving false notifications [https://www.cyber.gc.ca/en/guidance/guidance-securely-configuring-network-protocols-itsp40062].
+    \textbf{Rationale}: Enforces data integrity, and prevents city operators from receiving false notifications \cite{canGuid}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1756,7 +1755,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{SR-P}1. ]
 	\item The system will not collect or store any personally identifiable information from public users. \\
-    \textbf{Rationale}: Protects individual privacy, and ensures compliance with PIPEDA regulations [https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/p\_principle/principles/p\_collection/]
+    \textbf{Rationale}: Protects individual privacy, and ensures compliance with PIPEDA regulations \cite{pipeda}.
 
     \item The system shall only collect environmental data at the level of general city zones. \\
     \textbf{Rationale}: Ensures citizen privacy by preventing sensor data from tracking individual residents
@@ -1772,16 +1771,16 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{SR-AU}1. ]
 	\item The system shall log all user login attempts, including the timestamp, their distinct identification number, and the location of the request. \\
-    \textbf{Rationale}: Ensures accountability for access attempts [https://www.researchgate.net/publication/352745109\_Audit\_Logs\_Management\_and\_Security\_-\_A\_Survey].
+    \textbf{Rationale}: Ensures accountability for access attempts \cite{english2020}.
 
     \item The system shall log all access to sensitive data, and data modification such as updating, adding or deleting rule alerts, or registering new sensors or accounts. \\
-    \textbf{Rationale}: Ensures sensitive data is properly handled, and traceability of critical changes.[https://www.secoda.co/glossary/audit-traceability-audit-logs].
+    \textbf{Rationale}: Ensures sensitive data is properly handled, and traceability of critical changes \cite{secoda2025}.
 
     \item All audit logs should be retained for at least 1 years. \\
-    \textbf{Rationale}: Ensures there is enough time look at incidents, or check compliance [https://auditboard.com/blog/security-log-retention-best-practices-guide].
+    \textbf{Rationale}: Ensures there is enough time look at incidents, or check compliance \cite{Dreshner2025}.
 
     \item All audit logs should be protected with access controls to ensure that only authorized security can view or extract information from them. \\
-    \textbf{Rationale}: Prevents critical information from being shared without authorization.[https://auditboard.com/blog/security-log-retention-best-practices-guide].
+    \textbf{Rationale}: Prevents critical information from being shared without authorization \cite{Dreshner2025}.
     
 \end{enumerate}
 % End SubSubSection
@@ -1791,12 +1790,10 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{SR-IM}1. ]
 	\item The system shall keep receiving and storing sensor data even when the real-time processing system is down. \\
-    \textbf{Rationale}: Makes sure no sensor data is lost if part of the system stops.    [https://www.cyber.gc.ca/en/cyber-security-readiness/cyber-security-readiness-goals-securing-our-most-critical-systems].
+    \textbf{Rationale}: Makes sure no sensor data is lost if part of the system stops \cite{canRead}.
 
     \item The system shall immediately try again when sending sensor data fails.\\
-    \textbf{Rationale}: Ensures that sensor data eventually reaches the system, even in the case of network problems.    [https://www.cyber.gc.ca/en/cyber-security-readiness/cyber-security-readiness-goals-securing-our-most-critical-systems].
-
-
+    \textbf{Rationale}: Ensures that sensor data eventually reaches the system, even in the case of network problems \cite{canRead}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1825,10 +1822,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:political_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{CP-P}1. ]
-	\item The system shall comply with all federal, provincial, and municipal regulations regarding environmental monitoring and data sharing [https://www.canada.ca/en/environment-climate-change/services/canadian-environmental-protection-act-registry/monitoring-reporting-research/monitoring.html]. \\
+	\item The system shall comply with all federal, provincial, and municipal regulations regarding environmental monitoring and data sharing \cite{canEnv}. \\
     \textbf{Rationale}: Ensures legal compliance and helps to avoid political conflicts.
     	
-    \item The system shall be transparent in how it collects and stores data by giving government authorities access to such data and system reports [https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=28108]. \\
+    \item The system shall be transparent in how it collects and stores data by giving government authorities access to such data and system reports \cite{canDirective}. \\
     \textbf{Rationale}: Enables accountability to political authorities. 
         	
     \item The system shall provide ways to share environmental data to other authorized groups. \\
