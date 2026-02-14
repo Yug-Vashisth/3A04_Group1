@@ -129,7 +129,7 @@ The remainder of this Software Requirements Specification (SRS) is organized as 
 \label{sub:product_perspective}
 % Begin SubSection
 
-SCEMAS is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (CESI) (X) interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, SCEMAS is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. SCEMAS addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
+SCEMAS is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (CESI) () interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, SCEMAS is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. SCEMAS addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
 
 At a high level, SCEMAS sits between a network of environmental sensing devices and the people or systems that need environmental insights. During development and testing, the sensors act like real devices by publishing telemetry messages into the platform. Incoming telemetry is accepted through an MQTT-based ingestion entry point, then passed through a validation and ingestion component that checks message structure and plausible value ranges before storing the data in persistent time-series storage.
 
@@ -137,7 +137,7 @@ Once data is stored, SCEMAS performs real-time aggregation to produce useful sum
 
 SCEMAS also has a read-only REST API which can be provided to approved third-party organizations upon request. The API returns aggregated, non-sensitive environmental data, and can be paired with a simple demonstration client showing how to consume the endpoints. Potential consumers include mapping applications (e.g., Google Maps overlays) and external organizations that want to display SCEMAS data for their own users or services. To ensure secure administration and accountability, the platform includes role-based access control (RBAC) and audit logging across operator-facing functions and administrative actions.
 
-\begin{figure}[1]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.95\linewidth]{F1Block_D.png}
     \caption{SCEMAS high-level block diagram and external interfaces.}
@@ -852,162 +852,6 @@ Third-party developers request and interpret environmental data from the public 
                             \item[\textmd{5i.1}] System displays an error message to city operator.
                             \item[\textmd{5i.2}] Alert remains in \textit{Active} status.
                             \item[\textmd{5i.3}] System provides instructions for contacting IT Support.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-        	\end{quote}
-\end{enumerate}
-\begin{enumerate}[{\bf BE5.}]
-	\item Manage Role Permissions \#5 \\         
-    \textbf{Pre-condition}: The user is authenticated. Administrators are authorized to manage roles and permissions.
-    
-		\begin{enumerate}[{\bf VP1.}]
-			\item City Operators \#1 \\
-                \textbf{Pre-condition}: City Operator is authenticated and has an active account.\\
-                \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item City Operator opens their profile or account settings.
-                        \item System displays the City Operator’s assigned roles and a summary of allowed actions.
-                        \item City Operator confirms what actions they are permitted to perform.
-                    \end{enumerate}
-                \end{quote}
-                \textbf{Secondary Scenario}
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{3i.}] Permission change needed.
-                        \begin{description}
-                            \item[\textmd{3i.1}] City Operator submits an access change request describing the needed permission and reason.
-                            \item[\textmd{3i.2}] System records the request and notifies an Administrator for review.
-                        \end{description}
-                        \item[\textmd{2i.}] Role/permission information unavailable.
-                        \begin{description}
-                            \item[\textmd{2i.1}] System cannot load role/permission information.
-                            \item[\textmd{2i.2}] System displays an error message and instructs the user to retry or contact IT Support.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-                
-			\item Public Users \#2 
-				\begin{quote}
-				    N/A
-				\end{quote}
-                
-			\item Administrators \#3 \\
-                \textbf{Pre-condition}: Administrator is authenticated and authorized to manage roles and permissions.\\
-				\textbf{Main Success Scenario} 
-                    \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item Administrator opens the role and permission management page.
-                        \item System displays existing roles, permissions, and user-role assignments.
-                        \item Administrator selects a role to create, edit, or remove.
-                        \item Administrator adds or removes permissions for the selected role.
-                        \item Administrator assigns or removes the role to users as needed.
-                        \item System validates the changes against rules (e.g., preventing removal of required administrative access).
-                        \item System saves changes and updates role assignments.
-                        \item System records the change in an audit/history log and notifies affected users if applicable.
-                    \end{enumerate}
-                    \end{quote}
-                \textbf{Secondary Scenario} 
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{6i.}] Invalid/unsafe permission change.
-                        \begin{description}
-                            \item[\textmd{6i.1}] Administrator attempts to apply a change that violates system rules.
-                            \item[\textmd{6i.2}] System rejects the change and shows what must be corrected.
-                        \end{description}
-                        \item[\textmd{7i.}] Conflicting updates.
-                        \begin{description}
-                            \item[\textmd{7i.1}] Another Administrator modifies the same role at the same time.
-                            \item[\textmd{7i.2}] System detects the conflict and prompts the Administrator to reload and retry.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-                
-			\item Third-Party Developers \#4
-				\begin{quote}
-				    N/A
-				\end{quote}
-                
-			\item Environmental Monitoring Department \#5 \\
-                \textbf{Pre-condition}: Department user is authenticated and has an assigned account.\\
-                \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item Department user opens their profile or account settings.
-                        \item System displays the Department user’s assigned role and permitted actions.
-                        \item Department user confirms what they can access within the system.
-                    \end{enumerate}
-                \end{quote}
-                \textbf{Secondary Scenario}
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{3i.}] Needs access adjustment.
-                        \begin{description}
-                            \item[\textmd{3i.1}] Department user submits an access change request including the reason.
-                            \item[\textmd{3i.2}] System records the request and notifies an Administrator for review.
-                        \end{description}
-                        \item[\textmd{2i.}] Role/permission information unavailable.
-                        \begin{description}
-                            \item[\textmd{2i.1}] System cannot load role/permission information.
-                            \item[\textmd{2i.2}] System displays an error message and instructs the user to retry or contact IT Support.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-
-			\item IT Support \#6 \\
-                \textbf{Pre-condition}: IT Support is authenticated and authorized for support actions.\\
-                \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item IT Support opens an administrative support view for accounts and access.
-                        \item System displays user status and role assignment information relevant to support.
-                        \item IT Support performs an authorized support action (e.g., disable an account, restore access, or escalate).
-                        \item System records the action in an audit/history log and notifies Administrators when required.
-                    \end{enumerate}
-                \end{quote}
-                \textbf{Secondary Scenario}
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{3i.}] Emergency lockout required.
-                        \begin{description}
-                            \item[\textmd{3i.1}] IT Support detects suspicious activity or a security risk.
-                            \item[\textmd{3i.2}] IT Support temporarily disables the affected account and escalates to an Administrator.
-                        \end{description}
-                        \item[\textmd{3ii.}] Insufficient authorization.
-                        \begin{description}
-                            \item[\textmd{3ii.1}] IT Support attempts an action outside of their permission scope.
-                            \item[\textmd{3ii.2}] System blocks the action and recommends escalation to an Administrator.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-		\end{enumerate}
-        
-        {\bf Global Scenario:}
-        	\begin{quote}
-        	    \textbf{Pre-condition}: At least one Administrator exists with authority to manage roles and permissions. \\
-                \textbf{Main Success Scenario} 
-                    \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item A need arises to control or update what different users can do within the system.
-                        \item An Administrator reviews existing roles, permissions, and user assignments.
-                        \item The Administrator updates role permissions and/or user-role assignments as required.
-                        \item The system validates changes, saves updates, and applies them to affected accounts.
-                        \item The system records the changes in an audit/history log and notifies affected users if applicable.
-                    \end{enumerate}
-                    \end{quote}
-                \textbf{Secondary Scenario} 
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{3i.}] Access change request submitted.
-                        \begin{description}
-                            \item[\textmd{3i.1}] A City Operator or Department user submits a request for additional or reduced access.
-                            \item[\textmd{3i.2}] The system records the request and routes it to an Administrator for review and action.
-                        \end{description}
-                        \item[\textmd{4i.}] Security incident.
-                        \begin{description}
-                            \item[\textmd{4i.1}] IT Support detects suspicious behavior requiring immediate containment.
-                            \item[\textmd{4i.2}] IT Support performs an authorized emergency action and escalates to an Administrator; the system logs the action.
                         \end{description}
                     \end{description}
                 \end{quote}
