@@ -65,11 +65,6 @@
 This Software Requirements Specification (SRS) defines the requirements for the Smart City Environmental Monitoring \& Alert System (SCEMAS), a cloud-based platform for smart-city environmental monitoring and alerting. SCEMAS collects real-time environmental telemetry from a distributed sensor network, ingests it through an MQTT-based interface, validates incoming messages, and stores the data for both real-time and historical analysis. The platform aggregates readings, evaluates configurable threshold rules, and generates alerts to support timely city response. SCEMAS provides a secure operator dashboard for visualization and exposes a read-only REST API that returns aggregated, non-sensitive environmental data for public and third-party consumption. This document establishes the system scope, key stakeholders and users, core capabilities, and the constraints and quality attributes that guide implementation and verification.
 
 
-\begin{itemize}
-	\item Provide an overview of the document/SRS.
-\end{itemize}
-
-
 \subsection{Purpose}
 \label{sub:purpose}
 % Begin SubSection
@@ -80,20 +75,14 @@ The intended audience of the SRS is the stakeholders of SCEMAS, including develo
 \subsection{Scope}
 \label{sub:scope}
 % Begin SubSection
-\begin{itemize}
-	\item Identify the software product(s) to be produced, and name each (e.g., Host DBMS, Report Generator, etc.)
-	\item Explain what the software product(s) will do (and, if necessary, also state what they will not do).
-	\item Describe the application of the software being specified, including relevant benefits, objectives, and goals.
-%	\item Be consistent with similar statements in higher-level specifications (e.g., the system requirements specification), if they exist
-\end{itemize}
+The Smart City Environmental Monitoring \& Alert System (SCEMAS) is a cloud-based software product designed to collect, process, store, and distribute environmental telemetry data for urban monitoring and decision support. The system takes real-time data from a distributed network of environmental sensors, including air quality, temperature, humidity, and other environmental indicators. SCEMAS validates, aggregates, and persistently stores this telemetry in a secure database that supports both real-time and historical analysis. The software detects threshold violations and adverse environmental conditions and provides automated alerting functionalities for city operators. A secure dashboard allows authorized city personnel to visualize sensor data on maps and charts, monitor system health, and manage active alerts. Access to system functionality is controlled through a role-based access control framework to ensure that administrative and operational privileges are properly restricted. All telemetry and user data transmitted within the system is encrypted using industry-standard protocols, and stored data is protected through appropriate encryption mechanisms to maintain confidentiality and integrity. The scope of this project focuses on the architectural design and core software services of the system, including telemetry ingestion pipelines, secure data storage, alert evaluation logic, and the protected user interface. Physical sensor hardware, large-scale deployment, and advanced predictive analytics are outside the scope of the initial implementation.
 % End SubSection
 
 \subsection{Definitions, Acronyms, and Abbreviations}
 \label{sub:definitions_acronyms_and_abbreviations}
 % Begin SubSection
 \begin{itemize}
-	\item Provide the definitions of all terms, acronyms, and abbreviations required to properly interpret the SRS.
-	\item This should be in alphabetical order.
+	\item EMPTY
 \end{itemize}
 % End SubSection
 
@@ -118,18 +107,11 @@ The remainder of this Software Requirements Specification (SRS) is organized as 
 \label{sec:overall_description}
 % Begin Section
 
-\begin{itemize}
-	\item This section should describe the general factors that affect the product and its requirements. 
-	\item It does not state specific requirements.
-	\item It provides a \emph{background} for those requirements and makes them easier to understand.
-\end{itemize}
-
-
 \subsection{Product Perspective}
 \label{sub:product_perspective}
 % Begin SubSection
 
-SCEMAS is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (CESI) (X) interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, SCEMAS is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. SCEMAS addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
+SCEMAS is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (CESI) \cite{cesi} interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, SCEMAS is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. SCEMAS addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
 
 At a high level, SCEMAS sits between a network of environmental sensing devices and the people or systems that need environmental insights. During development and testing, the sensors act like real devices by publishing telemetry messages into the platform. Incoming telemetry is accepted through an MQTT-based ingestion entry point, then passed through a validation and ingestion component that checks message structure and plausible value ranges before storing the data in persistent time-series storage.
 
@@ -137,9 +119,9 @@ Once data is stored, SCEMAS performs real-time aggregation to produce useful sum
 
 SCEMAS also has a read-only REST API which can be provided to approved third-party organizations upon request. The API returns aggregated, non-sensitive environmental data, and can be paired with a simple demonstration client showing how to consume the endpoints. Potential consumers include mapping applications (e.g., Google Maps overlays) and external organizations that want to display SCEMAS data for their own users or services. To ensure secure administration and accountability, the platform includes role-based access control (RBAC) and audit logging across operator-facing functions and administrative actions.
 
-\begin{figure}[1]
+\begin{figure}[h] % h means place here
     \centering
-    \includegraphics[width=0.95\linewidth]{F1Block_D.png}
+    \includegraphics[width=0.95\linewidth]{pictures/F1Block_D.png}
     \caption{SCEMAS high-level block diagram and external interfaces.}
     \label{fig:scemas_block_diagram}
 \end{figure}
@@ -256,32 +238,28 @@ Public Dashboard &
 \end{itemize}
 \\[5pt]
 \hline
-
 \end{longtable}
-
-\vspace{0.5cm}
-\begin{center}
-    \includegraphics[width=10cm]{pictures/2.2state_diagram.png}
-\end{center}
-\vspace{0.5cm}
 
 
 % End SubSection
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pictures/2.2state_diagram.png}
+    \caption{SCEMAS State Diagram.}
+    \label{fig:scemas_state_diagram}
+\end{figure}
+
+
+
 \subsection{User Characteristics}
 \label{sub:user_characteristics}
-
-\begin{itemize}
-	\item Describe those general characteristics of the intended users of the product including educational level, experience, and technical expertise 
-	\item Since there will be many users, you may wish to divide into different user types or personas
-	\item Do not state specific requirements, but rather provide the reasons why certain specific requirements are later specified
-\end{itemize}
 
 \subsubsection{User I: City Operators}
 City operators analyze the web dashboard to monitor key environmental conditions, and respond accordingly to alerts generated by the system.
 \begin{itemize}
     \item \textbf{Education Level}: City operators are expected to have some level of post-secondary education, in environmental science, engineering, urban planning, or another related field of study.
-    \item \textbf{Experience}: Prior experience  working in a similar role, such as environmental monitoring or public safety operations. Such users should be familiar with interpreting geographical maps, environmental metrics, charts, and trends to identify irregular environmental conditions.
+    \item \textbf{Experience}: Prior experience working in a similar role, such as environmental monitoring or public safety operations. Such users should be familiar with interpreting geographical maps, environmental metrics, charts, and trends to identify irregular environmental conditions.
     \item \textbf{Technical Expertise}: City operators are expected to have intermediate computer proficiency, such as the ability to navigate web-based applications, interact with dashboards, and operate data visualization tools.
 \end{itemize}
 
@@ -290,14 +268,14 @@ The general public and citizens can access non-sensitive environmental informati
 \begin{itemize}
     \item \textbf{Education Level}: Public users are assumed to have basic literacy skills. Basic foundations in listening, reading, writing, and speaking are all the user needs to use the platform without any challenges.
     \item \textbf{Experience}: The user is  expected to have little to no prior experience using monitoring systems. The system is designed to be user-friendly to ensure that interactions are straightforward for any user.
-    \item \textbf{Technical Expertise}: Basic technical skills, such as understanding how to use a web browser, navigate a webpage, and view digital displays is all that is necessary.
+    \item \textbf{Technical Expertise}: Basic technical skills, such as understanding how to use a web browser, navigate a webpage, and view digital displays, are all that is necessary.
 \end{itemize}
 
 \subsubsection{User III: Administrators}
-System administrators are responsible for building and maintaining the system. Their role focuses specifically on ensuring the system operates securely, behaves correctly, and is maintainable over time.
+System administrators are responsible for building and maintaining the system. Their role focuses specifically on ensuring that the system operates securely, behaves correctly, and is maintainable over time.
 \begin{itemize}
     \item \textbf{Education Level}: System administrators should have at least a post-secondary education in software engineering, computer science, or another similar technical field.
-    \item \textbf{Experience}: They are expected to have prior experience maintaining or managing software systems in a professional or academic setting. This experience includes responsibilities related to access control, system configuration and operational oversight. Such users also should understand how to define system policies and supervise automated processes like logging and alert handling. 
+    \item \textbf{Experience}: They are expected to have prior experience maintaining or managing software systems in a professional or academic setting. This experience includes responsibilities related to access control, system configuration, and operational oversight. Such users should also understand how to define system policies and supervise automated processes such as logging and alert handling. 
     \item \textbf{Technical Expertise}: Advanced technical skills are required for system administrators. They should be familiar with configurable rule-based systems, authentication methods, role-based access control (RBAC) models, and audit logging.
 \end{itemize}
 
@@ -305,7 +283,7 @@ System administrators are responsible for building and maintaining the system. T
 Third-party developers request and interpret environmental data from the public API to help build external applications. 
 \begin{itemize}
     \item \textbf{Education Level}: Developers should have a post-secondary education in software engineering, computer science, or equivalent professional experience.
-    \item \textbf{Experience}: The third-party developers are expected to have experience developing software that uses REST APIs and works with JSON data
+    \item \textbf{Experience}: The third-party developers are expected to have experience developing software that uses REST APIs and works with JSON data.
     \item \textbf{Technical Expertise}: Proficient technical skills in web application development and API integration, as well as the ability to comprehend API documentation.
 \end{itemize}
 % End SubSection
@@ -322,7 +300,7 @@ Third-party developers request and interpret environmental data from the public 
     \item \textbf{Project Time}: The development of the system is constrained to the Winter 2026 academic calendar. This limits the overall scope of the system, and the amount of features that can be implemented at launch. It shapes the overall development timeline, and the ability to test and optimize. 
     \item \textbf{Communication Protocol}: All sensor telemetry must use the MQTT protocol. This restricts the system’s communication model and requires that incoming messages align with the predefined data formats that MQTT messaging supports.
     \item \textbf{Personal Identifiable Information}: The system is constrained to operate under privacy-by-design principles, and must not collect, process, or store any personally identifiable information. Environmental data must be aggregated and associated with general city zones rather than precise locations.
-    \item \textbf{Public API Scope}: The public and third-party facing API is constrained to be read-only, meaning that they can not submit data or modify the state. It must only provides access to aggregated, non-sensitive environmental data.
+    \item \textbf{Public API Scope}: The public and third-party facing API is constrained to be read-only, meaning that they can not submit data or modify the state. It must only provide access to aggregated, non-sensitive environmental data.
     \item \textbf{Simulated Hardware}: Physical IoT sensor hardware is not available for this project and must be be generated using software simulations. This influences design decisions as the functionality cannot be verified using real-world sensors.
     \item \textbf{Deployment Environment}: The system is constrained to a cloud architecture using available platforms and tools suitable for educational use. Therefore, developers cannot deploy the system on local machines or private servers.
 \end{enumerate}
@@ -331,51 +309,29 @@ Third-party developers request and interpret environmental data from the public 
 \subsection{Assumptions and Dependencies}
 \label{sub:assumptions_and_dependencies}
 % Begin SubSection
-\begin{itemize}
-	\item List any assumptions you made in interpreting what the software being developed is aiming to achieve
-	\item List any other assumptions you made that, if it fails to hold, could require you to change the requirements
-	%\item List each of the factors that affect the requirements stated in the SRS
-	%\item These factors are not design constraints on the software but are, rather, any changes to them that can affect the requirements in the SRS
-	\begin{enumerate}
-        \item IoT Sensors
-        \begin{enumerate}
-            \item Environmental Data
-            \begin{enumerate}
-                \item IoT sensors provide accurate environmental information to the web application.
-                \item IoT sensors provide data in real-time.
-            \end{enumerate}
-            \item Deployment
-            \begin{enumerate}
-                \item All IoT sensors have been already installed and require no setup.
-            \end{enumerate}
-            \item Messaging
-            \begin{enumerate}
-                \item All telemetry messages follow the predefined MQTT message schema agreed upon by the system.
-            \end{enumerate}
-        \end{enumerate}
-    
-        \item Assumptions
-        \begin{enumerate}
-            \item It is assumed that no PII will be collected or transmitted by IoT sensors.
-            \item It is assumed that the selected cloud provider provides sufficient uptime, scalability, and availability for development.
-            \item The system assumes that it has a database capable of efficiently storing and querying time-series data.
-        \end{enumerate}
-    
-        \item Scope Limitations
-        \begin{enumerate}
-            \item Dashboards and IoT Sensor Integration is limited to one city located in Canada.
-            \item The SCHEMAS dashboard shall display accurately on all web browsers.
-        \end{enumerate}
-    \end{enumerate}
-    
-\end{itemize}
+\textbf{Assumptions About What the Software Is Aiming to Achieve}
+    \begin{itemize}
+        \item IoT sensors provide accurate environmental information to the web application.
+        \item IoT sensors provide data in real-time.
+        \item All telemetry messages follow the predefined MQTT message schema agreed upon by the system.
+        \item All IoT sensors have already been installed and require no additional setup.
+        \item No PII data will be collected or transmitted by IoT sensors
+    \end{itemize}
+
+    \noindent\textbf{Other Assumptions That May Require Requirement Changes if They Fail}
+    \begin{itemize}
+        \item The selected cloud provider provides sufficient uptime, scalability, and availability for development and deployment.
+        \item The System has access to a database capable of efficiently storing and querying time-series data. 
+    \end{itemize}
+
+
 % End SubSection
 
 \subsection{Apportioning of Requirements}
 \label{sub:apportioning_of_requirements}
 % Begin SubSection
 \begin{itemize}
-	\item Identify requirements that may be delayed until future versions of the system
+	\item EMPTY
 \end{itemize}
 % End SubSection
 
@@ -384,10 +340,7 @@ Third-party developers request and interpret environmental data from the public 
 \label{sec:use_case_diagram}
 % Begin Section
 \begin{itemize}
-	\item Provide the use case diagram for the system being developed.
-	\item You do not need to provide the textual description of any of the use cases here (these will be specified under "Highlights of Functional Requirements").
-%	\item Provide \emph{one} use case diagram for the most important Business Event.
-%	\item The text of all use cases will be specified under "Highlights of Functional Requirements"
+	\item EMPTY
 \end{itemize}
 %In this section, select the most important Business Event that your system responds to and give its use case diagram.  Only one use case diagram is needed.  Give a brief textual description of the use case without repeating what is in the scenarios of the corresponding Business Event.
 
@@ -403,16 +356,7 @@ Third-party developers request and interpret environmental data from the public 
 \section{Highlights of Functional Requirements}
 \label{sec:functional_requirements}
 % Begin Section
-\begin{itemize}
-	\item Specify all use cases (or other scenarios triggered by other events), organized by Business Event. 
-	\item For each Business Event, show the scenario from every Viewpoint. You should have the same set of Viewpoints across all Business Events. If a Viewpoint doesn't participate, write N/A so we know you considered it still. You can choose how to present this - keep in mind it should be easy to follow. 
-	\item At the end, combine them all into a Global Scenario.
-	%\item Specify the "use cases" (or other triggering events) organized by Business Event. (The Global Scenario is what you might think of as a use case). Be sure to consider Business Events that aren't just triggered by users with goals (e.g. something happens in the environment that your system needs to respond to)
-	\item Your focus should be on what the system needs to do, not how to do it. Specify it in enough detail that it clearly specifies what needs to be accomplished, but not so detailed that you start programming or making design decisions.
-	\item Keep the length of each use case (Global Scenario) manageable. If it's getting too long, split into sub-cases.
-	\item You are \emph{not} specifying a complete and consistent set of functional requirements here. (i.e. you are providing them in the form of use cases/global scenarios, not a refined list). For the purpose of this project, you do not need to reduce them to a list; the global scenarios format is all you need.
-	\item Red text below is just to highlight where you need to insert a scenario - don't actually write it all in red.
-\end{itemize}
+
 
 \noindent {\bf Main Business Events:} The business events that relate to the system include:
 \begin{itemize}
@@ -863,162 +807,6 @@ Third-party developers request and interpret environmental data from the public 
                 \end{quote}
         	\end{quote}
 \end{enumerate}
-\begin{enumerate}[{\bf BE5.}]
-	\item Manage Role Permissions \#5 \\         
-    \textbf{Pre-condition}: The user is authenticated. Administrators are authorized to manage roles and permissions.
-    
-		\begin{enumerate}[{\bf VP1.}]
-			\item City Operators \#1 \\
-                \textbf{Pre-condition}: City Operator is authenticated and has an active account.\\
-                \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item City Operator opens their profile or account settings.
-                        \item System displays the City Operator’s assigned roles and a summary of allowed actions.
-                        \item City Operator confirms what actions they are permitted to perform.
-                    \end{enumerate}
-                \end{quote}
-                \textbf{Secondary Scenario}
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{3i.}] Permission change needed.
-                        \begin{description}
-                            \item[\textmd{3i.1}] City Operator submits an access change request describing the needed permission and reason.
-                            \item[\textmd{3i.2}] System records the request and notifies an Administrator for review.
-                        \end{description}
-                        \item[\textmd{2i.}] Role/permission information unavailable.
-                        \begin{description}
-                            \item[\textmd{2i.1}] System cannot load role/permission information.
-                            \item[\textmd{2i.2}] System displays an error message and instructs the user to retry or contact IT Support.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-                
-			\item Public Users \#2 
-				\begin{quote}
-				    N/A
-				\end{quote}
-                
-			\item Administrators \#3 \\
-                \textbf{Pre-condition}: Administrator is authenticated and authorized to manage roles and permissions.\\
-				\textbf{Main Success Scenario} 
-                    \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item Administrator opens the role and permission management page.
-                        \item System displays existing roles, permissions, and user-role assignments.
-                        \item Administrator selects a role to create, edit, or remove.
-                        \item Administrator adds or removes permissions for the selected role.
-                        \item Administrator assigns or removes the role to users as needed.
-                        \item System validates the changes against rules (e.g., preventing removal of required administrative access).
-                        \item System saves changes and updates role assignments.
-                        \item System records the change in an audit/history log and notifies affected users if applicable.
-                    \end{enumerate}
-                    \end{quote}
-                \textbf{Secondary Scenario} 
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{6i.}] Invalid/unsafe permission change.
-                        \begin{description}
-                            \item[\textmd{6i.1}] Administrator attempts to apply a change that violates system rules.
-                            \item[\textmd{6i.2}] System rejects the change and shows what must be corrected.
-                        \end{description}
-                        \item[\textmd{7i.}] Conflicting updates.
-                        \begin{description}
-                            \item[\textmd{7i.1}] Another Administrator modifies the same role at the same time.
-                            \item[\textmd{7i.2}] System detects the conflict and prompts the Administrator to reload and retry.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-                
-			\item Third-Party Developers \#4
-				\begin{quote}
-				    N/A
-				\end{quote}
-                
-			\item Environmental Monitoring Department \#5 \\
-                \textbf{Pre-condition}: Department user is authenticated and has an assigned account.\\
-                \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item Department user opens their profile or account settings.
-                        \item System displays the Department user’s assigned role and permitted actions.
-                        \item Department user confirms what they can access within the system.
-                    \end{enumerate}
-                \end{quote}
-                \textbf{Secondary Scenario}
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{3i.}] Needs access adjustment.
-                        \begin{description}
-                            \item[\textmd{3i.1}] Department user submits an access change request including the reason.
-                            \item[\textmd{3i.2}] System records the request and notifies an Administrator for review.
-                        \end{description}
-                        \item[\textmd{2i.}] Role/permission information unavailable.
-                        \begin{description}
-                            \item[\textmd{2i.1}] System cannot load role/permission information.
-                            \item[\textmd{2i.2}] System displays an error message and instructs the user to retry or contact IT Support.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-
-			\item IT Support \#6 \\
-                \textbf{Pre-condition}: IT Support is authenticated and authorized for support actions.\\
-                \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item IT Support opens an administrative support view for accounts and access.
-                        \item System displays user status and role assignment information relevant to support.
-                        \item IT Support performs an authorized support action (e.g., disable an account, restore access, or escalate).
-                        \item System records the action in an audit/history log and notifies Administrators when required.
-                    \end{enumerate}
-                \end{quote}
-                \textbf{Secondary Scenario}
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{3i.}] Emergency lockout required.
-                        \begin{description}
-                            \item[\textmd{3i.1}] IT Support detects suspicious activity or a security risk.
-                            \item[\textmd{3i.2}] IT Support temporarily disables the affected account and escalates to an Administrator.
-                        \end{description}
-                        \item[\textmd{3ii.}] Insufficient authorization.
-                        \begin{description}
-                            \item[\textmd{3ii.1}] IT Support attempts an action outside of their permission scope.
-                            \item[\textmd{3ii.2}] System blocks the action and recommends escalation to an Administrator.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-		\end{enumerate}
-        
-        {\bf Global Scenario:}
-        	\begin{quote}
-        	    \textbf{Pre-condition}: At least one Administrator exists with authority to manage roles and permissions. \\
-                \textbf{Main Success Scenario} 
-                    \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item A need arises to control or update what different users can do within the system.
-                        \item An Administrator reviews existing roles, permissions, and user assignments.
-                        \item The Administrator updates role permissions and/or user-role assignments as required.
-                        \item The system validates changes, saves updates, and applies them to affected accounts.
-                        \item The system records the changes in an audit/history log and notifies affected users if applicable.
-                    \end{enumerate}
-                    \end{quote}
-                \textbf{Secondary Scenario} 
-                \begin{quote}
-                    \begin{description}
-                        \item[\textmd{3i.}] Access change request submitted.
-                        \begin{description}
-                            \item[\textmd{3i.1}] A City Operator or Department user submits a request for additional or reduced access.
-                            \item[\textmd{3i.2}] The system records the request and routes it to an Administrator for review and action.
-                        \end{description}
-                        \item[\textmd{4i.}] Security incident.
-                        \begin{description}
-                            \item[\textmd{4i.1}] IT Support detects suspicious behavior requiring immediate containment.
-                            \item[\textmd{4i.2}] IT Support performs an authorized emergency action and escalates to an Administrator; the system logs the action.
-                        \end{description}
-                    \end{description}
-                \end{quote}
-        	\end{quote}
-\end{enumerate}
 
 \begin{enumerate}[{\bf BE5.}]
 	\item City Operator Resolves an Alert \#5 \\      
@@ -1357,8 +1145,8 @@ Third-party developers request and interpret environmental data from the public 
                     \end{enumerate}
                 \end{quote}
 		\end{enumerate}
-
-        {\bf Global Scenario:}
+  
+    {\bf Global Scenario:}
         \begin{quote}
             \textbf{Pre-condition}: User has a valid Public User or Third-Party Developer SCHEMAS account and is logged in. \\
             \textbf{Main Success Scenario}
@@ -1397,132 +1185,12 @@ Third-party developers request and interpret environmental data from the public 
         \end{quote}
 \end{enumerate}
 
+% End Section
 
 
-%	Below, we organize by Business Event.
-%	\begin{enumerate}[{BE}1.]
-%		\item Business Event name
-%		\begin{enumerate}[{VP1}.1]
-%			\item Viewpoint name \newline
-%			\noindent\fbox{%
-%				\parbox{0.5\textwidth}{%
-%					\begin{itemize}
-%						\item {\bf $S_{1}$:} Initial response of the system to the Business Event
-%						\item {\bf $E_{1}$:}  Reaction of the environment to $S_{1}$
-%						\item {\bf $S_{2}$:}  Response of the system to $E_{1}$
-%						\item {\bf $E_{2}$:}  Reaction of the environment to $S_{2}$
-%						\item[] $\cdots$
-%						\item {\bf $S_{n}$:}  Response of the system to $E_{(n-1)}$
-%						\item {\bf $E_{n}$:}  Reaction of the environment to $E_{(n-1)}$
-%						\item {\bf $S_{(n+1)}$:} Final response of the system concluding its function regarding the Business Event
-%					\end{itemize}
-%				}%
-%			}
-%			\item Viewpoint name\newline
-%			\noindent\fbox{%
-%				\parbox{0.5\textwidth}{%
-%					\begin{itemize}
-%						\item {\bf $S_{1}$:} Initial response of the system to the Business Event
-%						\item {\bf $E_{1}$:}  Reaction of the environment to $S_{1}$
-%						\item {\bf $S_{2}$:}  Response of the system to $E_{1}$
-%						\item {\bf $E_{2}$:}  Reaction of the environment to $S_{2}$
-%						\item[] $\cdots$
-%						\item {\bf $S_{k}$:}  Response of the system to $E_{(k-1)}$
-%						\item {\bf $E_{k}$:}  Reaction of the environment to $E_{(k-1)}$
-%						\item {\bf $S_{(k+1)}$:} Final response of the system concluding its function regarding the Business Event
-%					\end{itemize}
-%				}%
-%			}
-%			\item \dots
-%			\item \dots
-%			\item \dots
-%			\item[\dots]
-%		\end{enumerate}	
-%		\item[] {\bf Global Scenario of {\it Business Event Name}:} It is the scenario corresponding to the integration of all the above scenarios from the different Viewpoints of the Business Event BE1.\newline
-%		\noindent\fbox{%
-%			\parbox{0.5\textwidth}{%
-%				\begin{itemize}
-%					\item {\bf $S_{1}$:} Initial response of the system to the Business Event
-%					\item {\bf $E_{1}$:}  Reaction of the environment to $S_{1}$
-%					\item {\bf $S_{2}$:}  Response of the system to $E_{1}$
-%					\item {\bf $E_{2}$:}  Reaction of the environment to $S_{2}$
-%					\item[] $\cdots$
-%					\item {\bf $S_{m}$:}  Response of the system to $E_{(m-1)}$
-%					\item {\bf $E_{m}$:}  Reaction of the environment to $E_{(m-1)}$
-%					\item {\bf $S_{(m+1)}$:} Final response of the system concluding its function regarding the Business Event
-%				\end{itemize}
-%			}%
-%		}	
-%		%\end{enumerate}
-%		\item Business Event name
-%		\begin{enumerate}[{VP1}.1]
-%			\item Viewpoint name \newline
-%			\noindent\fbox{%
-%				\parbox{0.5\textwidth}{%
-%					\begin{itemize}
-%						\item {\bf $S_{1}$:} Initial response of the system to the Business Event
-%						\item {\bf $E_{1}$:}  Reaction of the environment to $S_{1}$
-%						\item {\bf $S_{2}$:}  Response of the system to $E_{1}$
-%						\item {\bf $E_{2}$:}  Reaction of the environment to $S_{2}$
-%						\item[] $\cdots$
-%						\item {\bf $S_{n'}$:}  Response of the system to $E_{(n'-1)}$
-%						\item {\bf $E_{n'}$:}  Reaction of the environment to $E_{(n'-1)}$
-%						\item {\bf $S_{(n'+1)}$:} Final response of the system concluding its function regarding the Business Event
-%					\end{itemize}
-%				}%
-%			}
-%			\item Viewpoint name\newline
-%			\noindent\fbox{%
-%				\parbox{0.5\textwidth}{%
-%					\begin{itemize}
-%						\item {\bf $S_{1}$:} Initial response of the system to the Business Event
-%						\item {\bf $E_{1}$:}  Reaction of the environment to $S_{1}$
-%						\item {\bf $S_{2}$:}  Response of the system to $E_{1}$
-%						\item {\bf $E_{2}$:}  Reaction of the environment to $S_{2}$
-%						\item[] $\cdots$
-%						\item {\bf $S_{k'}$:}  Response of the system to $E_{(k'-1)}$
-%						\item {\bf $E_{k'}$:}  Reaction of the environment to $E_{(k'-1)}$
-%						\item {\bf $S_{(k'+1)}$:} Final response of the system concluding its function regarding the Business Event
-%					\end{itemize}
-%				}%
-%			}
-%			\item \dots
-%			\item \dots
-%			\item \dots
-%			\item[\dots]
-%		\end{enumerate}	
-%		\item[] {\bf Global Scenario of {\it Business Event Name}:} It is the scenario corresponding to the integration of all the above scenarios from the different Viewpoints of the Business Event BE2.\newline
-%		\noindent\fbox{%
-%			\parbox{0.5\textwidth}{%
-%				\begin{itemize}
-%					\item {\bf $S_{1}$:} Initial response of the system to the Business Event
-%					\item {\bf $E_{1}$:}  Reaction of the environment to $S_{1}$
-%					\item {\bf $S_{2}$:}  Response of the system to $E_{1}$
-%					\item {\bf $E_{2}$:}  Reaction of the environment to $S_{2}$
-%					\item[] $\cdots$
-%					\item {\bf $S_{m'}$:}  Response of the system to $E_{(m'-1)}$
-%					\item {\bf $E_{m'}$:}  Reaction of the environment to $E_{(m'-1)}$
-%					\item {\bf $S_{(m'+1)}$:} Final response of the system concluding its function regarding the Business Event
-%				\end{itemize}
-%			}%
-%		}		
-%	\end{enumerate}
-
-%End Section
-
+% Begin Section
 \section{Non-Functional Requirements}
-\label{sec:non-functional_requirements}
-
-
-\begin{itemize}
-	\item For each non-functional requirement, provide a justification/rationale for it.\\
-	{\bf Example:} \\
-	SC1. \emph{The device should not explode in a customer’s pocket.}\\
-	{\bf Rationale:} Other companies have had issues with the batteries they used in their phones randomly exploding [insert citation]. This causes a safety issue, as the phone is often carried in a person's hand or pocket.	
-	\item If you need to make a guess because you couldn't really talk to stakeholders, you can say "We imagined stakeholders would want...because..."
-	\item Each requirement should have a unique label/number for it.
-	\item In the list below, if a particular section doesn't apply, just write N/A so we know you considered it.
-\end{itemize}
+\label{sec:none-functional_requirements}
 
 % Begin Section
 \subsection{Look and Feel Requirements}
@@ -1652,7 +1320,7 @@ Third-party developers request and interpret environmental data from the public 
     \textbf{Rationale}: Having a fast-loading website will ensure users remain engaged. A study shows that 40\% of users will leave a website if it takes longer than 3 seconds to load \cite{browserstack}.
     
     \item The system should provide a REST API for public use with a response time of less than 1 second. \\
-    \textbf{Rationale}: APIs with lower response time lead to many benefits, like enhancing user satisfaction and increasing cost effectiveness of the system by allowing fewer resources to be used. tied up in operations \cite{farouk2024}. longer API response times will likely result in user frustration and abandonment \cite{farouk2024}.
+    \textbf{Rationale}: APIs with lower response time lead to many benefits, like enhancing user satisfaction and increasing cost effectiveness of the system by allowing fewer resources to be used  \cite{farouk2024}. Longer API response times will likely result in user frustration and abandonment \cite{farouk2024}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1979,7 +1647,6 @@ An innovative feature that could be added is an included simulation feature that
 \section{Division of Labour}
 \label{sec:division_of_labour}
 % Begin Section
-Include a Division of Labour sheet which indicates the contributions of each team member. This sheet must be signed by all team members. \\
 
 \noindent \textbf{Benjamin Bloomfield} 
 \begin{itemize}
@@ -1999,6 +1666,7 @@ Include a Division of Labour sheet which indicates the contributions of each tea
         \item Wrote BE1-BE5.
     \end{itemize}
     \item Non-Functional Requirements: 5.6, 5.7
+    \item Organized storage and display of figures. 
     \item Wrote the LaTeX code structure for Division of Labour
 
     \vspace{0.5cm}
