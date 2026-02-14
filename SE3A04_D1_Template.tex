@@ -129,7 +129,7 @@ The remainder of this Software Requirements Specification (SRS) is organized as 
 \label{sub:product_perspective}
 % Begin SubSection
 
-SCEMAS is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (CESI) () interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, SCEMAS is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. SCEMAS addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
+SCEMAS is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (CESI) \cite{cesi} interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, SCEMAS is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. SCEMAS addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
 
 At a high level, SCEMAS sits between a network of environmental sensing devices and the people or systems that need environmental insights. During development and testing, the sensors act like real devices by publishing telemetry messages into the platform. Incoming telemetry is accepted through an MQTT-based ingestion entry point, then passed through a validation and ingestion component that checks message structure and plausible value ranges before storing the data in persistent time-series storage.
 
@@ -137,9 +137,9 @@ Once data is stored, SCEMAS performs real-time aggregation to produce useful sum
 
 SCEMAS also has a read-only REST API which can be provided to approved third-party organizations upon request. The API returns aggregated, non-sensitive environmental data, and can be paired with a simple demonstration client showing how to consume the endpoints. Potential consumers include mapping applications (e.g., Google Maps overlays) and external organizations that want to display SCEMAS data for their own users or services. To ensure secure administration and accountability, the platform includes role-based access control (RBAC) and audit logging across operator-facing functions and administrative actions.
 
-\begin{figure}[h!]
+\begin{figure}[h] % h means place here
     \centering
-    \includegraphics[width=0.95\linewidth]{F1Block_D.png}
+    \includegraphics[width=0.95\linewidth]{pictures/F1Block_D.png}
     \caption{SCEMAS high-level block diagram and external interfaces.}
     \label{fig:scemas_block_diagram}
 \end{figure}
@@ -256,17 +256,19 @@ Public Dashboard &
 \end{itemize}
 \\[5pt]
 \hline
-
 \end{longtable}
-
-\vspace{0.5cm}
-\begin{center}
-    \includegraphics[width=10cm]{pictures/2.2state_diagram.png}
-\end{center}
-\vspace{0.5cm}
 
 
 % End SubSection
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pictures/2.2state_diagram.png}
+    \caption{SCEMAS State Diagram.}
+    \label{fig:scemas_state_diagram}
+\end{figure}
+
+
 
 \subsection{User Characteristics}
 \label{sub:user_characteristics}
@@ -322,7 +324,7 @@ Third-party developers request and interpret environmental data from the public 
     \item \textbf{Project Time}: The development of the system is constrained to the Winter 2026 academic calendar. This limits the overall scope of the system, and the amount of features that can be implemented at launch. It shapes the overall development timeline, and the ability to test and optimize. 
     \item \textbf{Communication Protocol}: All sensor telemetry must use the MQTT protocol. This restricts the system’s communication model and requires that incoming messages align with the predefined data formats that MQTT messaging supports.
     \item \textbf{Personal Identifiable Information}: The system is constrained to operate under privacy-by-design principles, and must not collect, process, or store any personally identifiable information. Environmental data must be aggregated and associated with general city zones rather than precise locations.
-    \item \textbf{Public API Scope}: The public and third-party facing API is constrained to be read-only, meaning that they can not submit data or modify the state. It must only provides access to aggregated, non-sensitive environmental data.
+    \item \textbf{Public API Scope}: The public and third-party facing API is constrained to be read-only, meaning that they can not submit data or modify the state. It must only provide access to aggregated, non-sensitive environmental data.
     \item \textbf{Simulated Hardware}: Physical IoT sensor hardware is not available for this project and must be be generated using software simulations. This influences design decisions as the functionality cannot be verified using real-world sensors.
     \item \textbf{Deployment Environment}: The system is constrained to a cloud architecture using available platforms and tools suitable for educational use. Therefore, developers cannot deploy the system on local machines or private servers.
 \end{enumerate}
@@ -1179,10 +1181,8 @@ Third-party developers request and interpret environmental data from the public 
                     \end{enumerate}
                 \end{quote}
 		\end{enumerate}
-
-        
-\end{enumerate}
-{\bf Global Scenario:}
+  
+    {\bf Global Scenario:}
         \begin{quote}
             \textbf{Pre-condition}: User has a valid Public User or Third-Party Developer SCHEMAS account and is logged in. \\
             \textbf{Main Success Scenario}
@@ -1823,6 +1823,7 @@ Include a Division of Labour sheet which indicates the contributions of each tea
         \item Wrote BE1-BE5.
     \end{itemize}
     \item Non-Functional Requirements: 5.6, 5.7
+    \item Organized storage and display of figures. 
     \item Wrote the LaTeX code structure for Division of Labour
 
     \vspace{0.5cm}
