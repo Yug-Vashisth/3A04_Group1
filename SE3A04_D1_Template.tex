@@ -360,13 +360,14 @@ Third-party developers request and interpret environmental data from the public 
 
 \noindent {\bf Main Business Events:} The business events that relate to the system include:
 \begin{itemize}
-    \item BE1. Define new alert rule.
-    \item BE2. Update existing alert rule.
-    \item BE3. Remove or disable an alert rule.
-    \item BE4. Confirm alert.
-    \item BE5. Mark the alert as resolved
-    \item BE6. Request Access to Public API
-    \item BE7. Modify Account
+    \item BE1. Define a New Alert Rule For Incoming Hurricane.
+    \item BE2. Update an Existing Alert Rule Due to New Pollution Limits.
+    \item BE3. Remove or Disable an Alert Rule From the Winter Season Ending.
+    \item BE4. System Detects Rule Violation From a Wildfire and Triggers Alert 
+    \item BE5. Confirm Alert After Detecting a Rule Violation Due to a Heat Wave.
+    \item BE6. Mark the alert as resolved
+    \item BE7. Request Access to Public API
+    \item BE8. Modify Account
 \end{itemize}
 
 
@@ -383,8 +384,8 @@ Third-party developers request and interpret environmental data from the public 
 \noindent {\bf Business Events:} 
 
 \begin{enumerate}[{\bf BE1.}]
-	\item Define a New Alert Rule. \#1 \\         
-    \textbf{Pre-condition}: The administrator has an authenticated account and there is no alert rule that already exists for the same threshold.
+	\item Define a New Alert Rule For Incoming Hurricane. \#1 \\         
+    \textbf{Pre-condition}: The administrator is authenticated and logged into the system. There is no alert rule that already exists for the same threshold.
     
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1 
@@ -401,10 +402,6 @@ Third-party developers request and interpret environmental data from the public 
 				\textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Administrator opens the dashboard.
-                        \item System prompts the administrator to log in.
-                        \item Administrator enters login information.
-                        \item System authenticates the administrator.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules, and the option to create a new rule.
@@ -420,32 +417,17 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.}] System fails to authenticate the administrator.
+                        \item[\textmd{8i.}] System detects invalid or incomplete data.
                         \begin{description}
-                            \item[\textmd{4i.1}] System rejects the authentication attempt.
-                            \item[\textmd{4i.2}] System displays an authentication failure message.
-                            \item[\textmd{4i.3}] System prompts the administrator to re-enter credentials.
-                            \item[\textmd{4i.4}] Administrator selects try again.
-                            \item[\textmd{4i.5}] System tracks the number of consecutive failed sign-in attempts.
-                            \item[\textmd{4i.6}] Return to BE1-3.
+                            \item[\textmd{8i.1}] System prevents the alert rule from being submitted.
+                            \item[\textmd{8i.2}] System displays an error message describing the issue.
+                            \item[\textmd{8i.3}] System highlights the section(s) that need to be changed.
+                            \item[\textmd{8i.4}] Return to BE1-10.
                         \end{description}
-                        \item[\textmd{4ii.}] Maximum amount of sign-in attempts have been reached. 
+                        \item[\textmd{9i.}] System fails to store the added alert rule.
                         \begin{description}
-                            \item[\textmd{4ii.1}] System temporarily locks the account.
-                            \item[\textmd{4ii.2}] System displays a message indicating that access is restricted.
-                            \item[\textmd{4ii.3}] System provides instructions for contacting IT Support to resolve the issue.
-                        \end{description}
-                        \item[\textmd{12i.}] System detects invalid or incomplete data.
-                        \begin{description}
-                            \item[\textmd{12i.1}] System prevents the alert rule from being submitted.
-                            \item[\textmd{12i.2}] System displays an error message describing the issue.
-                            \item[\textmd{12i.3}] System highlights the section(s) that need to be changed.
-                            \item[\textmd{12i.4}] Return to BE1-10.
-                        \end{description}
-                        \item[\textmd{13i.}] System fails to store the added alert rule.
-                        \begin{description}
-                            \item[\textmd{13i.1}] System displays an error message that the alert rule could not be created.
-                            \item[\textmd{13i.2}] System provides instructions for contacting IT Support.
+                            \item[\textmd{9i.1}] System displays an error message that the alert rule could not be created.
+                            \item[\textmd{9i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -455,10 +437,16 @@ Third-party developers request and interpret environmental data from the public 
 				    N/A
 				\end{quote}
                 
-			\item Environmental Monitoring Department \#5 
-				\begin{quote}
-				    N/A
-				\end{quote}
+			\item Environmental Monitoring Department \#5 \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                \begin{enumerate}[1.]
+                    \item Environmental Monitoring Department identifies a hurricane is forming nearby.
+                    \item Environmental Monitoring Department determines that a new threshold is required to monitor wind conditions in new areas.
+                    \item Environmental Monitoring Department submits the updated rule requirements to the administrator
+                    \item Administrator reviews and approves the requested changes.
+                \end{enumerate}
+                \end{quote}
 
 			\item IT Support \#6 
                 \item[\textmd{4ii}] System should allow IT Support to restore administrator access after verifying their identity.
@@ -467,14 +455,14 @@ Third-party developers request and interpret environmental data from the public 
         
         {\bf Global Scenario:}
         	\begin{quote}
-        	    \textbf{Pre-condition}: Define a New Alert Rule.. \\
+        	    \textbf{Pre-condition}: The administrator is authenticated and logged into the system. There is no alert rule that already exists for the same threshold. \\
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Administrator opens the dashboard.
-                        \item System prompts the administrator to log in.
-                        \item Administrator enters login information.
-                        \item System authenticates the administrator.
+                        \item Environmental Monitoring Department identifies a hurricane is forming nearby.
+                        \item Environmental Monitoring Department determines that a new threshold is required to monitor wind conditions 
+                        \item Environmental Monitoring Department submits the updated rule requirements to the administrator
+                        \item Administrator reviews and approves the requested changes.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules, and the option to create a new rule.
@@ -490,21 +478,6 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.}] System fails to authenticate the administrator.
-                        \begin{description}
-                            \item[\textmd{4i.1}] System rejects the authentication attempt.
-                            \item[\textmd{4i.2}] System displays an authentication failure message.
-                            \item[\textmd{4i.3}] System prompts the administrator to re-enter credentials.
-                            \item[\textmd{4i.4}] Administrator selects try again.
-                            \item[\textmd{4i.5}] System tracks the number of consecutive failed sign-in attempts.
-                            \item[\textmd{4i.6}] Return to BE1-3.
-                        \end{description}
-                        \item[\textmd{4ii.}] Maximum amount of sign-in attempts have been reached. 
-                        \begin{description}
-                            \item[\textmd{4ii.1}] System temporarily locks the account.
-                            \item[\textmd{4ii.2}] System displays a message indicating that access is restricted.
-                            \item[\textmd{4ii.3}] System provides instructions for contacting IT Support.
-                        \end{description}
                         \item[\textmd{12i.}] System detects invalid or incomplete data.
                         \begin{description}
                             \item[\textmd{12i.1}] System prevents the alert rule from being submitted.
@@ -523,7 +496,7 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 
 \begin{enumerate}[{\bf BE2.}]
-	\item Update an Existing Alert Rule. \#2 \\         
+	\item Update an Existing Alert Rule Due to New Pollution Limits. \#2 \\ 
     \textbf{Pre-condition}: There must exist at least one alert rule in the system. The administrator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
@@ -575,10 +548,16 @@ Third-party developers request and interpret environmental data from the public 
 				    N/A
 				\end{quote}
                 
-			\item Environmental Monitoring Department \#5
-				\begin{quote}
-				    N/A
-				\end{quote}
+			\item Environmental Monitoring Department \#5 \\
+                \textbf{Main Success Scenario} 
+                \begin{quote}
+                \begin{enumerate}[1.]
+                    \item Environmental Monitoring Department identifies new pollution limits have been established.
+                    \item Environmental Monitoring Department makes a particular threshold adjustment based on new data.
+                    \item Environmental Monitoring Department submits the updated rule requirements to the administrator
+                    \item Administrator reviews and approves the requested changes.
+                \end{enumerate}
+                \end{quote}
 
 			\item IT Support \#6
             	\begin{quote}
@@ -593,6 +572,10 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
+                        \item Environmental Monitoring Department identifies an increase in rainfall in the upcoming season.
+                        \item Environmental Monitoring Department makes a particular threshold adjustment based on environmental readings.
+                        \item Environmental Monitoring Department submits the updated requirements to the administrator
+                        \item Administrator reviews and approves the requested changes.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules.
@@ -607,17 +590,17 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{7i.}] Updated alert information is invalid or incomplete.
+                        \item[\textmd{11i.}] Updated alert information is invalid or incomplete.
                         \begin{description}
-                            \item[\textmd{7i.1}] System prevents the updated alert rule from being submitted.
-                            \item[\textmd{7i.2}] System displays an error message describing the issue.
-                            \item[\textmd{7i.3}] System highlights the section(s) that need to be changed.
-                            \item[\textmd{7i.4}] Return to BE2-5.
+                            \item[\textmd{11i.1}] System prevents the updated alert rule from being submitted.
+                            \item[\textmd{11i.2}] System displays an error message describing the issue.
+                            \item[\textmd{11i.3}] System highlights the section(s) that need to be changed.
+                            \item[\textmd{11i.4}] Return to BE2-5.
                         \end{description}
-                        \item[\textmd{8i.}] System fails to update the alert rule.
+                        \item[\textmd{12i.}] System fails to update the alert rule.
                         \begin{description}
-                            \item[\textmd{8i.1}] System displays an error message that that the alert rule update failed.
-                            \item[\textmd{8i.2}] System provides instructions for contacting IT Support.
+                            \item[\textmd{12i.1}] System displays an error message that that the alert rule update failed.
+                            \item[\textmd{12i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -625,7 +608,7 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 
 \begin{enumerate}[{\bf BE3.}]
-	\item Remove or Disable an Alert Rule \#3 \\         
+	\item Remove or Disable an Alert Rule From the Winter Season Ending. \#3 \\         
     \textbf{Pre-condition}: There must exist at least one alert rule in the system. The administrator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
@@ -674,10 +657,16 @@ Third-party developers request and interpret environmental data from the public 
 				    N/A
 				\end{quote}
                 
-			\item Environmental Monitoring Department \#5
-				\begin{quote}
-				    N/A
-				\end{quote}
+			\item Environmental Monitoring Department \#5 \\
+                \textbf{Main Success Scenario} 
+                \begin{quote}
+                \begin{enumerate}[1.]
+                    \item Environmental Monitoring Department determines that seasonal environmental conditions (e.g., snow) have ended.
+                    \item Environmental Monitoring Department reviews identifies a threshold that is no longer required.
+                    \item Environmental Monitoring Department submits the no longer needed requirements to the administrator
+                    \item Administrator reviews and approves the requested changes.
+                \end{enumerate}
+                \end{quote}
 
 			\item IT Support \#6
                 \item[\textmd{7i}] System provides IT Support with system logs to investigate and resolve alert rule removal or disable failures.
@@ -689,6 +678,10 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
+                        \item Environmental Monitoring Department determines that seasonal environmental conditions (e.g., snow) have ended.
+                        \item Environmental Monitoring Department reviews identifies a threshold that is no longer required.
+                        \item Environmental Monitoring Department submits the no longer needed requirements to the administrator
+                        \item Administrator reviews and approves the requested changes.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules.
@@ -702,15 +695,15 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{6i.}] Administrator cancels the confirmation.
+                        \item[\textmd{11i.}] Administrator cancels the confirmation.
                         \begin{description}
-                            \item[\textmd{6i.1}] System does not remove or disable the alert rule.
-                            \item[\textmd{6i.2}] System returns to the list of existing alert rules.
+                            \item[\textmd{11i.1}] System does not remove or disable the alert rule.
+                            \item[\textmd{11i.2}] System returns to the list of existing alert rules.
                         \end{description}
-                        \item[\textmd{7i.}] System fails to remove or disable the alert rule.
+                        \item[\textmd{12i.}] System fails to remove or disable the alert rule.
                         \begin{description}
-                            \item[\textmd{7i.1}] System displays an error message that the action failed.
-                            \item[\textmd{7i.2}] System provides instructions for contacting IT Support.
+                            \item[\textmd{12i.1}] System displays an error message that the action failed.
+                            \item[\textmd{12i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -718,8 +711,83 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 
 \begin{enumerate}[{\bf BE4.}]
-	\item City Operator Acknowledges an Alert \#4 \\      
-    \textbf{Pre-condition}: An alert has been generated by the system and is marked as \textit{Active}. The city operator is authenticated and logged into the system.
+	\item System Detects Rule Violation From a Wildfire and Triggers Alert. \#4 \\         
+    \textbf{Pre-condition}: The wildfire violates thresholds. The City Operator is authenticated and logged into the system.
+    
+		\begin{enumerate}[{\bf VP1.}]
+			\item City Operators \#1 \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item System detects wildfire proximity within 15 km of city limits.
+                        \item System triggers the related alert.
+                        \item System sends a high-priority notification to the city operator.
+                        \item City operator views the active (triggered) alerts.
+                        \item City operator selects the alert from the dashboard.
+                        \item System displays the alert details.
+                        \item City operator reviews the alert information.
+                        \item System logs the acknowledgment with the timestamp and operator ID.
+                        \item System notifies subscribed external systems through the dedicated API endpoint..
+                    \end{enumerate}
+                    \end{quote}
+                
+			\item Public Users \#2 \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Public users view the wildfire details and recommended safety instructions.
+                    \end{enumerate}
+                    \end{quote}
+                
+			\item Administrators \#3 
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Third-Party Developers \#4 \\
+                \textbf{Main Success Scenario}
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Third-party developers confirm delivery of the alert.
+                    \end{enumerate}
+                    \end{quote}
+                
+			\item Environmental Monitoring Department \#5 
+				\begin{quote}
+				    N/A
+				\end{quote}
+
+			\item IT Support \#6 
+				\begin{quote}
+				    N/A
+				\end{quote}
+		\end{enumerate}
+        
+        {\bf Global Scenario:}
+        	\begin{quote}
+        	    \textbf{Pre-condition}: The wildfire violates thresholds. The City Operator is authenticated and logged into the system. \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item System detects wildfire proximity within 15 km of city limits.
+                        \item System triggers the related alert.
+                        \item System sends a high-priority notification to the city operator.
+                        \item City operator views the active (triggered) alerts.
+                        \item City operator selects the alert from the dashboard.
+                        \item System displays the alert details.
+                        \item City operator reviews the alert information.
+                        \item System logs the acknowledgment with the timestamp and operator ID.
+                        \item System sends a notification through the dedicated API endpoint.
+                        \item Third-party developers confirm delivery of the alert.
+                        \item Public users view the wildfire details and recommended safety instructions.
+                    \end{enumerate}
+                    \end{quote}
+        	\end{quote}
+\end{enumerate}
+
+\begin{enumerate}[{\bf BE5.}]
+	\item Confirm Alert After Detecting a Rule Violation Due to a Heat Wave. \#5 \\      
+    \textbf{Pre-condition}: An alert has been triggered by a threshold violation and is marked as \textit{Active}. The city operator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1 
@@ -736,12 +804,13 @@ Third-party developers request and interpret environmental data from the public 
 				\textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item System displays the dashboard showing the active alerts.
-                        \item City operator selects an active alert from the dashboard.
+                        \item System displays the dashboard showing the triggered alerts.
+                        \item City operator selects an alert from the dashboard.
                         \item System displays the alert details.
+                        \item City operator reviews alert information.
                         \item City operator selects the option to acknowledge the alert.
                         \item System updates the alert status to \textit{Acknowledged}.
-                        \item System confirms that the alert has been acknowledged. 
+                        \item System confirms that the alert has been acknowledged.
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
@@ -781,8 +850,8 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item System displays the dashboard showing the active alerts.
-                        \item City operator selects an active alert from the dashboard.
+                        \item System displays the dashboard showing the triggered alerts.
+                        \item City operator selects an alert from the dashboard.
                         \item System displays the alert details.
                         \item City operator selects the option to acknowledge the alert.
                         \item System updates the alert status to \textit{Acknowledged}.
@@ -808,8 +877,8 @@ Third-party developers request and interpret environmental data from the public 
         	\end{quote}
 \end{enumerate}
 
-\begin{enumerate}[{\bf BE5.}]
-	\item City Operator Resolves an Alert \#5 \\      
+\begin{enumerate}[{\bf BE6.}]
+	\item City Operator Resolves an Alert \#6 \\      
     \textbf{Pre-condition}: An alert has been generated by the system and has been acknowledged by a city operator. The city operator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
@@ -903,13 +972,13 @@ Third-party developers request and interpret environmental data from the public 
         	\end{quote}
 \end{enumerate}
 
-\begin{enumerate}[{\bf BE6.}]
-	\item Request Access to Public API
+\begin{enumerate}[{\bf BE7.}]
+	\item Request Access to Public API \#7
 		\begin{enumerate}[{\bf VP1.}]
-			\item City Operators \\
+			\item City Operators \#1\\
 				    N/A. City Operators have access to environmental data internally and do not require public API credentials.
 
-			\item Public Users \\
+			\item Public Users \#2\\
                 \textbf{Pre-condition}: User has a registered Public User SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
@@ -920,7 +989,7 @@ Third-party developers request and interpret environmental data from the public 
                     \end{enumerate}
                 \end{quote}
 
-			\item Administrators \\
+			\item Administrators \#3\\
                 \textbf{Pre-condition}: User has a registered Administrator SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
@@ -945,7 +1014,7 @@ Third-party developers request and interpret environmental data from the public 
                     \end{description}
                 \end{quote}
 
-			\item Third-Party Developers \\
+			\item Third-Party Developers \#4\\
                 \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
@@ -982,9 +1051,9 @@ Third-party developers request and interpret environmental data from the public 
                     \end{description}
                 \end{quote}
 
-			\item Environmental Monitoring Department \\
+			\item Environmental Monitoring Department \#5\\
 				    N/A.
-			\item IT Support \\
+			\item IT Support \#6\\
                 \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
@@ -1038,13 +1107,13 @@ Third-party developers request and interpret environmental data from the public 
         \end{quote}
 \end{enumerate}
 
-\begin{enumerate}[{\bf BE7.}]
-	\item Modify Account
+\begin{enumerate}[{\bf BE8.}]
+	\item Modify Account \#8
 		\begin{enumerate}[{\bf VP1.}]
-			\item City Operators \\
+			\item City Operators \#1\\
 				    N/A. City Operators do not have permission to modify user accounts.
 
-			\item Public Users \\
+			\item Public Users \#2\\
                 \textbf{Pre-condition}: User has a valid Public User SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
@@ -1081,7 +1150,7 @@ Third-party developers request and interpret environmental data from the public 
                     \end{description}
                 \end{quote}
 
-			\item Administrators \\
+			\item Administrators \#3\\
                 \textbf{Pre-condition}: User has a valid Administrator SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
@@ -1094,7 +1163,7 @@ Third-party developers request and interpret environmental data from the public 
                     \end{enumerate}
                 \end{quote}
 
-			\item Third-Party Developers \\
+			\item Third-Party Developers \#4\\
                 \textbf{Pre-condition}: User has a valid Third-Party Developer SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
@@ -1131,10 +1200,10 @@ Third-party developers request and interpret environmental data from the public 
                     \end{description}
                 \end{quote}
 
-			\item Environmental Monitoring Department \\
+			\item Environmental Monitoring Department \#5\\
 				    N/A.
 
-			\item IT Support \\
+			\item IT Support \#6\\
                 \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
@@ -1663,7 +1732,7 @@ An innovative feature that could be added is an included simulation feature that
     \begin{itemize}
         \item Helped devise the list of viewpoints.
         \item Wrote the LaTeX code structure for business events.
-        \item Wrote BE1-BE5.
+        \item Wrote BE1-BE6.
     \end{itemize}
     \item Non-Functional Requirements: 5.6, 5.7
     \item Organized storage and display of figures. 
@@ -1708,24 +1777,12 @@ An innovative feature that could be added is an included simulation feature that
     
     \vspace{0.5cm}
     \centering
-    \includegraphics[width=10cm]{signatures/hamza_nadeem_signature.jpeg}
+    \includegraphics[width=5cm]{signatures/hamza_nadeem_signature.jpeg}
     \\\vspace{0.2cm}
     Date: February 13, 2025 
     \vspace{0.5cm}
 \end{itemize}
 % End Section
-
-%\newpage
-%\section*{IMPORTANT NOTES}
-%\begin{itemize}
-%	\item Be sure to include all sections of the template in your document regardless whether you have something to write for each or not
-%	\begin{itemize}
-%		\item If you do not have anything to write in a section, indicate this by the \emph{N/A}, \emph{void}, \emph{none}, etc.
-%	\end{itemize}
-%	\item Uniquely number each of your requirements for easy identification and cross-referencing
-%	\item Highlight terms that are defined in Section~1.3 (\textbf{Definitions, Acronyms, and Abbreviations}) with \textbf{bold}, \emph{italic} or \underline{underline}
-%	\item For Deliverable 1, please highlight, in some fashion, all (you may have more than one) creative and innovative features. Your creative and innovative features will generally be described in Section~2.2 (\textbf{Product Functions}), but it will depend on the type of creative or innovative features you are including.
-%\end{itemize}
 
 
 \end{document}
