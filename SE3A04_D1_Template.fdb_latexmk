@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex SE3A04_D1_Template"] 1771022323.67865 "SE3A04_D1_Template.aux" "SE3A04_D1_Template.bbl" "SE3A04_D1_Template" 1771022325.16249 0
+["bibtex SE3A04_D1_Template"] 1771029090.74265 "SE3A04_D1_Template.aux" "SE3A04_D1_Template.bbl" "SE3A04_D1_Template" 1771029091.3962 0
   "./references.bib" 1771021238.72665 6516 81e38cc39264644970d4c0ab985fb377 ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "SE3A04_D1_Template.aux" 1771022324.98996 13136 28845bd64281dd04086fa188d6e3e960 "pdflatex"
+  "SE3A04_D1_Template.aux" 1771029091.18057 13134 a9664e73649f3634e5191b5b10d93300 "pdflatex"
   (generated)
   "SE3A04_D1_Template.bbl"
   "SE3A04_D1_Template.blg"
   (rewritten before read)
-["pdflatex"] 1771022324.57539 "/Users/yugvashisth/3A04_Group1/SE3A04_D1_Template.tex" "SE3A04_D1_Template.pdf" "SE3A04_D1_Template" 1771022325.16262 2
-  "/Users/yugvashisth/3A04_Group1/SE3A04_D1_Template.tex" 1771022323.47833 115724 28827d26eabb3d77fbc02ee987fe2aed ""
+["pdflatex"] 1771029090.83041 "/Users/yugvashisth/3A04_Group1/SE3A04_D1_Template.tex" "SE3A04_D1_Template.pdf" "SE3A04_D1_Template" 1771029091.39632 0
+  "/Users/yugvashisth/3A04_Group1/SE3A04_D1_Template.tex" 1771029089.88546 106123 c8bcd5bc0a9e9659a4366381c09de04b ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -77,9 +77,9 @@
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "F1Block_D.png" 1771020817.69309 99274 8314d6962597c93b29a2496d8b355f39 ""
-  "SE3A04_D1_Template.aux" 1771022324.98996 13136 28845bd64281dd04086fa188d6e3e960 "pdflatex"
-  "SE3A04_D1_Template.bbl" 1771022323.92489 7661 067ef9f266f9c0509e47dcece9d7f25d "bibtex SE3A04_D1_Template"
-  "SE3A04_D1_Template.tex" 1771022323.47833 115724 28827d26eabb3d77fbc02ee987fe2aed ""
+  "SE3A04_D1_Template.aux" 1771029091.18057 13134 a9664e73649f3634e5191b5b10d93300 "pdflatex"
+  "SE3A04_D1_Template.bbl" 1771029090.82898 7661 067ef9f266f9c0509e47dcece9d7f25d "bibtex SE3A04_D1_Template"
+  "SE3A04_D1_Template.tex" 1771029089.88546 106123 c8bcd5bc0a9e9659a4366381c09de04b ""
   "signatures/ben_bloomfield_signature.jpg" 1771021063.56714 29422 5468775c921b15c1d42f707b6e14d552 ""
   (generated)
   "SE3A04_D1_Template.aux"
