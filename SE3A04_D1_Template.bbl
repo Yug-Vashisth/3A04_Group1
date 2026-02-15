@@ -20,6 +20,11 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{cesi}
+\BIBentryALTinterwordspacing
+{Government of Canada}, ``{Canadian Environmental Sustainability Indicators (CESI)},'' \textit{Government of Canada}. [Online]. Available: \url{https://indicators-map.canada.ca/}
+\BIBentrySTDinterwordspacing
+
 \bibitem{murphy2025}
 \BIBentryALTinterwordspacing
 D.~Murphy, ``{FAQ Best Practices: Benefits of a Well-Structured Website FAQ},'' \textit{Masterful Marketing}, May 10, 2025. [Online]. Available: \url{https://masterful-marketing.com/website-faq-benefits-best-practices/}

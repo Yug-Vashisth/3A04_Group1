@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex SE3A04_D1_Template"] 1771029090.74265 "SE3A04_D1_Template.aux" "SE3A04_D1_Template.bbl" "SE3A04_D1_Template" 1771029091.3962 0
-  "./references.bib" 1771021238.72665 6516 81e38cc39264644970d4c0ab985fb377 ""
+["bibtex SE3A04_D1_Template"] 1771115331.87707 "SE3A04_D1_Template.aux" "SE3A04_D1_Template.bbl" "SE3A04_D1_Template" 1771115771.91566 0
+  "./references.bib" 1771115330.14832 6516 061de39119e657e5577bfb480c049cfe ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "SE3A04_D1_Template.aux" 1771029091.18057 13134 a9664e73649f3634e5191b5b10d93300 "pdflatex"
+  "SE3A04_D1_Template.aux" 1771115771.73871 13352 cf419581cb757dd65aa52e5c40b65be3 "pdflatex"
   (generated)
   "SE3A04_D1_Template.bbl"
   "SE3A04_D1_Template.blg"
   (rewritten before read)
-["pdflatex"] 1771029090.83041 "/Users/yugvashisth/3A04_Group1/SE3A04_D1_Template.tex" "SE3A04_D1_Template.pdf" "SE3A04_D1_Template" 1771029091.39632 0
-  "/Users/yugvashisth/3A04_Group1/SE3A04_D1_Template.tex" 1771029089.88546 106123 c8bcd5bc0a9e9659a4366381c09de04b ""
+["pdflatex"] 1771115771.33584 "/Users/yugvashisth/3A04_Group1/SE3A04_D1_Template.tex" "SE3A04_D1_Template.pdf" "SE3A04_D1_Template" 1771115771.91577 0
+  "/Users/yugvashisth/3A04_Group1/SE3A04_D1_Template.tex" 1771115771.15635 102958 f84bc49e72886c2901293e97cdc1e01c ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -76,11 +76,15 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1771022131 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "F1Block_D.png" 1771020817.69309 99274 8314d6962597c93b29a2496d8b355f39 ""
-  "SE3A04_D1_Template.aux" 1771029091.18057 13134 a9664e73649f3634e5191b5b10d93300 "pdflatex"
-  "SE3A04_D1_Template.bbl" 1771029090.82898 7661 067ef9f266f9c0509e47dcece9d7f25d "bibtex SE3A04_D1_Template"
-  "SE3A04_D1_Template.tex" 1771029089.88546 106123 c8bcd5bc0a9e9659a4366381c09de04b ""
+  "SE3A04_D1_Template.aux" 1771115771.73871 13352 cf419581cb757dd65aa52e5c40b65be3 "pdflatex"
+  "SE3A04_D1_Template.bbl" 1771115331.95421 7914 75df4e3c4298569bb415bb25e9209ce6 "bibtex SE3A04_D1_Template"
+  "SE3A04_D1_Template.tex" 1771115771.15635 102958 f84bc49e72886c2901293e97cdc1e01c ""
+  "pictures/2.2state_diagram.png" 1771029111.62115 39488 092cc334e21873297a5436807e8e027a ""
+  "pictures/F1Block_D.png" 1771029111.62155 99274 8314d6962597c93b29a2496d8b355f39 ""
+  "signatures/IMG_4568.jpg" 1771115330.14877 218684 cb9c2cc5e27d3d4126a8dda8ffa0cae1 ""
   "signatures/ben_bloomfield_signature.jpg" 1771021063.56714 29422 5468775c921b15c1d42f707b6e14d552 ""
+  "signatures/hamza_nadeem_signature.jpeg" 1771029111.62218 145701 9852b0e814d5652cd515c4752152dae9 ""
+  "signatures/yug_sig.jpg" 1771115749.68508 14198 6e2529cf99b8995e62df5a0b91dc9e01 ""
   (generated)
   "SE3A04_D1_Template.aux"
   "SE3A04_D1_Template.log"

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  13 FEB 2026 19:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  14 FEB 2026 19:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -277,75 +277,86 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] (./SE3A04_D1_Template.bbl
 
-[2])
+[2]
 
-[3]
-<F1Block_D.png, id=19, 487.8225pt x 210.5685pt>
-File: F1Block_D.png Graphic file (type png)
-<use F1Block_D.png>
-Package pdftex.def Info: F1Block_D.png  used on input line 142.
+[3])
+<pictures/F1Block_D.png, id=19, 487.8225pt x 210.5685pt>
+File: pictures/F1Block_D.png Graphic file (type png)
+<use pictures/F1Block_D.png>
+Package pdftex.def Info: pictures/F1Block_D.png  used on input line 129.
 (pdftex.def)             Requested size: 446.26582pt x 192.63292pt.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+[4] [5 <./pictures/F1Block_D.png>] [6]
+<pictures/2.2state_diagram.png, id=31, 532.99126pt x 395.4775pt>
+File: pictures/2.2state_diagram.png Graphic file (type png)
+<use pictures/2.2state_diagram.png>
+Package pdftex.def Info: pictures/2.2state_diagram.png  used on input line 253.
+(pdftex.def)             Requested size: 328.82707pt x 243.99265pt.
 
 
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-[4] [5 <./F1Block_D.png>] [6]
+
 
 [7]
 
-[8]
+[8 <./pictures/2.2state_diagram.png>]
 
 [9]
 
 [10]
 
-[11]
-
 LaTeX Warning: The counter will not be printed.
-             The label is: \bf BE2. on input line 575.
+             The label is: \bf BE2. on input line 503.
 
 
+
+[11]
 
 [12]
 
 LaTeX Warning: The counter will not be printed.
-             The label is: \bf BE3. on input line 677.
+             The label is: \bf BE3. on input line 615.
 
 
 
 [13]
 
 LaTeX Warning: The counter will not be printed.
-             The label is: \bf BE4. on input line 770.
+             The label is: \bf BE4. on input line 718.
 
 
 
 [14]
 
 LaTeX Warning: The counter will not be printed.
-             The label is: \bf BE5. on input line 861.
+             The label is: \bf BE5. on input line 793.
 
 
 
 [15]
 
+LaTeX Warning: The counter will not be printed.
+             The label is: \bf BE6. on input line 885.
+
+
+
 [16]
 
 LaTeX Warning: The counter will not be printed.
-             The label is: \bf BE6. on input line 956.
+             The label is: \bf BE7. on input line 980.
 
 
 
 [17]
 
-LaTeX Warning: The counter will not be printed.
-             The label is: \bf BE7. on input line 1091.
-
-
-
 [18]
+
+LaTeX Warning: The counter will not be printed.
+             The label is: \bf BE8. on input line 1115.
+
+
 
 [19]
 
@@ -364,39 +375,55 @@ LaTeX Warning: The counter will not be printed.
 [26]
 
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 1820--1821
-
- []
-
-
 
 [28]
-<signatures/ben_bloomfield_signature.jpg, id=101, 1027.84pt x 320.19624pt>
+<signatures/ben_bloomfield_signature.jpg, id=103, 1027.84pt x 320.19624pt>
 File: signatures/ben_bloomfield_signature.jpg Graphic file (type jpg)
 <use signatures/ben_bloomfield_signature.jpg>
-Package pdftex.def Info: signatures/ben_bloomfield_signature.jpg  used on input line 1844.
+Package pdftex.def Info: signatures/ben_bloomfield_signature.jpg  used on input line 1748.
 (pdftex.def)             Requested size: 284.52756pt x 88.63808pt.
 
 
-[29 <./signatures/ben_bloomfield_signature.jpg>] (./SE3A04_D1_Template.aux)
+[29]
+<signatures/IMG_4568.jpg, id=107, 419.4069pt x 176.5797pt>
+File: signatures/IMG_4568.jpg Graphic file (type jpg)
+<use signatures/IMG_4568.jpg>
+Package pdftex.def Info: signatures/IMG_4568.jpg  used on input line 1773.
+(pdftex.def)             Requested size: 284.52756pt x 119.80045pt.
+
+
+[30 <./signatures/ben_bloomfield_signature.jpg> <./signatures/IMG_4568.jpg>]
+<signatures/yug_sig.jpg, id=111, 411.5375pt x 156.585pt>
+File: signatures/yug_sig.jpg Graphic file (type jpg)
+<use signatures/yug_sig.jpg>
+Package pdftex.def Info: signatures/yug_sig.jpg  used on input line 1799.
+(pdftex.def)             Requested size: 284.52756pt x 108.25879pt.
+<signatures/hamza_nadeem_signature.jpeg, id=112, 893.3375pt x 898.35625pt>
+File: signatures/hamza_nadeem_signature.jpeg Graphic file (type jpg)
+<use signatures/hamza_nadeem_signature.jpeg>
+Package pdftex.def Info: signatures/hamza_nadeem_signature.jpeg  used on input line 1818.
+(pdftex.def)             Requested size: 142.26378pt x 143.05453pt.
+
+
+[31 <./signatures/yug_sig.jpg> <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>] (./SE3A04_D1_Template.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3858 strings out of 473190
- 59084 string characters out of 5715801
- 471887 words of memory out of 5000000
- 27071 multiletter control sequences out of 15000+600000
+ 3888 strings out of 473190
+ 60156 string characters out of 5715801
+ 466913 words of memory out of 5000000
+ 27101 multiletter control sequences out of 15000+600000
  567381 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,6n,65p,1132b,468s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,6n,65p,1655b,464s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on SE3A04_D1_Template.pdf (29 pages, 301290 bytes).
+Output written on SE3A04_D1_Template.pdf (31 pages, 696511 bytes).
 PDF statistics:
- 137 PDF objects out of 1000 (max. 8388607)
- 88 compressed objects within 1 object stream
+ 149 PDF objects out of 1000 (max. 8388607)
+ 93 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
