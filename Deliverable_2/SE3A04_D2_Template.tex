@@ -126,6 +126,17 @@ This section should provide an overview of the overall architectural design of y
 	\item Provide a structural architecture diagram showing the relationship among the subsystems (if appropriate)
 	\item List any design alternatives you considered, but eliminated (and explain why you eliminated them)
 \end{itemize}
+
+\subsubsection{Considered Design Alternatives} 
+\textbf{Model-View-Controller (MVC)} \\
+The MVC architectural pattern was considered because the system uses web dashboards to display environmental data. MVC is best used to organize interactive applications where a single central model supports multiple views, and user interactions are the main concern of the system. It is especially well suited for UI-based systems that focus on maintaining consistency between the interface and data. The SCEMAS software contains multiple complex components (telemetry ingestion, alert management, rule evaluation, etc.), which each have their own logic and control flow, with data changing and different periods and frequencies. As these components must be coordinated at a system level, is is challenging to maintain the structure with a PAC architecture. MVC assumes a centralized structure between the model, view, and controller, which does not support the hierarchical structure that PAC offers. \\
+
+\noindent \textbf{Blackboard} \\
+The Blackboard architecture was considered since the system involves multiple subsystems that interact with a centralized data store. Blackboard is most appropriate for subsystems in which agents collaborate by contributing partial solutions to a problem stored in the blackboard. 
+This architecture was eliminated since SCEMAS does not involve collaborative problem-solving among knowledge sources. Its subsystems do not compete, or contribute partial solutions. Instead, interactions with the data store are agent-driven, through read and writes. The data store therefore simply acts as passive storage. Since there is no need for agents to incrementally work on a shared solution state, the blackboard would simply introduce unnecessary coordination complexity. \\
+
+\noindent \textbf{Batch Sequential Architecture} \\
+NEED TO ADD THIS SECTION.
 % End SubSection
 
 \subsection{Subsystems}
