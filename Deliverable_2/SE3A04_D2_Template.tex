@@ -198,9 +198,10 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
+        \caption{CRC Card for Alert Management Controller}
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Management}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Management Controller}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -210,9 +211,10 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
+        \caption{CRC Card for Alert Database Entity}
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Database}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Database (Entity)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -222,9 +224,10 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
+        \caption{CRC Card for Creating an Alert Rule}
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Create Alert Rule}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Create Alert Rule (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -234,9 +237,10 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
+        \caption{CRC Card for Modifying an Alert Rule}
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Alert Rule}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Alert Rule (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -246,9 +250,10 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
+        \caption{CRC Card for Removing an Alert Rule}
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Remove Alert Rule}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Remove Alert Rule (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -258,9 +263,10 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
+        \caption{CRC Card for Alert History}
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert History}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert History (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -270,9 +276,10 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
+        \caption{CRC Card for Removing an Alert Rule Violation}
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Rule Violated}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Rule Violated (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -282,9 +289,10 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
+        \caption{CRC Card for Confirming an Alert Violation}
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Confirm Alert Violated}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Confirm Alert Violated (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -345,6 +353,10 @@ This section should contain all of your CRC cards.
         Knows API Controller & API Controller \\
         Knows Endpoints & \\
         Knows active and inactive routes & \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Settings}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
@@ -360,6 +372,10 @@ This section should contain all of your CRC cards.
         Knows Main Dashboard Controller & Main Dashboard \\
         Knows Admin Dashboard & Admin Dashboard \\
         Knows Admin DB & Admin DB \\ 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: View Account}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
@@ -389,6 +405,10 @@ This section should contain all of your CRC cards.
         Knows Admin Dashboard Controller & Admin Dashboard Controller \\
         Knows Admin privileges & \\
         Knows Admin action log history & \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: City Wide Dashboard Controller}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
@@ -398,6 +418,7 @@ This section should contain all of your CRC cards.
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Management}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: City Dashboard}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -410,6 +431,7 @@ This section should contain all of your CRC cards.
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Create Account}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: District Dashboard Controller}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -422,6 +444,7 @@ This section should contain all of your CRC cards.
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Account}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: District Dashboard}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -434,6 +457,7 @@ This section should contain all of your CRC cards.
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Login}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Dashboard Controller}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -446,6 +470,7 @@ This section should contain all of your CRC cards.
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Settings}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Dashboard}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -458,6 +483,7 @@ This section should contain all of your CRC cards.
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: View Account}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Database}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -470,6 +496,103 @@ This section should contain all of your CRC cards.
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Database}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Dashboard Controller}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Dashboard}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Database}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Temperature Dashboard Controller}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Temperature Dashboard}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Temperature Database}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Dashboard Controller}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Dashboard}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Database}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
