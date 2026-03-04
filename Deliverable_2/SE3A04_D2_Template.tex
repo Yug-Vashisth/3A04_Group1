@@ -1,0 +1,194 @@
+\documentclass[]{article}
+
+% Imported Packages
+%------------------------------------------------------------------------------
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+%\usepackage{extarrows}
+%\usepackage{setspace}
+%------------------------------------------------------------------------------
+
+% Header and Footer
+%------------------------------------------------------------------------------
+\pagestyle{plain}  
+\renewcommand\headrulewidth{0.4pt}                                      
+\renewcommand\footrulewidth{0.4pt}                                    
+%------------------------------------------------------------------------------
+
+% Title Details
+%------------------------------------------------------------------------------
+\title{Deliverable \#2 Template}
+\author{SE 3A04: Software Design III -- Large System Design}
+\date{}                               
+%------------------------------------------------------------------------------
+
+% Document
+%------------------------------------------------------------------------------
+\begin{document}
+
+\maketitle	
+\noindent{\bf Tutorial Number:} T01\\
+{\bf Group Number:} G01 \\
+{\bf Group Members:} 
+\begin{itemize}
+	\item Benjamin Bloomfield
+	\item Vikram Chandar
+    \item Trisha Panchal
+    \item Yug Vashisth
+    \item Hamza Nadeem
+\end{itemize}
+
+\section*{IMPORTANT NOTES}
+\begin{itemize}
+	%	\item You do \underline{NOT} need to provide a text explanation of each diagram; the diagram should speak for itself
+	\item Please document any non-standard notations that you may have used
+	\begin{itemize}
+		\item \emph{Rule of Thumb}: if you feel there is any doubt surrounding the meaning of your notations, document them
+	\end{itemize}
+	\item Some diagrams may be difficult to fit into one page
+	\begin{itemize}
+		\item Ensure that the text is readable when printed, or when viewed at 100\% on a regular laptop-sized screen.
+		\item If you need to break a diagram onto multiple pages, please adopt a system of doing so and thoroughly explain how it can be reconnected from one page to the next; if you are unsure about this, please ask about it
+	\end{itemize}
+	\item Please submit the latest version of Deliverable 1 with Deliverable 2
+	\begin{itemize}
+		\item Indicate any changes you made.
+	\end{itemize}
+	\item If you do \underline{NOT} have a Division of Labour sheet, your deliverable will \underline{NOT} be marked
+\end{itemize}
+
+\newpage
+\section{Introduction}
+\label{sec:introduction}
+% Begin Section
+
+This section should provide an brief overview of the entire document.
+
+\subsection{Purpose}
+\label{sub:purpose}
+% Begin SubSection
+State the purpose and intended audience for the document.\\\\
+This document is intended to provide a high-level overview of the SCEMAS system architecture design as well as considerations for various subsystems that are a part of SCEMAS.\\
+The intended audience for this document is stakeholders of SCEMAS, including developers and testers. SCEMAS deliverable 1 would serve as a necessary document to aid in understanding this document.
+
+
+% End SubSection
+
+\subsection{System Description}
+\label{sub:system_description}
+% Begin SubSection
+Give a brief description of the system. This could be a paragraph or two to give some context to this document.\\\\
+The SCEMAS system is designed to collect, process, analyze, and display environmental data from sensors placed throughout a city. Its main purpose is to serve as a monitoring system that evaluates and alerts users based on set environmental parameters. The system will evaluate sensor data against environmental level thresholds. When data exceeds thresholds, the system will send an alert for users to view and act on.\\
+The system will provide a private dashboard for city officials and a public API for public users.
+
+% End SubSection
+
+\subsection{Overview}
+\label{sub:overview}
+% Begin SubSection
+Describe what the rest of the document contains and explain how the document is organised (e.g. "In Section 2, we discuss...in Section 3...").\\\\
+In Section 2 of this document, an analysis class diagram is provided for SCEMAS. In Section 3, the document covers the architectural design of the system, including architecture choices, justifications, a structural architecture diagram, and design alternatives that were considered. Finally, in Section 4, the document provides Class Responsibility Collaboration Cards that help further detail the connections of each class from the analysis class diagram from Section 2.
+
+% End SubSection
+
+% End Section
+
+\section{Analysis Class Diagram}
+\label{sec:analysis_class_diagram}
+% Begin Section
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{./assets/analysis class.jpg}
+    \caption{Analysis Class Diagram}
+    \label{fig:analysis-class}
+\end{figure}
+% End Section
+
+
+\section{Architectural Design}
+\label{sec:architectural_design}
+% Begin Section
+This section should provide an overview of the overall architectural design of your application. Your overall architecture should show the division of the system into subsystems with high cohesion and low coupling.
+
+\subsection{System Architecture}
+\label{sub:system_architecture}
+% Begin SubSection
+\begin{itemize}
+	\item Identify and explain the overall architecture of your system
+	\item Be sure to clearly state the name of the architecture you used (this is the name of the architectural pattern, not the name of your system)
+	\item Provide the reasoning and justification of the choice of architecture
+	\item Provide a structural architecture diagram showing the relationship among the subsystems (if appropriate)
+	\item List any design alternatives you considered, but eliminated (and explain why you eliminated them)
+\end{itemize}
+% End SubSection
+
+\subsection{Subsystems}
+\label{sub:subsystems}
+% Begin SubSection
+The system has been divided into three primary subsystems: 
+\begin{enumerate}
+    \item Alert Management
+    \item Account Management 
+    \item Dashboard
+    \item Public API
+\end{enumerate}
+\subsubsection{Alert Management Subsystem}
+The Alert Management subsystem is responsible for evaluating the environmental data against the predefined rules and to generate alerts when the system detects a threshold violation. This may include environmental events such as wildfire risks, extreme heat conditions, or potential for natural disasters, such as hurricanes. The subsystem manages the life cycle of these alerts, including when they are created, confirmed, and resolved. It is also responsible for  maintaining a history of all logged alerts, and their current status. This isolation of concerns helps to ensure high-cohesion of alert functionalities, and maintain loose coupling with storage and presentation components.\\
+
+\noindent This subsystem is responsible for interacting with the Repository and Dashboard subsystem. It needs to communicate with the Repository to retrieve the environmental data required for alert evaluation. Its interactions with the Dashboard are essential to provide real-time updates on the status of a particular alert. When a threshold violation is detected, the subsystem generates a corresponding alert event, which is uploaded to the dashboard for City Operators to view. 
+
+\subsubsection{Account Management Subsystem}
+The Account Management subsystem is responsible for authenticating and authorizing the different users of the system, and ensure that role-based access control (RBAC) is sustained. It allows for users to register, log in, and manage their account details. It also defines the different user roles (city operators, public users), and ensures that only those who have permission to access a specific functionality are able to do so. Separating these details into its own subsystem is essential to help enhance the overall security while ensuring that authentication operates independently. \\
+
+\noindent Like the Alert Management subsystem, it also needs to collaborate with the Repository. This is needed to securely store user information and profile details.
+
+\subsubsection{Dashboard Subsystem}
+The dashboard subsystem is essential for providing an interface to display environmental data and alerts. It displays the real-time sensor readings, paleographical maps, sensor locations, and environmental metrics. This is fundamental for allowing city operators to monitor environmental conditions, and make necessary responses. \\
+% End SubSection
+
+\subsubsection{Public API Subsystem}
+NEED TO ADD THIS SECTION.
+% End SubSection
+
+% End Section
+	
+\section{Class Responsibility Collaboration (CRC) Cards}
+\label{sec:class_responsibility_collaboration_crc_cards}
+% Begin Section
+This section should contain all of your CRC cards.
+
+\begin{itemize}
+	\item Provide a CRC Card for each identified class
+	\item Please use the format outlined in tutorial, i.e., 
+	\begin{table}[ht]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name:}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+	
+\end{itemize}
+% End Section
+
+\appendix
+\section{Division of Labour}
+\label{sec:division_of_labour}
+% Begin Section
+Include a Division of Labour sheet which indicates the contributions of each team member. This sheet must be signed by all team members.
+% End Section
+
+
+\end{document}
+%------------------------------------------------------------------------------
