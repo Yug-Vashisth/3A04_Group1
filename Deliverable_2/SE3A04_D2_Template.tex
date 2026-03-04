@@ -131,8 +131,29 @@ This section should provide an overview of the overall architectural design of y
 \subsection{Subsystems}
 \label{sub:subsystems}
 % Begin SubSection
- Provide a list of your subsystems, with a brief description of each. Be sure to document its purpose and relationship to other subsystems.
+The system has been divided into three primary subsystems: 
+\begin{enumerate}
+    \item Alert Management
+    \item Account Management 
+    \item Dashboard
+    \item Public API
+\end{enumerate}
+\subsubsection{Alert Management Subsystem}
+The Alert Management subsystem is responsible for evaluating the environmental data against the predefined rules and to generate alerts when the system detects a threshold violation. This may include environmental events such as wildfire risks, extreme heat conditions, or potential for natural disasters, such as hurricanes. The subsystem manages the life cycle of these alerts, including when they are created, confirmed, and resolved. It is also responsible for  maintaining a history of all logged alerts, and their current status. This isolation of concerns helps to ensure high-cohesion of alert functionalities, and maintain loose coupling with storage and presentation components.\\
 
+\noindent This subsystem is responsible for interacting with the Repository and Dashboard subsystem. It needs to communicate with the Repository to retrieve the environmental data required for alert evaluation. Its interactions with the Dashboard are essential to provide real-time updates on the status of a particular alert. When a threshold violation is detected, the subsystem generates a corresponding alert event, which is uploaded to the dashboard for City Operators to view. 
+
+\subsubsection{Account Management Subsystem}
+The Account Management subsystem is responsible for authenticating and authorizing the different users of the system, and ensure that role-based access control (RBAC) is sustained. It allows for users to register, log in, and manage their account details. It also defines the different user roles (city operators, public users), and ensures that only those who have permission to access a specific functionality are able to do so. Separating these details into its own subsystem is essential to help enhance the overall security while ensuring that authentication operates independently. \\
+
+\noindent Like the Alert Management subsystem, it also needs to collaborate with the Repository. This is needed to securely store user information and profile details.
+
+\subsubsection{Dashboard Subsystem}
+The dashboard subsystem is essential for providing an interface to display environmental data and alerts. It displays the real-time sensor readings, paleographical maps, sensor locations, and environmental metrics. This is fundamental for allowing city operators to monitor environmental conditions, and make necessary responses. \\
+% End SubSection
+
+\subsubsection{Public API Subsystem}
+NEED TO ADD THIS SECTION.
 % End SubSection
 
 % End Section
