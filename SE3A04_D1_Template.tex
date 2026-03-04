@@ -68,14 +68,14 @@ This Software Requirements Specification (SRS) defines the requirements for the 
 \subsection{Purpose}
 \label{sub:purpose}
 % Begin SubSection
-This document is used to establish the requirements, performance, and intended behaviour/uses of (\textbf{SCEMAS}).
+This document is used to establish the requirements, performance, and intended behaviour/uses of \textbf{SCEMAS}.
 The intended audience of the SRS is the stakeholders of \textbf{SCEMAS}, including developers and testers.
 % End SubSection
 
 \subsection{Scope}
 \label{sub:scope}
 % Begin SubSection
-(\textbf{SCEMAS}) is a cloud-based software product designed to collect, process, store, and distribute environmental telemetry data for urban monitoring and decision support. The system takes real-time data from a distributed network of environmental sensors, including air quality, temperature, humidity, and other environmental indicators. \textbf{SCEMAS} validates, aggregates, and persistently stores this telemetry in a secure database that supports both real-time and historical analysis. The software detects threshold violations and adverse environmental conditions and provides automated alerting functionalities for city operators. A secure dashboard allows authorized city personnel to visualize sensor data on maps and charts, monitor system health, and manage active alerts. Access to system functionality is controlled through a role-based access control (\textbf{RBAC}) framework to ensure that administrative and operational privileges are properly restricted. All telemetry and user data transmitted within the system is encrypted using industry-standard protocols, and stored data is protected through appropriate encryption mechanisms to maintain confidentiality and integrity. The scope of this project focuses on the architectural design and core software services of the system, including telemetry ingestion pipelines, secure data storage, alert evaluation logic, and the protected user interface. Physical sensor hardware, large-scale deployment, and advanced predictive analytics are outside the scope of the initial implementation.
+\textbf{SCEMAS} is a cloud-based software product designed to collect, process, store, and distribute environmental telemetry data for urban monitoring and decision support. The system takes real-time data from a distributed network of environmental sensors, including air quality, temperature, humidity, and other environmental indicators. \textbf{SCEMAS} validates, aggregates, and persistently stores this telemetry in a secure database that supports both real-time and historical analysis. The software detects threshold violations and adverse environmental conditions and provides automated alerting functionalities for city operators. A secure dashboard allows authorized city personnel to visualize sensor data on maps and charts, monitor system health, and manage active alerts. Access to system functionality is controlled through a role-based access control (\textbf{RBAC}) framework to ensure that administrative and operational privileges are properly restricted. All telemetry and user data transmitted within the system is encrypted using industry-standard protocols, and stored data is protected through appropriate encryption mechanisms to maintain confidentiality and integrity. The scope of this project focuses on the architectural design and core software services of the system, including telemetry ingestion pipelines, secure data storage, alert evaluation logic, and the protected user interface. Physical sensor hardware, large-scale deployment, and advanced predictive analytics are outside the scope of the initial implementation.
 % End SubSection
 
 \subsection{Definitions, Acronyms, and Abbreviations}
@@ -83,8 +83,8 @@ The intended audience of the SRS is the stakeholders of \textbf{SCEMAS}, includi
 % Begin SubSection
 \begin{itemize}
 
-	\item \textbf{MQTT}: Message Queuing Telemetry Transport
-	\item \textbf{SCEMAS}: Smart City Environmental Monitoring and Alert System 
+	\item \textbf{SCEMAS}: Smart City Environmental Monitoring and Alert System
+    \item \textbf{MQTT}: Message Queuing Telemetry Transport
     \item \textbf{CESI}: Canadian Environmental Sustainability Indicators
     \item \textbf{RBAC}: Role-based Access Control
     \item \textbf{PIPEDA}: Personal Information Protection and Electronic Documents Act
@@ -110,7 +110,7 @@ The remainder of this Software Requirements Specification (SRS) is organized as 
 % End SubSection
 
 % End Section
-
+\newpage
 \section{Overall Product Description}
 \label{sec:overall_description}
 % Begin Section
@@ -130,7 +130,7 @@ Once data is stored, \textbf{SCEMAS} performs real-time aggregation to produce u
 \begin{figure}[h] % h means place here
     \centering
     \includegraphics[width=0.95\linewidth]{pictures/F1Block_D.png}
-    \caption{SCEMAS high-level block diagram and external interfaces.}
+    \caption{\textbf{SCEMAS} high-level block diagram and external interfaces.}
     \label{fig:scemas_block_diagram}
 \end{figure}
 
@@ -202,7 +202,7 @@ Data Handling &
 \begin{itemize}
     \item Receiving data
         \begin{itemize}
-            \item Receives IoT data.
+            \item Receives \textbf{IoT} data.
         \end{itemize}
     \item Message validation
         \begin{itemize}
@@ -258,7 +258,7 @@ Public Dashboard &
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{pictures/2.2state_diagram.png}
-    \caption{SCEMAS State Diagram.}
+    \caption{\textbf{SCEMAS} State Diagram.}
     \label{fig:scemas_state_diagram}
 \end{figure}
 
@@ -310,7 +310,7 @@ Third-party developers request and interpret environmental data from the public 
     \item \textbf{Communication Protocol}: All sensor telemetry must use the \textbf{MQTT} protocol. This restricts the system's communication model and requires that incoming messages align with the predefined data formats that \textbf{MQTT} messaging supports.
     \item \textbf{Personal Identifiable Information}: The system is constrained to operate under privacy-by-design principles, and must not collect, process, or store any personally identifiable information. Environmental data must be aggregated and associated with general city zones rather than precise locations.
     \item \textbf{Public API Scope}: The public and third-party facing API is constrained to be read-only, meaning that they can not submit data or modify the state. It must only provide access to aggregated, non-sensitive environmental data.
-    \item \textbf{Simulated Hardware}: Physical IoT sensor hardware is not available for this project and must be be generated using software simulations. This influences design decisions as the functionality cannot be verified using real-world sensors.
+    \item \textbf{Simulated Hardware}: Physical \textbf{IoT} sensor hardware is not available for this project and must be be generated using software simulations. This influences design decisions as the functionality cannot be verified using real-world sensors.
     \item \textbf{Deployment Environment}: The system is constrained to a cloud architecture using available platforms and tools suitable for educational use. Therefore, developers cannot deploy the system on local machines or private servers.
 \end{enumerate}
 % End SubSection
@@ -320,11 +320,11 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSection
 \textbf{Assumptions About What the Software Is Aiming to Achieve}
     \begin{itemize}
-        \item IoT sensors provide accurate environmental information to the web application.
-        \item IoT sensors provide data in real-time.
+        \item \textbf{IoT} sensors provide accurate environmental information to the web application.
+        \item \textbf{IoT} sensors provide data in real-time.
         \item All telemetry messages follow the predefined \textbf{MQTT} message schema agreed upon by the system.
-        \item All IoT sensors have already been installed and require no additional setup.
-        \item No PII data will be collected or transmitted by IoT sensors
+        \item All \textbf{IoT} sensors have already been installed and require no additional setup.
+        \item No \textbf{PII} data will be collected or transmitted by \textbf{IoT} sensors
     \end{itemize}
 
     \noindent\textbf{Other Assumptions That May Require Requirement Changes if They Fail}
@@ -349,17 +349,19 @@ Third-party developers request and interpret environmental data from the public 
 % End SubSection
 
 % End Section
+\newpage
 \section{Use Case Diagram}
 \label{sec:use_case_diagram}
 % Begin Section
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.95\linewidth]{pictures/use_case.png}
-    \caption{SCEMAS Use Case Diagram.}
+    \caption{\textbf{SCEMAS} Use Case Diagram.}
     \label{fig:scemas_use_case_diagram}
 \end{figure}
 %% End Section
 
+\newpage
 \section{Highlights of Functional Requirements}
 \label{sec:functional_requirements}
 % Begin Section
@@ -988,7 +990,7 @@ Third-party developers request and interpret environmental data from the public 
                 N/A. City Operators have access to environmental data internally and do not require public API credentials.
 
             \item Public Users \\
-                \textbf{Pre-condition}: User has a registered Public User SCEMAS account and is logged in.\\
+                \textbf{Pre-condition}: User has a registered Public User \textbf{SCEMAS} account and is logged in.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{description}
@@ -1000,7 +1002,7 @@ Third-party developers request and interpret environmental data from the public 
                 \end{quote}
 
             \item Administrators \\
-                \textbf{Pre-condition}: User has a registered Administrator SCEMAS account and is logged in viewing admin dashboard.\\
+                \textbf{Pre-condition}: User has a registered Administrator \textbf{SCEMAS} account and is logged in viewing admin dashboard.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{description}
@@ -1026,7 +1028,7 @@ Third-party developers request and interpret environmental data from the public 
                 \end{quote}
 
             \item Third-Party Developers \\
-                \textbf{Pre-condition}: User has a registered Third-Party Developer SCEMAS account and is logged in.\\
+                \textbf{Pre-condition}: User has a registered Third-Party Developer \textbf{SCEMAS} account and is logged in.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -1067,7 +1069,7 @@ Third-party developers request and interpret environmental data from the public 
                 N/A.
 
             \item IT Support \\
-    \textbf{Pre-condition}: User has a registered IT Support SCEMAS account and is logged in.\\
+    \textbf{Pre-condition}: User has a registered IT Support \textbf{SCEMAS} account and is logged in.\\
     \textbf{Main Success Scenario}
     \begin{quote}
         \begin{description}
@@ -1081,7 +1083,7 @@ Third-party developers request and interpret environmental data from the public 
 
         \end{enumerate}
         {\bf Global Scenario:} \\
-                \textbf{Pre-condition}: User has a registered Third-Party Developer SCEMAS account and is logged in.\\
+                \textbf{Pre-condition}: User has a registered Third-Party Developer \textbf{SCEMAS} account and is logged in.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -1127,7 +1129,7 @@ Third-party developers request and interpret environmental data from the public 
 				    N/A. City Operators do not have permission to modify user accounts.
 
 			\item Public Users \\
-                \textbf{Pre-condition}: User has a valid Public User SCEMAS account and is logged in. \\
+                \textbf{Pre-condition}: User has a valid Public User \textbf{SCEMAS} account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -1157,7 +1159,7 @@ Third-party developers request and interpret environmental data from the public 
                 \end{quote}
 
 			\item Administrators \\
-                \textbf{Pre-condition}: User has a valid Administrator SCEMAS account and is logged in. \\
+                \textbf{Pre-condition}: User has a valid Administrator \textbf{SCEMAS} account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
     \begin{description}
@@ -1172,7 +1174,7 @@ Third-party developers request and interpret environmental data from the public 
 
 
 			\item Third-Party Developers \\
-                \textbf{Pre-condition}: User has a valid Third-Party Developer SCEMAS account and is logged in. \\
+                \textbf{Pre-condition}: User has a valid Third-Party Developer \textbf{SCEMAS} account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -1205,7 +1207,7 @@ Third-party developers request and interpret environmental data from the public 
 				    N/A.
 
 			\item IT Support \\
-                \textbf{Pre-condition}: User has a registered IT Support SCEMAS account and is logged in. \\
+                \textbf{Pre-condition}: User has a registered IT Support \textbf{SCEMAS} account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
     \begin{description}
@@ -1224,7 +1226,7 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 {\bf Global Scenario:}
         \begin{quote}
-            \textbf{Pre-condition}: User has a valid Public User or Third-Party Developer SCEMAS account and is logged in. \\
+            \textbf{Pre-condition}: User has a valid Public User or Third-Party Developer \textbf{SCEMAS} account and is logged in. \\
             \textbf{Main Success Scenario}
             \begin{quote}
                 \begin{enumerate}[1.]
@@ -1261,11 +1263,11 @@ Third-party developers request and interpret environmental data from the public 
 	\item Create Account \#9
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1\\
-                \textbf{Pre-condition}: User does not have a SCEMAS account and is not logged in. \\
+                \textbf{Pre-condition}: User does not have a \textbf{SCEMAS} account and is not logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
-                        \item User navigates to the SCEMAS portal
+                        \item User navigates to the \textbf{SCEMAS} portal
                         \item User selects ``Request Account''
                         \item User selects ``City Operator'' as requested role
                         \item User enters required personal and work-related information
@@ -1291,7 +1293,7 @@ Third-party developers request and interpret environmental data from the public 
                 N/A. City Operators do not have permission to modify user accounts.
 
 			\item Administrators \#3\\
-                \textbf{Pre-condition}: User has a registered Administrator SCEMAS account and is logged in. \\
+                \textbf{Pre-condition}: User has a registered Administrator \textbf{SCEMAS} account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -1339,11 +1341,11 @@ Third-party developers request and interpret environmental data from the public 
 		\end{enumerate}
     {\bf Global Scenario:}
         \begin{quote}
-            \textbf{Pre-condition}: The user does not have an existing SCEMAS account. Administrators and IT Support personnel must be logged into an authorized administrative account. \\
+            \textbf{Pre-condition}: The user does not have an existing \textbf{SCEMAS} account. Administrators and IT Support personnel must be logged into an authorized administrative account. \\
             \textbf{Main Success Scenario}
             \begin{quote}
                 \begin{enumerate}[1.]
-                    \item The requester (City Operator, Administrator, or IT Support) navigates to the SCEMAS portal or administrative dashboard.
+                    \item The requester (City Operator, Administrator, or IT Support) navigates to the \textbf{SCEMAS} portal or administrative dashboard.
 					\item The system displays available account-creation options appropriate to the requester's role.
 					\item The requester selects ``Create Account'' or ``Request Account''.
 					\item The requester enters all required personal and work‑related information.
@@ -1384,14 +1386,14 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 
 \begin{enumerate}[{\bf BE10.}]
-    \item Login
+    \item Login \#10
         \begin{enumerate}[{\bf VP1.}]
             \item City Operators \#1\\
-                \textbf{Pre-condition}: User has a valid City Operator SCEMAS account.\\
+                \textbf{Pre-condition}: User has a valid City Operator \textbf{SCEMAS} account.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
-                        \item User navigates to the SCEMAS login page
+                        \item User navigates to the \textbf{SCEMAS} login page
                         \item User enters login credentials
                         \item User clicks ``Sign In''
                         \item System validates credentials
@@ -1417,7 +1419,7 @@ Third-party developers request and interpret environmental data from the public 
                 N/A.
 
             \item Administrators \#3\\
-                \textbf{Pre-condition}: User has a valid Administrator SCEMAS account.\\
+                \textbf{Pre-condition}: User has a valid Administrator \textbf{SCEMAS} account.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -1446,7 +1448,7 @@ Third-party developers request and interpret environmental data from the public 
                 N/A.
 
             \item IT Support \#6\\
-                \textbf{Pre-condition}: IT Support has a valid Administrator SCEMAS account.\\
+                \textbf{Pre-condition}: IT Support has a valid Administrator \textbf{SCEMAS} account.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -1471,11 +1473,11 @@ Third-party developers request and interpret environmental data from the public 
 
     {\bf Global Scenario:}
         \begin{quote}
-            \textbf{Pre-condition}: User must have a valid SCEMAS account for their respective role (City Operator, Administrator, or IT Support). User is not currently logged into the system.\\
+            \textbf{Pre-condition}: User must have a valid \textbf{SCEMAS} account for their respective role (City Operator, Administrator, or IT Support). User is not currently logged into the system.\\
             \textbf{Main Success Scenario}
             \begin{quote}
                 \begin{enumerate}[1.]
-                    \item The user (City Operator, Administrator, or IT Support) navigates to the SCEMAS login page.
+                    \item The user (City Operator, Administrator, or IT Support) navigates to the \textbf{SCEMAS} login page.
                     \item The user enters their login credentials.
                     \item The user submits the login request by selecting ``Sign In''.
                     \item The system validates the submitted credentials.
@@ -1513,6 +1515,7 @@ Third-party developers request and interpret environmental data from the public 
 
 
 % Begin Section
+\newpage
 \section{Non-Functional Requirements}
 \label{sec:none-functional_requirements}
 
@@ -1565,7 +1568,7 @@ Third-party developers request and interpret environmental data from the public 
 	\item The system should show brief tooltips for all major controls, indicators and buttons.\\
 	\textbf{Rationale:} Giving tooltips enhances user understanding and provides context for each element on the dashboard.
 	\item The system should allow users to report bugs to IT support.\\
-	\textbf{Rationale:} If users encounter a problem they should be able to receive a response from the SCEMAS team to address their issue and implement fixes.
+	\textbf{Rationale:} If users encounter a problem they should be able to receive a response from the \textbf{SCEMAS} team to address their issue and implement fixes.
 	\item The system should maintain consistent terminology and terms throughout the interface.\\
 	\textbf{Rationale:} Consistent terminology improves learnability and prevents inconsistent descriptions across multiple screens.
 	\item The system shall cache user interface preferences, such as selected dashboards or view settings.\\
@@ -1727,7 +1730,7 @@ Third-party developers request and interpret environmental data from the public 
     \textbf{Rationale:} The system should be deployable using free-tier or educational cloud resources, and sensor hardware is simulated rather than physically deployed.
     
 	\item \textbf{SCEMAS} shall support operation over standard internet connections and tolerate intermittent connectivity from simulated sensor publishers by continuing to run and ingest telemetry once connectivity resumes.\\
-    \textbf{Rationale:} IoT-style telemetry publishers may disconnect; the system should remain stable and continue ingesting when publishers reconnect.
+    \textbf{Rationale:} \textbf{IoT}-style telemetry publishers may disconnect; the system should remain stable and continue ingesting when publishers reconnect.
 \end{enumerate}
 % End SubSubSection
 
@@ -1829,13 +1832,13 @@ Third-party developers request and interpret environmental data from the public 
     \item The system must support multi-factor authentication (MFA) for administrative accounts. \\
     \textbf{Rationale}: MFA helps by eliminating the possibility of compromising the credentials of an administrators account. This is crucial, since the administrator is a high-privilege user who can define alert rules, and view sensitive system information \cite{canSecure}.
 
-    \item The system must enforce Role-Base Access Control (\textbf{RBAC}) to distinguish between the different user groups, such as administrator, city operator, and read-only public users. \\
+    \item The system must enforce \textbf{RBAC} to distinguish between the different user groups, such as administrator, city operator, and read-only public users. \\
     \textbf{Rationale}: Enforcing an \textbf{RBAC} policy ensures that each user group can only perform actions that are appropriate to their respective role. This helps to reduce accidental misuse of the systems functions. 
 
     \item The system must lock out a user account after five consecutive failed login attempts. \\
     \textbf{Rationale}: Protects against repeated attempts of trying to login to an account that does not belong to the respective individual \cite{canUserAuth}.
 
-    \item All IoT devices must be authenticated with a unique key before sending telemetry data to the system. \\
+    \item All \textbf{IoT} devices must be authenticated with a unique key before sending telemetry data to the system. \\
     \textbf{Rationale}: Prevents harmful telemetry to be injection into the system, by limiting entering data to registered and authorized sensors \cite{canIoT}.
 \end{enumerate}
 % End SubSubSection
@@ -1844,7 +1847,7 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:integrity_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{SR-INT}1. ]
-    \item Any data transmitted between IoT devices, and the system must be encrypted, and include integrity protection. \\
+    \item Any data transmitted between \textbf{IoT} devices, and the system must be encrypted, and include integrity protection. \\
     \textbf{Rationale}: Ensures that telemetry is protected, and cannot be changed during transmission. As a result, this helps maintain confidentiality and integrity \cite{canEncrypt}.
     
 	\item All incoming sensor telemetry must be validated against a defined schema and acceptable value ranges before being stored. \\
@@ -1863,7 +1866,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{SR-P}1. ]
 	\item The system will not collect or store any personally identifiable information from public users. \\
-    \textbf{Rationale}: Protects individual privacy, and ensures compliance with PIPEDA (Personal Information Protection and Electronic Documents Act) regulations \cite{pipeda}.
+    \textbf{Rationale}: Protects individual privacy, and ensures compliance with \textbf{PIPEDA} (Personal Information Protection and Electronic Documents Act) regulations \cite{pipeda}.
 
     \item The system shall only collect environmental data at the level of general city zones. \\
     \textbf{Rationale}: Ensures citizen privacy by preventing sensor data from tracking individual residents
@@ -1947,19 +1950,19 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{LR-COMP}1. ]
     \item The system shall identify and document the purposes for collection or use of its users' personal information before or at the time of collection. \\
-    \textbf{Rationale}: This is PIPEDA Fair Information Principle 2 - Identifying Purposes \cite{pipedaAll}.
+    \textbf{Rationale}: This is \textbf{PIPEDA} Fair Information Principle 2 - Identifying Purposes \cite{pipedaAll}.
 
     \item The system shall obtain the consent of users for the collection, use, or disclosure of their personal information. \\
-    \textbf{Rationale}: This is PIPEDA Fair Information Principle 3 - Consent \cite{pipedaAll}.
+    \textbf{Rationale}: This is \textbf{PIPEDA} Fair Information Principle 3 - Consent \cite{pipedaAll}.
 
     \item The system shall limit any collection of personal information to what is necessary for the stated purposes. \\
-    \textbf{Rationale}: This is PIPEDA Fair Information Principle 4 - Limiting Collection \cite{pipedaAll}.
+    \textbf{Rationale}: This is \textbf{PIPEDA} Fair Information Principle 4 - Limiting Collection \cite{pipedaAll}.
 
     \item The system shall use, disclose, and retain personal information only for the purposes for which it was collected, and will not retain the information longer than necessary. \\
-    \textbf{Rationale}: This is PIPEDA Fair Information Principle 5 - Limiting Use, Disclosure, and Retention \cite{pipedaAll}.
+    \textbf{Rationale}: This is \textbf{PIPEDA} Fair Information Principle 5 - Limiting Use, Disclosure, and Retention \cite{pipedaAll}.
 
     \item The system shall protect personal information with safeguards appropriate to its sensitivity, and will not store credentials or other sensitive data in unsecured locations. \\
-    \textbf{Rationale}: This is PIPEDA Fair Information Principle 7 - Safeguards \cite{pipedaAll}.
+    \textbf{Rationale}: This is \textbf{PIPEDA} Fair Information Principle 7 - Safeguards \cite{pipedaAll}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1981,10 +1984,12 @@ Third-party developers request and interpret environmental data from the public 
 % End SubSection
 
 % End Section
+\newpage
 \section{Innovative Feature}
 \label{sec:innovative_feature}
 An innovative feature that could be added is an included simulation feature that would allow city operators to adjust environmental parameters and observe the projected outcome in a visual dashboard overlaid on top of the city. This would help city operators plan response strategies, visualize worst case outcomes, and help train employees without impacting live data.
 
+\newpage
 \appendix
 \section{Division of Labour}
 \label{sec:division_of_labour}
