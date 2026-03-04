@@ -62,27 +62,32 @@
 \newpage
 \section{Introduction}
 \label{sec:introduction}
-This Software Requirements Specification (SRS) defines the requirements for the Smart City Environmental Monitoring \& Alert System (SCEMAS), a cloud-based platform for smart-city environmental monitoring and alerting. SCEMAS collects real-time environmental telemetry from a distributed sensor network, ingests it through an MQTT-based interface, validates incoming messages, and stores the data for both real-time and historical analysis. The platform aggregates readings, evaluates configurable threshold rules, and generates alerts to support timely city response. SCEMAS provides a secure operator dashboard for visualization and exposes a read-only REST API that returns aggregated, non-sensitive environmental data for public and third-party consumption. This document establishes the system scope, key stakeholders and users, core capabilities, and the constraints and quality attributes that guide implementation and verification.
+This Software Requirements Specification (SRS) defines the requirements for the Smart City Environmental Monitoring \& Alert System (\textbf{SCEMAS}), a cloud-based platform for smart-city environmental monitoring and alerting. \textbf{SCEMAS} collects real-time environmental telemetry from a distributed sensor network, ingests it through an \textbf{MQTT}-based interface, validates incoming messages, and stores the data for both real-time and historical analysis. The platform aggregates readings, evaluates configurable threshold rules, and generates alerts to support timely city response. \textbf{SCEMAS} provides a secure operator dashboard for visualization and exposes a read-only REST API that returns aggregated, non-sensitive environmental data for public and third-party consumption. This document establishes the system scope, key stakeholders and users, core capabilities, and the constraints and quality attributes that guide implementation and verification.
 
 
 \subsection{Purpose}
 \label{sub:purpose}
 % Begin SubSection
-This document is used to establish the requirements, performance, and intended behaviour/uses of the Smart City Environmental Monitoring and Alert System (SCEMAS).
-The intended audience of the SRS is the stakeholders of SCEMAS, including developers and testers.
+This document is used to establish the requirements, performance, and intended behaviour/uses of the Smart City Environmental Monitoring and Alert System (\textbf{SCEMAS}).
+The intended audience of the SRS is the stakeholders of \textbf{SCEMAS}, including developers and testers.
 % End SubSection
 
 \subsection{Scope}
 \label{sub:scope}
 % Begin SubSection
-The Smart City Environmental Monitoring \& Alert System (SCEMAS) is a cloud-based software product designed to collect, process, store, and distribute environmental telemetry data for urban monitoring and decision support. The system takes real-time data from a distributed network of environmental sensors, including air quality, temperature, humidity, and other environmental indicators. SCEMAS validates, aggregates, and persistently stores this telemetry in a secure database that supports both real-time and historical analysis. The software detects threshold violations and adverse environmental conditions and provides automated alerting functionalities for city operators. A secure dashboard allows authorized city personnel to visualize sensor data on maps and charts, monitor system health, and manage active alerts. Access to system functionality is controlled through a role-based access control framework to ensure that administrative and operational privileges are properly restricted. All telemetry and user data transmitted within the system is encrypted using industry-standard protocols, and stored data is protected through appropriate encryption mechanisms to maintain confidentiality and integrity. The scope of this project focuses on the architectural design and core software services of the system, including telemetry ingestion pipelines, secure data storage, alert evaluation logic, and the protected user interface. Physical sensor hardware, large-scale deployment, and advanced predictive analytics are outside the scope of the initial implementation.
+The Smart City Environmental Monitoring \& Alert System (\textbf{SCEMAS}) is a cloud-based software product designed to collect, process, store, and distribute environmental telemetry data for urban monitoring and decision support. The system takes real-time data from a distributed network of environmental sensors, including air quality, temperature, humidity, and other environmental indicators. \textbf{SCEMAS} validates, aggregates, and persistently stores this telemetry in a secure database that supports both real-time and historical analysis. The software detects threshold violations and adverse environmental conditions and provides automated alerting functionalities for city operators. A secure dashboard allows authorized city personnel to visualize sensor data on maps and charts, monitor system health, and manage active alerts. Access to system functionality is controlled through a role-based access control framework to ensure that administrative and operational privileges are properly restricted. All telemetry and user data transmitted within the system is encrypted using industry-standard protocols, and stored data is protected through appropriate encryption mechanisms to maintain confidentiality and integrity. The scope of this project focuses on the architectural design and core software services of the system, including telemetry ingestion pipelines, secure data storage, alert evaluation logic, and the protected user interface. Physical sensor hardware, large-scale deployment, and advanced predictive analytics are outside the scope of the initial implementation.
 % End SubSection
 
 \subsection{Definitions, Acronyms, and Abbreviations}
 \label{sub:definitions_acronyms_and_abbreviations}
 % Begin SubSection
 \begin{itemize}
-	\item EMPTY
+
+	\item \textbf{MQTT}: Message Queuing Telemetry Transport
+	\item \textbf{SCEMAS}: Smart City Environmental Monitoring and Alert System 
+    \item \textbf{CESI}: Canadian Environmental Sustainability Indicators
+    \item \textbf{RBAC}: Role based Access Control
+
 \end{itemize}
 % End SubSection
 
@@ -98,7 +103,7 @@ The Smart City Environmental Monitoring \& Alert System (SCEMAS) is a cloud-base
 
 \subsection{Overview}
 \label{sub:overview}
-The remainder of this Software Requirements Specification (SRS) is organized as follows. Section 2 provides an overall description of SCEMAS, including its context, major functions, intended users, constraints, and assumptions. Section 3 presents the system’s use case diagram. Section 4 outlines the functional requirements using the main business events and viewpoint-based scenarios, ending with a consolidated global scenario. Section 5 describes the non-functional requirements, including usability, performance, operational/environmental constraints, maintainability/support, security, cultural/political, and legal considerations. Finally, the Appendix includes the division of labor and any supporting material required by the course template.
+The remainder of this Software Requirements Specification (SRS) is organized as follows. Section 2 provides an overall description of \textbf{SCEMAS}, including its context, major functions, intended users, constraints, and assumptions. Section 3 presents the system’s use case diagram. Section 4 outlines the functional requirements using the main business events and viewpoint-based scenarios, ending with a consolidated global scenario. Section 5 describes the non-functional requirements, including usability, performance, operational/environmental constraints, maintainability/support, security, cultural/political, and legal considerations. Finally, the Appendix includes the division of labor and any supporting material required by the course template.
 % End SubSection
 
 % End Section
@@ -111,13 +116,13 @@ The remainder of this Software Requirements Specification (SRS) is organized as 
 \label{sub:product_perspective}
 % Begin SubSection
 
-SCEMAS is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (CESI) \cite{cesi} interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, SCEMAS is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. SCEMAS addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
+\textbf{SCEMAS} is a cloud-native IoT software platform built for smart-city environmental monitoring and alerting. It is similar in purpose to Government of Canada environmental dashboards such as the Canadian Environmental Sustainability Indicators (\textbf{CESI}) \cite{cesi} interactive indicators and maps, as well as national monitoring dashboards that report trends and exceedances (for example, water monitoring and wastewater surveillance). However, \textbf{SCEMAS} is designed for city operations where near real-time telemetry ingestion, automated threshold-based alerting, and zone-level aggregation are needed to support fast response and day-to-day decision-making. In many cities, environmental data is tracked in a scattered or manual way, which can slow down responses to issues like poor air quality, heatwaves, or noise disturbances. \textbf{SCEMAS} addresses this by bringing everything into one place: it collects telemetry in real time, automatically detects when conditions cross important thresholds, and shares clear, timely information with both city operators and the public.
 
-At a high level, SCEMAS sits between a network of environmental sensing devices and the people or systems that need environmental insights. During development and testing, the sensors act like real devices by publishing telemetry messages into the platform. Incoming telemetry is accepted through an MQTT-based ingestion entry point, then passed through a validation and ingestion component that checks message structure and plausible value ranges before storing the data in persistent time-series storage.
+At a high level, \textbf{SCEMAS} sits between a network of environmental sensing devices and the people or systems that need environmental insights. During development and testing, the sensors act like real devices by publishing telemetry messages into the platform. Incoming telemetry is accepted through an \textbf{MQTT}-based ingestion entry point, then passed through a validation and ingestion component that checks message structure and plausible value ranges before storing the data in persistent time-series storage.
 
-Once data is stored, SCEMAS performs real-time aggregation to produce useful summaries for monitoring and reporting. A configurable, rule-based alerting engine continuously evaluates these readings and aggregates to detect threshold violations and track alert status over time. When an alert is triggered, SCEMAS can notify external subscriber systems, while also presenting the situation to operators through a secure web dashboard that includes maps, charts, current values, active alerts, system health, and historical trends.
+Once data is stored, \textbf{SCEMAS} performs real-time aggregation to produce useful summaries for monitoring and reporting. A configurable, rule-based alerting engine continuously evaluates these readings and aggregates to detect threshold violations and track alert status over time. When an alert is triggered, \textbf{SCEMAS} can notify external subscriber systems, while also presenting the situation to operators through a secure web dashboard that includes maps, charts, current values, active alerts, system health, and historical trends.
 
-SCEMAS also has a read-only REST API which can be provided to approved third-party organizations upon request. The API returns aggregated, non-sensitive environmental data, and can be paired with a simple demonstration client showing how to consume the endpoints. Potential consumers include mapping applications (e.g., Google Maps overlays) and external organizations that want to display SCEMAS data for their own users or services. To ensure secure administration and accountability, the platform includes role-based access control (RBAC) and audit logging across operator-facing functions and administrative actions.
+\textbf{SCEMAS} also has a read-only REST API which can be provided to approved third-party organizations upon request. The API returns aggregated, non-sensitive environmental data, and can be paired with a simple demonstration client showing how to consume the endpoints. Potential consumers include mapping applications (e.g., Google Maps overlays) and external organizations that want to display \textbf{SCEMAS} data for their own users or services. To ensure secure administration and accountability, the platform includes role-based access control (\textbf{RBAC}) and audit logging across operator-facing functions and administrative actions.
 
 \begin{figure}[h] % h means place here
     \centering
@@ -226,6 +231,10 @@ Private Dashboard &
         \begin{itemize}
             \item Ability to manage sensors including adding and deleting them.
         \end{itemize}
+    \item Display simulated environmental visualizations
+        \begin{itemize}
+            \item Ability to observe projected environmental outcomes based on modifications to  threshold parameters
+        \end{itemize}
 \end{itemize}
 \\[5pt]
 \hline
@@ -276,7 +285,7 @@ System administrators are responsible for building and maintaining the system. T
 \begin{itemize}
     \item \textbf{Education Level}: System administrators should have at least a post-secondary education in software engineering, computer science, or another similar technical field.
     \item \textbf{Experience}: They are expected to have prior experience maintaining or managing software systems in a professional or academic setting. This experience includes responsibilities related to access control, system configuration, and operational oversight. Such users should also understand how to define system policies and supervise automated processes such as logging and alert handling. 
-    \item \textbf{Technical Expertise}: Advanced technical skills are required for system administrators. They should be familiar with configurable rule-based systems, authentication methods, role-based access control (RBAC) models, and audit logging.
+    \item \textbf{Technical Expertise}: Advanced technical skills are required for system administrators. They should be familiar with configurable rule-based systems, authentication methods, role-based access control (\textbf{RBAC}) models, and audit logging.
 \end{itemize}
 
 \subsubsection{User IV: Third-Party Developer}
@@ -298,7 +307,7 @@ Third-party developers request and interpret environmental data from the public 
 \begin{enumerate}
     \item \textbf{Budget}: The project is constrained by a budget of \$0. This impacts what features the developer can implement, as all technologies, frameworks, cloud services, and other development tools must be free for the team to use.
     \item \textbf{Project Time}: The development of the system is constrained to the Winter 2026 academic calendar. This limits the overall scope of the system, and the amount of features that can be implemented at launch. It shapes the overall development timeline, and the ability to test and optimize. 
-    \item \textbf{Communication Protocol}: All sensor telemetry must use the MQTT protocol. This restricts the system’s communication model and requires that incoming messages align with the predefined data formats that MQTT messaging supports.
+    \item \textbf{Communication Protocol}: All sensor telemetry must use the \textbf{MQTT} protocol. This restricts the system’s communication model and requires that incoming messages align with the predefined data formats that \textbf{MQTT} messaging supports.
     \item \textbf{Personal Identifiable Information}: The system is constrained to operate under privacy-by-design principles, and must not collect, process, or store any personally identifiable information. Environmental data must be aggregated and associated with general city zones rather than precise locations.
     \item \textbf{Public API Scope}: The public and third-party facing API is constrained to be read-only, meaning that they can not submit data or modify the state. It must only provide access to aggregated, non-sensitive environmental data.
     \item \textbf{Simulated Hardware}: Physical IoT sensor hardware is not available for this project and must be be generated using software simulations. This influences design decisions as the functionality cannot be verified using real-world sensors.
@@ -313,7 +322,7 @@ Third-party developers request and interpret environmental data from the public 
     \begin{itemize}
         \item IoT sensors provide accurate environmental information to the web application.
         \item IoT sensors provide data in real-time.
-        \item All telemetry messages follow the predefined MQTT message schema agreed upon by the system.
+        \item All telemetry messages follow the predefined \textbf{MQTT} message schema agreed upon by the system.
         \item All IoT sensors have already been installed and require no additional setup.
         \item No PII data will be collected or transmitted by IoT sensors
     \end{itemize}
@@ -360,13 +369,14 @@ Third-party developers request and interpret environmental data from the public 
 
 \noindent {\bf Main Business Events:} The business events that relate to the system include:
 \begin{itemize}
-    \item BE1. Define new alert rule.
-    \item BE2. Update existing alert rule.
-    \item BE3. Remove or disable an alert rule.
-    \item BE4. Confirm alert.
-    \item BE5. Mark the alert as resolved
-    \item BE6. Request Access to Public API
-    \item BE7. Modify Account
+    \item BE1. Define a New Alert Rule For Incoming Hurricane.
+    \item BE2. Update an Existing Alert Rule Due to New Pollution Limits.
+    \item BE3. Remove or Disable an Alert Rule From the Winter Season Ending.
+    \item BE4. System Detects Rule Violation From a Wildfire and Triggers Alert 
+    \item BE5. Confirm Alert After Detecting a Rule Violation Due to a Heat Wave.
+    \item BE6. Mark the alert as resolved
+    \item BE7. Request Access to Public API
+    \item BE8. Modify Account
 \end{itemize}
 
 
@@ -383,8 +393,8 @@ Third-party developers request and interpret environmental data from the public 
 \noindent {\bf Business Events:} 
 
 \begin{enumerate}[{\bf BE1.}]
-	\item Define a New Alert Rule. \#1 \\         
-    \textbf{Pre-condition}: The administrator has an authenticated account and there is no alert rule that already exists for the same threshold.
+	\item Define a New Alert Rule For Incoming Hurricane. \#1 \\         
+    \textbf{Pre-condition}: The administrator is authenticated and logged into the system. There is no alert rule that already exists for the same threshold.
     
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1 
@@ -401,10 +411,6 @@ Third-party developers request and interpret environmental data from the public 
 				\textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Administrator opens the dashboard.
-                        \item System prompts the administrator to log in.
-                        \item Administrator enters login information.
-                        \item System authenticates the administrator.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules, and the option to create a new rule.
@@ -420,32 +426,17 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.}] System fails to authenticate the administrator.
+                        \item[\textmd{8i.}] System detects invalid or incomplete data.
                         \begin{description}
-                            \item[\textmd{4i.1}] System rejects the authentication attempt.
-                            \item[\textmd{4i.2}] System displays an authentication failure message.
-                            \item[\textmd{4i.3}] System prompts the administrator to re-enter credentials.
-                            \item[\textmd{4i.4}] Administrator selects try again.
-                            \item[\textmd{4i.5}] System tracks the number of consecutive failed sign-in attempts.
-                            \item[\textmd{4i.6}] Return to BE1-3.
+                            \item[\textmd{8i.1}] System prevents the alert rule from being submitted.
+                            \item[\textmd{8i.2}] System displays an error message describing the issue.
+                            \item[\textmd{8i.3}] System highlights the section(s) that need to be changed.
+                            \item[\textmd{8i.4}] Return to BE1-10.
                         \end{description}
-                        \item[\textmd{4ii.}] Maximum amount of sign-in attempts have been reached. 
+                        \item[\textmd{9i.}] System fails to store the added alert rule.
                         \begin{description}
-                            \item[\textmd{4ii.1}] System temporarily locks the account.
-                            \item[\textmd{4ii.2}] System displays a message indicating that access is restricted.
-                            \item[\textmd{4ii.3}] System provides instructions for contacting IT Support to resolve the issue.
-                        \end{description}
-                        \item[\textmd{12i.}] System detects invalid or incomplete data.
-                        \begin{description}
-                            \item[\textmd{12i.1}] System prevents the alert rule from being submitted.
-                            \item[\textmd{12i.2}] System displays an error message describing the issue.
-                            \item[\textmd{12i.3}] System highlights the section(s) that need to be changed.
-                            \item[\textmd{12i.4}] Return to BE1-10.
-                        \end{description}
-                        \item[\textmd{13i.}] System fails to store the added alert rule.
-                        \begin{description}
-                            \item[\textmd{13i.1}] System displays an error message that the alert rule could not be created.
-                            \item[\textmd{13i.2}] System provides instructions for contacting IT Support.
+                            \item[\textmd{9i.1}] System displays an error message that the alert rule could not be created.
+                            \item[\textmd{9i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -455,10 +446,16 @@ Third-party developers request and interpret environmental data from the public 
 				    N/A
 				\end{quote}
                 
-			\item Environmental Monitoring Department \#5 
-				\begin{quote}
-				    N/A
-				\end{quote}
+			\item Environmental Monitoring Department \#5 \\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                \begin{enumerate}[1.]
+                    \item Environmental Monitoring Department identifies a hurricane is forming nearby.
+                    \item Environmental Monitoring Department determines that a new threshold is required to monitor wind conditions in new areas.
+                    \item Environmental Monitoring Department submits the updated rule requirements to the administrator
+                    \item Administrator reviews and approves the requested changes.
+                \end{enumerate}
+                \end{quote}
 
 			\item IT Support \#6 
                 \item[\textmd{4ii}] System should allow IT Support to restore administrator access after verifying their identity.
@@ -467,14 +464,14 @@ Third-party developers request and interpret environmental data from the public 
         
         {\bf Global Scenario:}
         	\begin{quote}
-        	    \textbf{Pre-condition}: Define a New Alert Rule.. \\
+        	    \textbf{Pre-condition}: The administrator is authenticated and logged into the system. There is no alert rule that already exists for the same threshold. \\
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item Administrator opens the dashboard.
-                        \item System prompts the administrator to log in.
-                        \item Administrator enters login information.
-                        \item System authenticates the administrator.
+                        \item Environmental Monitoring Department identifies a hurricane is forming nearby.
+                        \item Environmental Monitoring Department determines that a new threshold is required to monitor wind conditions 
+                        \item Environmental Monitoring Department submits the updated rule requirements to the administrator
+                        \item Administrator reviews and approves the requested changes.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules, and the option to create a new rule.
@@ -490,21 +487,6 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.}] System fails to authenticate the administrator.
-                        \begin{description}
-                            \item[\textmd{4i.1}] System rejects the authentication attempt.
-                            \item[\textmd{4i.2}] System displays an authentication failure message.
-                            \item[\textmd{4i.3}] System prompts the administrator to re-enter credentials.
-                            \item[\textmd{4i.4}] Administrator selects try again.
-                            \item[\textmd{4i.5}] System tracks the number of consecutive failed sign-in attempts.
-                            \item[\textmd{4i.6}] Return to BE1-3.
-                        \end{description}
-                        \item[\textmd{4ii.}] Maximum amount of sign-in attempts have been reached. 
-                        \begin{description}
-                            \item[\textmd{4ii.1}] System temporarily locks the account.
-                            \item[\textmd{4ii.2}] System displays a message indicating that access is restricted.
-                            \item[\textmd{4ii.3}] System provides instructions for contacting IT Support.
-                        \end{description}
                         \item[\textmd{12i.}] System detects invalid or incomplete data.
                         \begin{description}
                             \item[\textmd{12i.1}] System prevents the alert rule from being submitted.
@@ -523,7 +505,7 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 
 \begin{enumerate}[{\bf BE2.}]
-	\item Update an Existing Alert Rule. \#2 \\         
+	\item Update an Existing Alert Rule Due to New Pollution Limits. \#2 \\ 
     \textbf{Pre-condition}: There must exist at least one alert rule in the system. The administrator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
@@ -575,10 +557,16 @@ Third-party developers request and interpret environmental data from the public 
 				    N/A
 				\end{quote}
                 
-			\item Environmental Monitoring Department \#5
-				\begin{quote}
-				    N/A
-				\end{quote}
+			\item Environmental Monitoring Department \#5 \\
+                \textbf{Main Success Scenario} 
+                \begin{quote}
+                \begin{enumerate}[1.]
+                    \item Environmental Monitoring Department identifies new pollution limits have been established.
+                    \item Environmental Monitoring Department makes a particular threshold adjustment based on new data.
+                    \item Environmental Monitoring Department submits the updated rule requirements to the administrator
+                    \item Administrator reviews and approves the requested changes.
+                \end{enumerate}
+                \end{quote}
 
 			\item IT Support \#6
             	\begin{quote}
@@ -593,6 +581,10 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
+                        \item Environmental Monitoring Department identifies an increase in rainfall in the upcoming season.
+                        \item Environmental Monitoring Department makes a particular threshold adjustment based on environmental readings.
+                        \item Environmental Monitoring Department submits the updated requirements to the administrator
+                        \item Administrator reviews and approves the requested changes.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules.
@@ -607,17 +599,17 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{7i.}] Updated alert information is invalid or incomplete.
+                        \item[\textmd{11i.}] Updated alert information is invalid or incomplete.
                         \begin{description}
-                            \item[\textmd{7i.1}] System prevents the updated alert rule from being submitted.
-                            \item[\textmd{7i.2}] System displays an error message describing the issue.
-                            \item[\textmd{7i.3}] System highlights the section(s) that need to be changed.
-                            \item[\textmd{7i.4}] Return to BE2-5.
+                            \item[\textmd{11i.1}] System prevents the updated alert rule from being submitted.
+                            \item[\textmd{11i.2}] System displays an error message describing the issue.
+                            \item[\textmd{11i.3}] System highlights the section(s) that need to be changed.
+                            \item[\textmd{11i.4}] Return to BE2-5.
                         \end{description}
-                        \item[\textmd{8i.}] System fails to update the alert rule.
+                        \item[\textmd{12i.}] System fails to update the alert rule.
                         \begin{description}
-                            \item[\textmd{8i.1}] System displays an error message that that the alert rule update failed.
-                            \item[\textmd{8i.2}] System provides instructions for contacting IT Support.
+                            \item[\textmd{12i.1}] System displays an error message that that the alert rule update failed.
+                            \item[\textmd{12i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -625,7 +617,7 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 
 \begin{enumerate}[{\bf BE3.}]
-	\item Remove or Disable an Alert Rule \#3 \\         
+	\item Remove or Disable an Alert Rule From the Winter Season Ending. \#3 \\         
     \textbf{Pre-condition}: There must exist at least one alert rule in the system. The administrator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
@@ -674,10 +666,16 @@ Third-party developers request and interpret environmental data from the public 
 				    N/A
 				\end{quote}
                 
-			\item Environmental Monitoring Department \#5
-				\begin{quote}
-				    N/A
-				\end{quote}
+			\item Environmental Monitoring Department \#5 \\
+                \textbf{Main Success Scenario} 
+                \begin{quote}
+                \begin{enumerate}[1.]
+                    \item Environmental Monitoring Department determines that seasonal environmental conditions (e.g., snow) have ended.
+                    \item Environmental Monitoring Department reviews identifies a threshold that is no longer required.
+                    \item Environmental Monitoring Department submits the no longer needed requirements to the administrator
+                    \item Administrator reviews and approves the requested changes.
+                \end{enumerate}
+                \end{quote}
 
 			\item IT Support \#6
                 \item[\textmd{7i}] System provides IT Support with system logs to investigate and resolve alert rule removal or disable failures.
@@ -689,6 +687,10 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
+                        \item Environmental Monitoring Department determines that seasonal environmental conditions (e.g., snow) have ended.
+                        \item Environmental Monitoring Department reviews identifies a threshold that is no longer required.
+                        \item Environmental Monitoring Department submits the no longer needed requirements to the administrator
+                        \item Administrator reviews and approves the requested changes.
                         \item System displays the dashboard.
                         \item Administrator selects \textit{Manage Alerts} tab
                         \item System displays the existing alert rules.
@@ -702,15 +704,15 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Secondary Scenario} 
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{6i.}] Administrator cancels the confirmation.
+                        \item[\textmd{11i.}] Administrator cancels the confirmation.
                         \begin{description}
-                            \item[\textmd{6i.1}] System does not remove or disable the alert rule.
-                            \item[\textmd{6i.2}] System returns to the list of existing alert rules.
+                            \item[\textmd{11i.1}] System does not remove or disable the alert rule.
+                            \item[\textmd{11i.2}] System returns to the list of existing alert rules.
                         \end{description}
-                        \item[\textmd{7i.}] System fails to remove or disable the alert rule.
+                        \item[\textmd{12i.}] System fails to remove or disable the alert rule.
                         \begin{description}
-                            \item[\textmd{7i.1}] System displays an error message that the action failed.
-                            \item[\textmd{7i.2}] System provides instructions for contacting IT Support.
+                            \item[\textmd{12i.1}] System displays an error message that the action failed.
+                            \item[\textmd{12i.2}] System provides instructions for contacting IT Support.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -718,8 +720,83 @@ Third-party developers request and interpret environmental data from the public 
 \end{enumerate}
 
 \begin{enumerate}[{\bf BE4.}]
-	\item City Operator Acknowledges an Alert \#4 \\      
-    \textbf{Pre-condition}: An alert has been generated by the system and is marked as \textit{Active}. The city operator is authenticated and logged into the system.
+	\item System Detects Rule Violation From a Wildfire and Triggers Alert. \#4 \\         
+    \textbf{Pre-condition}: The wildfire violates thresholds. The City Operator is authenticated and logged into the system.
+    
+		\begin{enumerate}[{\bf VP1.}]
+			\item City Operators \#1 \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item System detects wildfire proximity within 15 km of city limits.
+                        \item System triggers the related alert.
+                        \item System sends a high-priority notification to the city operator.
+                        \item City operator views the active (triggered) alerts.
+                        \item City operator selects the alert from the dashboard.
+                        \item System displays the alert details.
+                        \item City operator reviews the alert information.
+                        \item System logs the acknowledgment with the timestamp and operator ID.
+                        \item System notifies subscribed external systems through the dedicated API endpoint..
+                    \end{enumerate}
+                    \end{quote}
+                
+			\item Public Users \#2 \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Public users view the wildfire details and recommended safety instructions.
+                    \end{enumerate}
+                    \end{quote}
+                
+			\item Administrators \#3 
+				\begin{quote}
+				    N/A
+				\end{quote}
+                
+			\item Third-Party Developers \#4 \\
+                \textbf{Main Success Scenario}
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item Third-party developers confirm delivery of the alert.
+                    \end{enumerate}
+                    \end{quote}
+                
+			\item Environmental Monitoring Department \#5 
+				\begin{quote}
+				    N/A
+				\end{quote}
+
+			\item IT Support \#6 
+				\begin{quote}
+				    N/A
+				\end{quote}
+		\end{enumerate}
+        
+        {\bf Global Scenario:}
+        	\begin{quote}
+        	    \textbf{Pre-condition}: The wildfire violates thresholds. The City Operator is authenticated and logged into the system. \\
+                \textbf{Main Success Scenario} 
+                    \begin{quote}
+                    \begin{enumerate}[1.]
+                        \item System detects wildfire proximity within 15 km of city limits.
+                        \item System triggers the related alert.
+                        \item System sends a high-priority notification to the city operator.
+                        \item City operator views the active (triggered) alerts.
+                        \item City operator selects the alert from the dashboard.
+                        \item System displays the alert details.
+                        \item City operator reviews the alert information.
+                        \item System logs the acknowledgment with the timestamp and operator ID.
+                        \item System sends a notification through the dedicated API endpoint.
+                        \item Third-party developers confirm delivery of the alert.
+                        \item Public users view the wildfire details and recommended safety instructions.
+                    \end{enumerate}
+                    \end{quote}
+        	\end{quote}
+\end{enumerate}
+
+\begin{enumerate}[{\bf BE5.}]
+	\item Confirm Alert After Detecting a Rule Violation Due to a Heat Wave. \#5 \\      
+    \textbf{Pre-condition}: An alert has been triggered by a threshold violation and is marked as \textit{Active}. The city operator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \#1 
@@ -736,12 +813,13 @@ Third-party developers request and interpret environmental data from the public 
 				\textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item System displays the dashboard showing the active alerts.
-                        \item City operator selects an active alert from the dashboard.
+                        \item System displays the dashboard showing the triggered alerts.
+                        \item City operator selects an alert from the dashboard.
                         \item System displays the alert details.
+                        \item City operator reviews alert information.
                         \item City operator selects the option to acknowledge the alert.
                         \item System updates the alert status to \textit{Acknowledged}.
-                        \item System confirms that the alert has been acknowledged. 
+                        \item System confirms that the alert has been acknowledged.
                     \end{enumerate}
                     \end{quote}
                 \textbf{Secondary Scenario} 
@@ -781,8 +859,8 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Main Success Scenario} 
                     \begin{quote}
                     \begin{enumerate}[1.]
-                        \item System displays the dashboard showing the active alerts.
-                        \item City operator selects an active alert from the dashboard.
+                        \item System displays the dashboard showing the triggered alerts.
+                        \item City operator selects an alert from the dashboard.
                         \item System displays the alert details.
                         \item City operator selects the option to acknowledge the alert.
                         \item System updates the alert status to \textit{Acknowledged}.
@@ -808,8 +886,8 @@ Third-party developers request and interpret environmental data from the public 
         	\end{quote}
 \end{enumerate}
 
-\begin{enumerate}[{\bf BE5.}]
-	\item City Operator Resolves an Alert \#5 \\      
+\begin{enumerate}[{\bf BE6.}]
+	\item City Operator Resolves an Alert \#6 \\      
     \textbf{Pre-condition}: An alert has been generated by the system and has been acknowledged by a city operator. The city operator is authenticated and logged into the system.
     
 		\begin{enumerate}[{\bf VP1.}]
@@ -903,50 +981,52 @@ Third-party developers request and interpret environmental data from the public 
         	\end{quote}
 \end{enumerate}
 
-\begin{enumerate}[{\bf BE6.}]
-	\item Request Access to Public API
-		\begin{enumerate}[{\bf VP1.}]
-			\item City Operators \\
-				    N/A. City Operators have access to environmental data internally and do not require public API credentials.
+\begin{enumerate}[{\bf BE7.}]
+    \item Request Access to Public API
+        \begin{enumerate}[{\bf VP1.}]
+            \item City Operators \\
+                N/A. City Operators have access to environmental data internally and do not require public API credentials.
 
-			\item Public Users \\
-                \textbf{Pre-condition}: User has a registered Public User SCHEMAS account and is logged in. \\
+            \item Public Users \\
+                \textbf{Pre-condition}: User has a registered Public User SCHEMAS account and is logged in.\\
                 \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item User selects ``Request Public API''.
-                        \item System redirects user to an information page.
-                        \item System informs user that public API access is unavailable and that an account modification to a Third-Party Developer account is required.
-                    \end{enumerate}
-                \end{quote}
-
-			\item Administrators \\
-                \textbf{Pre-condition}: User has a registered Administrator SCHEMAS account and is logged in. \\
-                \textbf{Main Success Scenario}
-                \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item Administrator navigates to the admin dashboard.
-                        \item Administrator selects ``View API request tickets''.
-                        \item Administrator selects a ticket to view request details.
-                        \item Administrator adds review comments.
-                        \item Administrator approves the API access request.
-                        \item System generates API credentials with appropriate rate limits.
-                        \item System notifies the user that API access has been granted.
-                    \end{enumerate}
-                \end{quote}
-                \textbf{Secondary Scenario}
                 \begin{quote}
                     \begin{description}
-                        \item[\textmd{5i.}] Administrator rejects API access request.
+                        \item[\textmd{5i.}] System informs user that public API access is unavailable and that an account modification to a Third-Party Developer account is required.
                         \begin{description}
                             \item[\textmd{5i.1}] System records the rejected request.
-                            \item[\textmd{5i.2}] System notifies the user that the request has been rejected.
                         \end{description}
                     \end{description}
                 \end{quote}
 
-			\item Third-Party Developers \\
-                \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in. \\
+            \item Administrators \\
+                \textbf{Pre-condition}: User has a registered Administrator SCHEMAS account and is logged in viewing admin dashboard.\\
+                \textbf{Main Success Scenario}
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{6.}] Administrator Views Request
+                        \begin{description}
+                            \item[\textmd{6.1}] Administrator adds review comments.
+                            \item[\textmd{6.2}] Administrator approves the API access request.
+                            \item[\textmd{6.3}] System generates API credentials with appropriate rate limits.
+                            \item[\textmd{6.4}] System notifies the user that API access has been granted.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+
+                \textbf{Secondary Scenario}
+                \begin{quote}
+                    \begin{description}
+                        \item[\textmd{6i.}] Administrator rejects API access request.
+                        \begin{description}
+                            \item[\textmd{6i.1}] System records the rejected request.
+                            \item[\textmd{6i.2}] System notifies the user that the request has been rejected.
+                        \end{description}
+                    \end{description}
+                \end{quote}
+
+            \item Third-Party Developers \\
+                \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
@@ -961,6 +1041,7 @@ Third-party developers request and interpret environmental data from the public 
                         \item System displays API credentials and a link to API documentation.
                     \end{enumerate}
                 \end{quote}
+
                 \textbf{Secondary Scenario}
                 \begin{quote}
                     \begin{description}
@@ -982,63 +1063,64 @@ Third-party developers request and interpret environmental data from the public 
                     \end{description}
                 \end{quote}
 
-			\item Environmental Monitoring Department \\
-				    N/A.
-			\item IT Support \\
-                \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in. \\
+            \item Environmental Monitoring Department \\
+                N/A.
+
+            \item IT Support \\
+    \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in.\\
+    \textbf{Main Success Scenario}
+    \begin{quote}
+        \begin{description}
+            \item[\textmd{4i.}] System fails to submit API access request form.
+            \begin{description}
+                \item[\textmd{4i.1}] System displays link to customer support page.
+            \end{description}
+        \end{description}
+    \end{quote}
+
+
+        \end{enumerate}
+        {\bf Global Scenario:} \\
+                \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in.\\
                 \textbf{Main Success Scenario}
                 \begin{quote}
                     \begin{enumerate}[1.]
-                        \item IT Support navigates to the IT support ticket dashboard.
-                        \item IT Support selects a support ticket to view details.
-                        \item IT Support resolves the issue and documents actions taken.
-                        \item IT Support marks the ticket as resolved.
+                        \item User selects ``Request Public API''.
+                        \item System displays the API access request form.
+                        \item User enters required project and usage information.
+                        \item User submits the API access request form.
+                        \item System validates and stores the request.
+                        \item Administrator reviews and approves the request.
+                        \item System generates API credentials with appropriate rate limits.
+                        \item System notifies the user that API access has been granted.
                     \end{enumerate}
                 \end{quote}
-		\end{enumerate}
 
-        {\bf Global Scenario:}
-        \begin{quote}
-            \textbf{Pre-condition}: User has a registered Third-Party Developer SCHEMAS account and is logged in. \\
-            \textbf{Main Success Scenario}
-            \begin{quote}
-                \begin{enumerate}[1.]
-                    \item User selects ``Request Public API''.
-                    \item System displays the API access request form.
-                    \item User enters required project and usage information.
-                    \item User submits the API access request form.
-                    \item System validates and stores the request.
-                    \item Administrator reviews and approves the request.
-                    \item System generates API credentials with appropriate rate limits.
-                    \item System notifies the user that API access has been granted.
-                \end{enumerate}
-            \end{quote}
-            \textbf{Secondary Scenario}
-            \begin{quote}
-                \begin{description}
-                    \item[\textmd{4i.}] System fails to submit API access request form.
+                \textbf{Secondary Scenario}
+                \begin{quote}
                     \begin{description}
-                        \item[\textmd{4i.1}] System prompts user to contact IT support.
-                        \item[\textmd{4i.2}] User submits an IT support ticket.
-                        \item[\textmd{4i.3}] IT Support resolves the issue.
-                        \item[\textmd{4i.4}] User retries the API request.
+                        \item[\textmd{4i.}] System fails to submit API access request form.
+                        \begin{description}
+                            \item[\textmd{4i.1}] System prompts user to contact IT support.
+                        \end{description}
+
+                        \item[\textmd{5i.}] System detects invalid form fields.
+                        \begin{description}
+                            \item[\textmd{5i.1}] User is prompted to correct the form.
+                            \item[\textmd{5i.2}] User resubmits the request.
+                        \end{description}
+
+                        \item[\textmd{6i.}] Administrator rejects the request.
+                        \begin{description}
+                            \item[\textmd{6i.1}] User receives rejection notification.
+                            \item[\textmd{6i.2}] User reviews comments and returns to BE6-1.
+                        \end{description}
                     \end{description}
-                    \item[\textmd{5i.}] System detects invalid form fields.
-                    \begin{description}
-                        \item[\textmd{5i.1}] User is prompted to correct the form.
-                        \item[\textmd{5i.2}] User resubmits the request.
-                    \end{description}
-                    \item[\textmd{6i.}] Administrator rejects the request.
-                    \begin{description}
-                        \item[\textmd{6i.1}] User receives rejection notification.
-                        \item[\textmd{6i.2}] User reviews comments and returns to BE6-1.
-                    \end{description}
-                \end{description}
-            \end{quote}
-        \end{quote}
+                \end{quote}
 \end{enumerate}
 
-\begin{enumerate}[{\bf BE7.}]
+
+\begin{enumerate}[{\bf BE8.}]
 	\item Modify Account
 		\begin{enumerate}[{\bf VP1.}]
 			\item City Operators \\
@@ -1051,10 +1133,10 @@ Third-party developers request and interpret environmental data from the public 
                     \begin{enumerate}[1.]
                         \item User selects ``Request Account Modification''.
                         \item System displays an account modification page containing a request form.
-                        \item User enters the purpose of the request, organization affiliation, and developer credentials (if required).
+                        \item User enters the purpose of the request and organization affiliation.
                         \item User submits the account modification request form.
                         \item System records the account modification request.
-                        \item System notifies the user of the account modification decision.
+                        \item System notifies the user of successful account modification decision.
                         \item User opens the notification.
                         \item System displays confirmation of the change, updated permission details, and administrator comments.
                     \end{enumerate}
@@ -1067,16 +1149,9 @@ Third-party developers request and interpret environmental data from the public 
                             \item[\textmd{3i.1}] System prompts the user to correct the form and retry submission.
                         \end{description}
                         \item[\textmd{4i.}] System prompts user to contact customer support.
+                        \item[\textmd{6i.}] User receives a rejection notification.
                         \begin{description}
-                            \item[\textmd{4i.1}] User navigates to the customer support ticket page.
-                            \item[\textmd{4i.2}] User submits a support ticket describing the issue.
-                            \item[\textmd{4i.3}] IT Support responds with remediation instructions.
-                            \item[\textmd{4i.4}] User follows instructions and returns to BE7-1.
-                        \end{description}
-                        \item[\textmd{6i.}] Administrator rejects the account modification request.
-                        \begin{description}
-                            \item[\textmd{6i.1}] User receives a rejection notification.
-                            \item[\textmd{6i.2}] User reviews comments and returns to BE7-1.
+                            \item[\textmd{6i.1}] User reviews comments and returns to BE8-1.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -1085,14 +1160,16 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Pre-condition}: User has a valid Administrator SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item Administrator navigates to the admin dashboard.
-                        \item Administrator selects ``View Account Modification Request Tickets''.
-                        \item Administrator selects a ticket to view request details.
-                        \item Administrator adds review comments.
-                        \item Administrator approves the account modification request.
-                    \end{enumerate}
-                \end{quote}
+    \begin{description}
+        \item[\textmd{5.}] Administrator navigates to the admin dashboard.
+        \item[\textmd{6.}] Administrator selects ``View Account Modification Request Tickets''.
+        \item[\textmd{7.}] Administrator selects a ticket to view request details.
+        \item[\textmd{8.}] Administrator adds review comments.
+        \item[\textmd{9.}] Administrator approves the account modification request.
+        \item[\textmd{9i.}] Administrator rejects the request.
+    \end{description}
+\end{quote}
+
 
 			\item Third-Party Developers \\
                 \textbf{Pre-condition}: User has a valid Third-Party Developer SCHEMAS account and is logged in. \\
@@ -1101,7 +1178,7 @@ Third-party developers request and interpret environmental data from the public 
                     \begin{enumerate}[1.]
                         \item Developer selects ``Request Account Modification''.
                         \item System displays an account modification page containing a request form.
-                        \item Developer enters the purpose of the request, organization affiliation, and developer credentials (if required).
+                        \item Developer enters the purpose of the request, organization affiliation, and developer credentials.
                         \item Developer submits the account modification request form.
                         \item System records the account modification request.
                         \item System notifies the developer of the account modification decision.
@@ -1117,16 +1194,9 @@ Third-party developers request and interpret environmental data from the public 
                             \item[\textmd{3i.1}] System prompts the developer to correct the form and retry submission.
                         \end{description}
                         \item[\textmd{4i.}] System prompts developer to contact customer support.
+                        \item[\textmd{6i.}] Developer receives a rejection notification.
                         \begin{description}
-                            \item[\textmd{4i.1}] Developer navigates to the customer support ticket page.
-                            \item[\textmd{4i.2}] Developer submits a support ticket describing the issue.
-                            \item[\textmd{4i.3}] IT Support responds with remediation instructions.
-                            \item[\textmd{4i.4}] Developer follows instructions and returns to BE7-1.
-                        \end{description}
-                        \item[\textmd{6i.}] Administrator rejects the account modification request.
-                        \begin{description}
-                            \item[\textmd{6i.1}] Developer receives a rejection notification.
-                            \item[\textmd{6i.2}] Developer reviews comments and returns to BE7-1.
+                            \item[\textmd{6i.1}] Developer reviews comments and returns to BE8-1.
                         \end{description}
                     \end{description}
                 \end{quote}
@@ -1138,15 +1208,21 @@ Third-party developers request and interpret environmental data from the public 
                 \textbf{Pre-condition}: User has a registered IT Support SCHEMAS account and is logged in. \\
                 \textbf{Main Success Scenario}
                 \begin{quote}
-                    \begin{enumerate}[1.]
-                        \item IT Support navigates to the IT support ticket dashboard.
-                        \item IT Support selects a support ticket to view details.
-                        \item IT Support resolves the issue and documents actions taken.
-                    \end{enumerate}
-                \end{quote}
-		\end{enumerate}
-  
-    {\bf Global Scenario:}
+    \begin{description}
+        \item[\textmd{4i.}] System displays link to customer support page.
+        \begin{description}
+            \item[\textmd{4i.1}] IT Support navigates to the IT support ticket dashboard.
+            \item[\textmd{4i.2}] IT Support selects a support ticket to view details.
+            \item[\textmd{4i.3}] IT Support resolves the issue and documents actions taken.
+            \item[\textmd{4i.4}] IT Support closes the support ticket.
+        \end{description}
+    \end{description}
+\end{quote}
+
+
+        
+\end{enumerate}
+{\bf Global Scenario:}
         \begin{quote}
             \textbf{Pre-condition}: User has a valid Public User or Third-Party Developer SCHEMAS account and is logged in. \\
             \textbf{Main Success Scenario}
@@ -1170,20 +1246,18 @@ Third-party developers request and interpret environmental data from the public 
                         \item[\textmd{3i.1}] User is prompted to retry submission.
                     \end{description}
                     \item[\textmd{4i.}] System prompts user to contact customer support.
-                    \begin{description}
-                        \item[\textmd{4i.1}] User submits a support ticket.
-                        \item[\textmd{4i.2}] IT Support resolves the issue.
-                        \item[\textmd{4i.3}] User retries the modification request.
-                    \end{description}
                     \item[\textmd{9i.}] Administrator rejects the request.
                     \begin{description}
                         \item[\textmd{9i.1}] User receives rejection notification.
-                        \item[\textmd{9i.2}] User reviews comments and returns to BE7-1.
+                        \item[\textmd{9i.2}] User reviews comments and returns to BE8-1.
                     \end{description}
-                \end{description}
+                    \end{description}
             \end{quote}
         \end{quote}
 \end{enumerate}
+
+
+
 
 % End Section
 
@@ -1202,7 +1276,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{LF-A}1. ]
 	\item The system shall use a cool, non-distracting background that does not draw visual focus away from the operational dashboard content.\\
-	\textbf{Rationale:} SCEMAS is intended for monitoring environmental conditions. A background with colours that are not warm such as bright red/yellow ensures that users’ attention is reserved for critical dashboard elements such as metrics, dashboards, and alerts.
+	\textbf{Rationale:} \textbf{SCEMAS} is intended for monitoring environmental conditions. A background with colours that are not warm such as bright red/yellow ensures that users’ attention is reserved for critical dashboard elements such as metrics, dashboards, and alerts.
 	\item The system should use a consistent font family across all screens.\\
 	\textbf{Rationale:} A standardized font enhances the user experience by providing a consistent experience across all screens making it easier to navigate.
 	\item Visual alert indicators shall be designed to clearly stand out from non-critical information.\\
@@ -1401,10 +1475,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:expected_physical_environment}
 % Begin SubSubSection
 \begin{enumerate}[{OE-EPE}1. ]
-	\item SCEMAS shall operate in a cloud-hosted environment using commodity server infrastructure (virtual machines/containers) and shall not require any specialized physical hardware.\\
+	\item \textbf{SCEMAS} shall operate in a cloud-hosted environment using commodity server infrastructure (virtual machines/containers) and shall not require any specialized physical hardware.\\
     \textbf{Rationale:} The system should be deployable using free-tier or educational cloud resources, and sensor hardware is simulated rather than physically deployed.
     
-	\item SCEMAS shall support operation over standard internet connections and tolerate intermittent connectivity from simulated sensor publishers by continuing to run and ingest telemetry once connectivity resumes.\\
+	\item \textbf{SCEMAS} shall support operation over standard internet connections and tolerate intermittent connectivity from simulated sensor publishers by continuing to run and ingest telemetry once connectivity resumes.\\
     \textbf{Rationale:} IoT-style telemetry publishers may disconnect; the system should remain stable and continue ingesting when publishers reconnect.
 \end{enumerate}
 % End SubSubSection
@@ -1413,13 +1487,13 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:requirements_for_interfacing_with_adjacent_systems}
 % Begin SubSubSection
 \begin{enumerate}[{OE-IA}1. ]
-	\item SCEMAS shall ingest sensor telemetry through the MQTT protocol and validate each incoming message against a defined schema and plausible value ranges before storage.\\
-    \textbf{Rationale:} MQTT ingestion and validation are core requirements for reliable telemetry processing.
+	\item \textbf{SCEMAS} shall ingest sensor telemetry through the \textbf{MQTT} protocol and validate each incoming message against a defined schema and plausible value ranges before storage.\\
+    \textbf{Rationale:} \textbf{MQTT} ingestion and validation are core requirements for reliable telemetry processing.
     
-	\item SCEMAS shall expose a read-only REST API for public/third-party consumption that returns aggregated, non-sensitive environmental data.\\
+	\item \textbf{SCEMAS} shall expose a read-only REST API for public/third-party consumption that returns aggregated, non-sensitive environmental data.\\
     \textbf{Rationale:} The public-facing API must be read-only and provide aggregated data rather than sensitive/raw details.
     
-	\item When an alert is triggered, SCEMAS shall notify subscribed external systems through a dedicated notification API endpoint.\\
+	\item When an alert is triggered, \textbf{SCEMAS} shall notify subscribed external systems through a dedicated notification API endpoint.\\
     \textbf{Rationale:} External notifications on alert triggers are a required system capability.
 \end{enumerate}
 % End SubSubSection
@@ -1428,10 +1502,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:productization_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{OE-P}1. ]
-	\item SCEMAS shall provide configuration-driven deployment for thresholds, zone definitions, and alert rules so the same build can be used across environments (dev/test/demo).\\
+	\item \textbf{SCEMAS} shall provide configuration-driven deployment for thresholds, zone definitions, and alert rules so the same build can be used across environments (dev/test/demo).\\
     \textbf{Rationale:} Configuration-based behavior supports different setups without rebuilding code and better fits a reusable platform.
     
-	\item SCEMAS shall include clear operator and developer documentation, including public API documentation sufficient for a competent third-party developer to request and interpret data within two hours.\\
+	\item \textbf{SCEMAS} shall include clear operator and developer documentation, including public API documentation sufficient for a competent third-party developer to request and interpret data within two hours.\\
     \textbf{Rationale:} Good documentation is required so external developers can successfully use the API quickly.
 \end{enumerate}
 % End SubSubSection
@@ -1440,10 +1514,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:release_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{OE-R}1. ]
-	\item SCEMAS shall support separate deployment profiles for (at minimum) development and demonstration/staging, with distinct configuration for database endpoints, authentication secrets, and rate limits.\\
+	\item \textbf{SCEMAS} shall support separate deployment profiles for (at minimum) development and demonstration/staging, with distinct configuration for database endpoints, authentication secrets, and rate limits.\\
     \textbf{Rationale:} Separating environments reduces demo risk and avoids mixing secrets/data across deployments.
     
-	\item Each SCEMAS release shall be versioned and include a rollback strategy for the dashboard and API services.\\
+	\item Each \textbf{SCEMAS} release shall be versioned and include a rollback strategy for the dashboard and API services.\\
     \textbf{Rationale:} Cloud deployments can fail; rollback supports service continuity.
 \end{enumerate}
 % End SubSubSection
@@ -1459,10 +1533,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:maintenance_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{MS-M}1. ]
-	\item SCEMAS shall be designed as modular services/components (e.g., ingestion, alerting, storage, dashboard/API) so that changes to one component do not require rewriting unrelated components.\\
+	\item \textbf{SCEMAS} shall be designed as modular services/components (e.g., ingestion, alerting, storage, dashboard/API) so that changes to one component do not require rewriting unrelated components.\\
     \textbf{Rationale:} Modularity reduces regression risk and makes future extensions (new metrics, new rules) easier.
     
-	\item SCEMAS shall maintain automated logs for major runtime events (telemetry ingestion failures, validation rejections, alert triggers, and admin actions) to support debugging and ongoing maintenance.\\
+	\item \textbf{SCEMAS} shall maintain automated logs for major runtime events (telemetry ingestion failures, validation rejections, alert triggers, and admin actions) to support debugging and ongoing maintenance.\\
     \textbf{Rationale:} Logs are essential for diagnosing issues in distributed systems and supporting ongoing maintenance.
 \end{enumerate}
 % End SubSubSection
@@ -1471,10 +1545,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:supportability_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{MS-S}1. ]
-	\item SCEMAS shall provide a support-facing troubleshooting view or documented runbook steps that allow IT Support/Administrators to identify common failures (database unreachable, API rate-limit triggered) and the recommended recovery action.\\
+	\item \textbf{SCEMAS} shall provide a support-facing troubleshooting view or documented runbook steps that allow IT Support/Administrators to identify common failures (database unreachable, API rate-limit triggered) and the recommended recovery action.\\
     \textbf{Rationale:} Support needs a fast way to narrow down what broke in a multi-component system (ingestion + storage + dashboards + API).
     
-	\item SCEMAS shall provide user-facing error messages on the dashboard/API that are actionable (what happened + what to try next) without exposing sensitive internal details.\\
+	\item \textbf{SCEMAS} shall provide user-facing error messages on the dashboard/API that are actionable (what happened + what to try next) without exposing sensitive internal details.\\
     \textbf{Rationale:} Clear errors reduce support load, and avoiding internal details supports secure operations.
 \end{enumerate}
 % End SubSubSection
@@ -1483,10 +1557,10 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:adaptability_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{MS-A}1. ]
-	\item SCEMAS shall allow new sensor types/metrics to be introduced by extending the telemetry schema and validation rules, without changing the operator dashboard’s core navigation or authentication flow.\\
+	\item \textbf{SCEMAS} shall allow new sensor types/metrics to be introduced by extending the telemetry schema and validation rules, without changing the operator dashboard’s core navigation or authentication flow.\\
     \textbf{Rationale:} Monitoring evolves; the system should adapt to new indicators while keeping the operator experience stable.
     
-	\item SCEMAS shall be adaptable to multiple deployment providers (or local containers for demos) by avoiding provider-specific hard dependencies in core logic.\\
+	\item \textbf{SCEMAS} shall be adaptable to multiple deployment providers (or local containers for demos) by avoiding provider-specific hard dependencies in core logic.\\
     \textbf{Rationale:} Teams may switch hosting/deployment options; portability reduces rework.
 \end{enumerate}
 % End SubSubSection
@@ -1507,8 +1581,8 @@ Third-party developers request and interpret environmental data from the public 
     \item The system must support multi-factor authentication (MFA) for administrative accounts. \\
     \textbf{Rationale}: MFA helps by eliminating the possibility of compromising the credentials of an administrators account. This is crucial, since the administrator is a high-privilege user who can define alert rules, and view sensitive system information \cite{canSecure}.
 
-    \item The system must enforce Role-Base Access Control (RBAC) to distinguish between the different user groups, such as administrator, city operator, and read-only public users. \\
-    \textbf{Rationale}: Enforcing an RBAC policy ensures that each user group can only perform actions that are appropriate to their respective role. This helps to reduce accidental misuse of the systems functions. 
+    \item The system must enforce Role-Base Access Control (\textbf{RBAC}) to distinguish between the different user groups, such as administrator, city operator, and read-only public users. \\
+    \textbf{Rationale}: Enforcing an \textbf{RBAC} policy ensures that each user group can only perform actions that are appropriate to their respective role. This helps to reduce accidental misuse of the systems functions. 
 
     \item The system must lock out a user account after five consecutive failed login attempts. \\
     \textbf{Rationale}: Protects against repeated attempts of trying to login to an account that does not belong to the respective individual \cite{canUserAuth}.
@@ -1663,7 +1737,7 @@ An innovative feature that could be added is an included simulation feature that
     \begin{itemize}
         \item Helped devise the list of viewpoints.
         \item Wrote the LaTeX code structure for business events.
-        \item Wrote BE1-BE5.
+        \item Wrote BE1-BE6.
     \end{itemize}
     \item Non-Functional Requirements: 5.6, 5.7
     \item Organized storage and display of figures. 
@@ -1681,8 +1755,28 @@ An innovative feature that could be added is an included simulation feature that
 
 \noindent \textbf{Vikram Chandar}
 \begin{itemize}
-    \item 
+    \item Revised 1.2 Scope and 2.1 Product Perspective
+    \item 1.3 Definitions, Acronyms, and Abbreviation
+    \item Revised 2.2 Product Functions as a Group
+    \item 2.5 Assumptions and Dependencie
+    \item Functional Requirements
+    \begin{itemize}
+        \item Helped create the list of viewpoints as a team
+        \item Wrote BE6,BE7.
+    \end{itemize}
+    \item 5.1 Look and Feel Requirement
+    \item 5.2 Style Requirements
+    \item 6 - Thought of innovative feature and adapted project around this feature.
+
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[width=10cm]{signatures/IMG_4568.jpg}
+    \\\vspace{0.2cm}
+    Date: February 13, 2025 
+    \vspace{0.5cm}
 \end{itemize}
+
+
 
 \noindent \textbf{Trisha Panchal}
 \begin{itemize}
@@ -1691,8 +1785,21 @@ An innovative feature that could be added is an included simulation feature that
 
 \noindent \textbf{Yug Vashisth}
 \begin{itemize}
-    \item 
+    \item Introduction
+    \item Overview (1.5)
+    \item 2.1 Product Purpose
+    \item Figure 1(2.1) Diagram
+    \item Wrote the Origial BE5 (now revised by and combined with other BE)
+    \item 5.4	Operational and Environmental Requirements 
+    \item 5.5  Maintainability and Support Requirements
+    \item General team contributions, engaging in discussions, helping create ideas etc.
 \end{itemize}
+\vspace{0.5cm}
+    \centering
+    \includegraphics[width=10cm]{signatures/yug_sig.jpg}
+    \\\vspace{0.2cm}
+    Date: February 14, 2025 
+    \vspace{0.5cm}
 
 \noindent \textbf{Hamza Nadeem}
 \begin{itemize}
@@ -1714,24 +1821,12 @@ An innovative feature that could be added is an included simulation feature that
     
     \vspace{0.5cm}
     \centering
-    \includegraphics[width=10cm]{signatures/hamza_nadeem_signature.jpeg}
+    \includegraphics[width=5cm]{signatures/hamza_nadeem_signature.jpeg}
     \\\vspace{0.2cm}
     Date: February 13, 2025 
     \vspace{0.5cm}
 \end{itemize}
 % End Section
-
-%\newpage
-%\section*{IMPORTANT NOTES}
-%\begin{itemize}
-%	\item Be sure to include all sections of the template in your document regardless whether you have something to write for each or not
-%	\begin{itemize}
-%		\item If you do not have anything to write in a section, indicate this by the \emph{N/A}, \emph{void}, \emph{none}, etc.
-%	\end{itemize}
-%	\item Uniquely number each of your requirements for easy identification and cross-referencing
-%	\item Highlight terms that are defined in Section~1.3 (\textbf{Definitions, Acronyms, and Abbreviations}) with \textbf{bold}, \emph{italic} or \underline{underline}
-%	\item For Deliverable 1, please highlight, in some fashion, all (you may have more than one) creative and innovative features. Your creative and innovative features will generally be described in Section~2.2 (\textbf{Product Functions}), but it will depend on the type of creative or innovative features you are including.
-%\end{itemize}
 
 
 \end{document}
