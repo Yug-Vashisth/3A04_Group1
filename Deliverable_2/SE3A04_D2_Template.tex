@@ -10,6 +10,7 @@
 \usepackage{fancyhdr}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage{float} % added to insert tables & figures in the place they are written
 %\usepackage{extarrows}
 %\usepackage{setspace}
 %------------------------------------------------------------------------------
@@ -73,20 +74,27 @@ This section should provide an brief overview of the entire document.
 \subsection{Purpose}
 \label{sub:purpose}
 % Begin SubSection
-State the purpose and intended audience for the document.
+State the purpose and intended audience for the document.\\\\
+This document is intended to provide a high-level overview of the SCEMAS system architecture design as well as considerations for various subsystems that are a part of SCEMAS.\\
+The intended audience for this document is stakeholders of SCEMAS, including developers and testers. SCEMAS deliverable 1 would serve as a necessary document to aid in understanding this document.
+
+
 % End SubSection
 
 \subsection{System Description}
 \label{sub:system_description}
 % Begin SubSection
-Give a brief description of the system. This could be a paragraph or two to give some context to this document.
+Give a brief description of the system. This could be a paragraph or two to give some context to this document.\\\\
+The SCEMAS system is designed to collect, process, analyze, and display environmental data from sensors placed throughout a city. Its main purpose is to serve as a monitoring system that evaluates and alerts users based on set environmental parameters. The system will evaluate sensor data against environmental level thresholds. When data exceeds thresholds, the system will send an alert for users to view and act on.\\
+The system will provide a private dashboard for city officials and a public API for public users.
 
 % End SubSection
 
 \subsection{Overview}
 \label{sub:overview}
 % Begin SubSection
-Describe what the rest of the document contains and explain how the document is organised (e.g. "In Section 2 we discuss...in Section 3...").
+Describe what the rest of the document contains and explain how the document is organised (e.g. "In Section 2, we discuss...in Section 3...").\\\\
+In Section 2 of this document, an analysis class diagram is provided for SCEMAS. In Section 3, the document covers the architectural design of the system, including architecture choices, justifications, a structural architecture diagram, and design alternatives that were considered. Finally, in Section 4, the document provides Class Responsibility Collaboration Cards that help further detail the connections of each class from the analysis class diagram from Section 2.
 
 % End SubSection
 
@@ -95,7 +103,7 @@ Describe what the rest of the document contains and explain how the document is 
 \section{Analysis Class Diagram}
 \label{sec:analysis_class_diagram}
 % Begin Section
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{./assets/analysis class.jpg}
     \caption{Analysis Class Diagram}
@@ -119,13 +127,45 @@ This section should provide an overview of the overall architectural design of y
 	\item Provide a structural architecture diagram showing the relationship among the subsystems (if appropriate)
 	\item List any design alternatives you considered, but eliminated (and explain why you eliminated them)
 \end{itemize}
+
+\subsubsection{Considered Design Alternatives} 
+\textbf{Model-View-Controller (MVC)} \\
+The MVC architectural pattern was considered because the system uses web dashboards to display environmental data. MVC is best used to organize interactive applications where a single central model supports multiple views, and user interactions are the main concern of the system. It is especially well suited for UI-based systems that focus on maintaining consistency between the interface and data. The SCEMAS software contains multiple complex components (telemetry ingestion, alert management, rule evaluation, etc.), which each have their own logic and control flow, with data changing and different periods and frequencies. As these components must be coordinated at a system level, is is challenging to maintain the structure with a PAC architecture. MVC assumes a centralized structure between the model, view, and controller, which does not support the hierarchical structure that PAC offers. \\
+
+\noindent \textbf{Blackboard} \\
+The Blackboard architecture was considered since the system involves multiple subsystems that interact with a centralized data store. Blackboard is most appropriate for subsystems in which agents collaborate by contributing partial solutions to a problem stored in the blackboard. 
+This architecture was eliminated since SCEMAS does not involve collaborative problem-solving among knowledge sources. Its subsystems do not compete, or contribute partial solutions. Instead, interactions with the data store are agent-driven, through read and writes. The data store therefore simply acts as passive storage. Since there is no need for agents to incrementally work on a shared solution state, the blackboard would simply introduce unnecessary coordination complexity. \\
+
+\noindent \textbf{Batch Sequential Architecture} \\
+NEED TO ADD THIS SECTION.
 % End SubSection
 
 \subsection{Subsystems}
 \label{sub:subsystems}
 % Begin SubSection
- Provide a list of your subsystems, with a brief description of each. Be sure to document its purpose and relationship to other subsystems.
+The system has been divided into three primary subsystems: 
+\begin{enumerate}
+    \item Alert Management
+    \item Account Management 
+    \item Dashboard
+    \item Public API
+\end{enumerate}
+\subsubsection{Alert Management Subsystem}
+The Alert Management subsystem is responsible for evaluating the environmental data against the predefined rules and to generate alerts when the system detects a threshold violation. This may include environmental events such as wildfire risks, extreme heat conditions, or potential for natural disasters, such as hurricanes. The subsystem manages the life cycle of these alerts, including when they are created, confirmed, and resolved. It is also responsible for  maintaining a history of all logged alerts, and their current status. This isolation of concerns helps to ensure high-cohesion of alert functionalities, and maintain loose coupling with storage and presentation components.\\
 
+\noindent This subsystem is responsible for interacting with the Repository and Dashboard subsystem. It needs to communicate with the Repository to retrieve the environmental data required for alert evaluation. Its interactions with the Dashboard are essential to provide real-time updates on the status of a particular alert. When a threshold violation is detected, the subsystem generates a corresponding alert event, which is uploaded to the dashboard for City Operators to view. 
+
+\subsubsection{Account Management Subsystem}
+The Account Management subsystem is responsible for authenticating and authorizing the different users of the system, and ensure that role-based access control (RBAC) is sustained. It allows for users to register, log in, and manage their account details. It also defines the different user roles (city operators, public users), and ensures that only those who have permission to access a specific functionality are able to do so. Separating these details into its own subsystem is essential to help enhance the overall security while ensuring that authentication operates independently. \\
+
+\noindent Like the Alert Management subsystem, it also needs to collaborate with the Repository. This is needed to securely store user information and profile details.
+
+\subsubsection{Dashboard Subsystem}
+The dashboard subsystem is essential for providing an interface to display environmental data and alerts. It displays the real-time sensor readings, paleographical maps, sensor locations, and environmental metrics. This is fundamental for allowing city operators to monitor environmental conditions, and make necessary responses. \\
+% End SubSection
+
+\subsubsection{Public API Subsystem}
+NEED TO ADD THIS SECTION.
 % End SubSection
 
 % End Section
@@ -138,11 +178,310 @@ This section should contain all of your CRC cards.
 \begin{itemize}
 	\item Provide a CRC Card for each identified class
 	\item Please use the format outlined in tutorial, i.e., 
-	\begin{table}[ht]
+	\begin{table}[H]
 		\centering
 		\begin{tabular}{|p{5cm}|p{5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name:}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Main Dashboard Controller}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+        Knows Main Dashboard & Main Dashboard \\
+        Knows Account Management & Account Management \\
+        Knows Admin Dashboard Controller & Admin Dashboard Controller \\ 
+        Knows Alert Management & Alert Management\\
+        Knows API Controller  & API Controller \\
+        Facilitates communication regarding overall dashboard structure &\\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Management}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Database}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Create Alert Rule}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Alert Rule}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Remove Alert Rule}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert History}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Rule Violated}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Confirm Alert Violated}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Main Dashboard}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: API Controller}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+        Knows API Documentation & API Documentation \\
+        Knows API DB & API DB \\
+        Knows Main Dashboard Controller &  Main Dashboard Controller \\
+        Facilitates communication and implementation of API calls & \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: API Documentation}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+        Knows API Controller & API Controller \\
+        Responsible for displaying API documentation for developers &\\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: API Database}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+        Knows API Controller & API Controller \\
+        Knows Endpoints & \\
+        Knows active and inactive routes & \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Admin Dashboard Controller}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+        Knows Main Dashboard Controller & Main Dashboard \\
+        Knows Admin Dashboard & Admin Dashboard \\
+        Knows Admin DB & Admin DB \\ 
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Admin Dashboard}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+        Knows Admin Dashboard Controller & Admin Dashboard Controller \\
+        Responsible for displaying administrator action interface & \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Admin Database}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+        Knows Admin Dashboard Controller & Admin Dashboard Controller \\
+        Knows Admin privileges & \\
+        Knows Admin action log history & \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Management}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Create Account}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Account}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Login}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Settings}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: View Account}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Database}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+    \begin{table}[H]
+		\centering
+		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\hline 
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Account}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
@@ -158,7 +497,40 @@ This section should contain all of your CRC cards.
 \section{Division of Labour}
 \label{sec:division_of_labour}
 % Begin Section
-Include a Division of Labour sheet which indicates the contributions of each team member. This sheet must be signed by all team members.
+
+\noindent \textbf{Benjamin Bloomfield} 
+\begin{itemize}
+    \item 3.1 - Justification of considered architectures that were not chosen.
+    \item 3.2.1 Subsystem descriptions.
+
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[width=10cm]{signatures/ben_bloomfield_signature.jpg}
+    \\\vspace{0.2cm}
+    Date: March Xth, 2025 
+    \vspace{0.5cm}
+\end{itemize}
+
+
+\noindent \textbf{Vikram Chandar}
+\begin{itemize}
+    \item 
+\end{itemize}
+
+\noindent \textbf{Trisha Panchal}
+\begin{itemize}
+    \item 
+\end{itemize}
+
+\noindent \textbf{Yug Vashisth}
+\begin{itemize}
+    \item 
+\end{itemize}
+
+\noindent \textbf{Hamza Nadeem}
+\begin{itemize}
+    \item 
+\end{itemize}
 % End Section
 
 
