@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  14 FEB 2026 19:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  15 FEB 2026 22:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -354,7 +354,7 @@ LaTeX Warning: The counter will not be printed.
 [18]
 
 LaTeX Warning: The counter will not be printed.
-             The label is: \bf BE8. on input line 1115.
+             The label is: \bf BE8. on input line 1119.
 
 
 
@@ -380,32 +380,32 @@ LaTeX Warning: The counter will not be printed.
 <signatures/ben_bloomfield_signature.jpg, id=103, 1027.84pt x 320.19624pt>
 File: signatures/ben_bloomfield_signature.jpg Graphic file (type jpg)
 <use signatures/ben_bloomfield_signature.jpg>
-Package pdftex.def Info: signatures/ben_bloomfield_signature.jpg  used on input line 1748.
+Package pdftex.def Info: signatures/ben_bloomfield_signature.jpg  used on input line 1744.
 (pdftex.def)             Requested size: 284.52756pt x 88.63808pt.
 
 
-[29]
+[29 <./signatures/ben_bloomfield_signature.jpg>]
 <signatures/IMG_4568.jpg, id=107, 419.4069pt x 176.5797pt>
 File: signatures/IMG_4568.jpg Graphic file (type jpg)
 <use signatures/IMG_4568.jpg>
-Package pdftex.def Info: signatures/IMG_4568.jpg  used on input line 1773.
+Package pdftex.def Info: signatures/IMG_4568.jpg  used on input line 1769.
 (pdftex.def)             Requested size: 284.52756pt x 119.80045pt.
-
-
-[30 <./signatures/ben_bloomfield_signature.jpg> <./signatures/IMG_4568.jpg>]
-<signatures/yug_sig.jpg, id=111, 411.5375pt x 156.585pt>
+<signatures/yug_sig.jpg, id=108, 411.5375pt x 156.585pt>
 File: signatures/yug_sig.jpg Graphic file (type jpg)
 <use signatures/yug_sig.jpg>
-Package pdftex.def Info: signatures/yug_sig.jpg  used on input line 1799.
+Package pdftex.def Info: signatures/yug_sig.jpg  used on input line 1795.
 (pdftex.def)             Requested size: 284.52756pt x 108.25879pt.
+
+
+[30 <./signatures/IMG_4568.jpg> <./signatures/yug_sig.jpg>]
 <signatures/hamza_nadeem_signature.jpeg, id=112, 893.3375pt x 898.35625pt>
 File: signatures/hamza_nadeem_signature.jpeg Graphic file (type jpg)
 <use signatures/hamza_nadeem_signature.jpeg>
-Package pdftex.def Info: signatures/hamza_nadeem_signature.jpeg  used on input line 1818.
+Package pdftex.def Info: signatures/hamza_nadeem_signature.jpeg  used on input line 1820.
 (pdftex.def)             Requested size: 142.26378pt x 143.05453pt.
 
 
-[31 <./signatures/yug_sig.jpg> <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>] (./SE3A04_D1_Template.aux)
+[31 <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>] (./SE3A04_D1_Template.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -418,9 +418,9 @@ Here is how much of TeX's memory you used:
  27101 multiletter control sequences out of 15000+600000
  567381 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,6n,65p,1655b,464s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,6n,65p,1655b,468s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on SE3A04_D1_Template.pdf (31 pages, 696511 bytes).
+Output written on SE3A04_D1_Template.pdf (31 pages, 696125 bytes).
 PDF statistics:
  149 PDF objects out of 1000 (max. 8388607)
  93 compressed objects within 1 object stream
