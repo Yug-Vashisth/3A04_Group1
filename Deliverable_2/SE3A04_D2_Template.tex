@@ -196,16 +196,31 @@ This section should contain all of your CRC cards.
 		\hline
 		\end{tabular}
 	\end{table}
-    \begin{table}[H]
+	\begin{table}[H]
 		\centering
         \caption{CRC Card for Alert Management Controller}
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Management Controller}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
-		\vspace{1in} & \\
+        \hline
+            Knows Alert Database \newline
+            Knows Create Alert Rule \newline
+            Knows Modify Alert Rule \newline 
+            Knows Remove Alert Rule \newline
+            Knows Alert Rule Violated \newline
+            Knows Confirm Alert Rule Violated \newline
+            Knows Alert History \newline
+            & 
+            Alert Database \newline
+            Create Alert Rule \newline
+            Modify Alert Rule \newline 
+            Remove Alert Rule \newline
+            Alert Rule Violated \newline
+            Confirm Alert Rule Violated \newline
+            Alert History \\
+		\vspace{-1in} & \\
 		\hline
 		\end{tabular}
 	\end{table}
@@ -225,39 +240,55 @@ This section should contain all of your CRC cards.
     \begin{table}[H]
 		\centering
         \caption{CRC Card for Creating an Alert Rule}
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Create Alert Rule (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
-		\vspace{1in} & \\
+        Handles interfacing for creating new alert rules \newline
+        Collects and validates alert rule parameters \newline
+        Sends the creation request to the Alert Management Controller \newline     
+        & 
+        Alert Management Controller \\
+		\vspace{-1in} & \\
 		\hline
 		\end{tabular}
 	\end{table}
     \begin{table}[H]
 		\centering
         \caption{CRC Card for Modifying an Alert Rule}
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Alert Rule (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
-		\vspace{1in} & \\
+        Handles interfacing for updating alert rules \newline
+        Displays current rule information \newline
+        Validates rule modifications \newline
+        Sends the modification request to the Alert Management Controller \newline
+        & 
+        Alert Management Controller \\
+		\vspace{-1in} & \\
 		\hline
 		\end{tabular}
 	\end{table}
     \begin{table}[H]
 		\centering
         \caption{CRC Card for Removing an Alert Rule}
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Remove Alert Rule (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
-		\vspace{1in} & \\
+        Handles interfacing for deleting an alert rule \newline
+        Allows users to select an alert rule for removal \newline
+        Sends deletion request to the Alert Management Controller \newline
+        & 
+        Alert Management Controller \\
+		\vspace{-1in} & \\
 		\hline
 		\end{tabular}
 	\end{table}
@@ -274,29 +305,39 @@ This section should contain all of your CRC cards.
 		\hline
 		\end{tabular}
 	\end{table}
-    \begin{table}[H]
+	\begin{table}[H]
 		\centering
-        \caption{CRC Card for Removing an Alert Rule Violation}
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+        \caption{CRC Card for Alert Rule Violation}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Rule Violated (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
-		\vspace{1in} & \\
+        Notifies the system when environmental data violates an alert rule \newline
+        Sends violation notifications to dashboards or user \newline
+        Sends violation information to the Alert Management Controller \newline
+        & 
+        Alert Management Controller \\
+		\vspace{-1in} & \\
 		\hline
 		\end{tabular}
 	\end{table}
     \begin{table}[H]
 		\centering
-        \caption{CRC Card for Confirming an Alert Violation}
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+        \caption{CRC Card for Confirming an Alert Rule Violation}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Confirm Alert Violated (Boundary)}} \\
+		 \multicolumn{2}{|l|}{\textbf{Class Name: Confirm Alert Rule Violated (Boundary)}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
-		\vspace{1in} & \\
+        Allow city operators to confirm a detected alert violation \newline
+        Display the details of the alert event \newline
+        Send confirmation status to the Alert Management Controller \newline
+        & 
+        Alert Management Controller \\
+		\vspace{-1in} & \\
 		\hline
 		\end{tabular}
 	\end{table}
@@ -763,14 +804,23 @@ This section should contain all of your CRC cards.
 
 \noindent \textbf{Benjamin Bloomfield} 
 \begin{itemize}
-    \item 3.1 - Justification of considered architectures that were not chosen.
+    \item 3.1: Justification of considered architectures that were not chosen.
     \item 3.2.1 Subsystem descriptions.
+    \item 4. CRC Cards:
+    \begin{itemize}
+        \item Alert Management Controller
+        \item Create Alert Rule 
+        \item Modify Alert Rule 
+        \item Remove Alert Rule
+        \item Alert Rule Violated
+        \item Confirm Alert Rule Violated
+    \end{itemize}
 
     \vspace{0.5cm}
     \centering
     \includegraphics[width=10cm]{signatures/ben_bloomfield_signature.jpg}
     \\\vspace{0.2cm}
-    Date: March Xth, 2025 
+    Date: March 7th, 2025 
     \vspace{0.5cm}
 \end{itemize}
 
