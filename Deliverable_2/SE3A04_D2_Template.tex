@@ -148,12 +148,17 @@ This section should contain all of your CRC cards.
 	\item Please use the format outlined in tutorial, i.e., 
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Main Dashboard Controller}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
+        Knows Main Dashboard & Main Dashboard\\
+        Knows Alert Management & Alert Management\\
+        Knows Citywide Dashboard Controller & Citywide Dashboard Controller\\
+        Knows Admin Dashboard Controller & Admin Dashboard Controller\\
+        Knows Account Management & Account Management\\
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
@@ -172,12 +177,14 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Alert Database}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
+        Knows Alert Management & Alert Management\\
+        Handles overall alert storage
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
@@ -226,6 +233,8 @@ This section should contain all of your CRC cards.
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
+        Knows Alert Management & Alert Management\\
+        Handles alert log storage
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
@@ -256,12 +265,14 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: Main Dashboard}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
+        Knows Main Dashboard Controller & Main Dashboard Controller\\
+        Handles display of main dashboard
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
@@ -424,24 +435,29 @@ This section should contain all of your CRC cards.
 	\end{table}
     \begin{table}[H]
 		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: City Wide Dashboard Controller}} \\
 		\hline
 		\textbf{Responsibility:} & \textbf{Collaborators:} \\
 		\hline
+        Knows City Wide Dashboard & City Wide Dashboard\\
+        Knows Main Dashboard Controller & Main Dashboard Controller\\
+        Knows District Dashboard Controller & District Dashboard Controller \\
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
 	\end{table}
     \begin{table}[H]
 		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
 		 \multicolumn{2}{|l|}{\textbf{Class Name: City Dashboard}} \\
 		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\textbf{Responsibility: } & \textbf{Collaborators:} \\
 		\hline
+        Knows City Dashboard Controller & City Dashboard Controller\\
+        Handles display of city dashboard
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
