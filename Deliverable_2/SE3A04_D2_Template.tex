@@ -137,7 +137,10 @@ The Blackboard architecture was considered since the system involves multiple su
 This architecture was eliminated since SCEMAS does not involve collaborative problem-solving among knowledge sources. Its subsystems do not compete, or contribute partial solutions. Instead, interactions with the data store are agent-driven, through read and writes. The data store therefore simply acts as passive storage. Since there is no need for agents to incrementally work on a shared solution state, the blackboard would simply introduce unnecessary coordination complexity. \\
 
 \noindent \textbf{Batch Sequential Architecture} \\
-NEED TO ADD THIS SECTION.
+The Batch Sequential Architecture is designed for systems that process data in discrete batches. Each processing stage must complete before the next stage starts, meaning that data flows linearly. SCEMAS, however, requires real-time (continuous) processing of environmental telemetry. Sensor data must be evaluated in real time to generate rule violations and environmental alerts without delay. Since the Batch Sequential architecture relies on periodic batch execution, it would introduce latency and prevent timely alert generation. Therefore, the Batch Sequential architecture was not selected. \\
+
+\noindent \textbf{Additional Data Flow Architectures} \\
+The Pipe-and-Filter and Process-Control architectural styles were not considered as design alternatives because they had not yet been introduced in the course lectures when the architectures were discussed.
 % End SubSection
 
 \subsection{Subsystems}
