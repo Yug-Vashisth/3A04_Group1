@@ -116,7 +116,8 @@ In Section 2 of this document, an analysis class diagram is provided for SCEMAS.
 \section{Architectural Design}
 \label{sec:architectural_design}
 % Begin Section
-This section should provide an overview of the overall architectural design of your application. Your overall architecture should show the division of the system into subsystems with high cohesion and low coupling.
+% This section should provide an overview of the overall architectural design of your application. Your overall architecture should show the division of the system into subsystems with high cohesion and low coupling.
+This section provides an overview of the overall architectural design of SCEMAS.
 
 \subsection{System Architecture}
 \label{sub:system_architecture}
@@ -135,6 +136,40 @@ This section should provide an overview of the overall architectural design of y
 % 	\item Provide a structural architecture diagram showing the relationship among the subsystems (if appropriate)
 % 	\item List any design alternatives you considered, but eliminated (and explain why you eliminated them)
 % \end{itemize}
+
+\subsubsection{Choice of Architecture} 
+
+SCEMAS utilizes an Interaction-Oriented Software Architecture, specifically the Presentation-Abstraction-Control (PAC) architecture style, in combination with the 
+Data-Centered Repository architecture style. The PAC structure supports SCEMAS's interactive and interface-driven behaviour, while the Repository acts as the centralized 
+data backbone that stores all environmental telemetry, alert information, administrative data, and account records.
+
+The PAC architecture was selected, as it separates an interactive system into a hierarchy of cooperating agents, each with its own presentation logic, abstraction 
+logic, and control component. This structure aligns well with SCEMAS, where multiple interactive components must operate independently while still coordinating at a higher level. PAC allows each component to maintain high cohesion, as each agent encapsulates its own interaction and domain logic. At the same time, it minimizes coupling between agents, as communication flows strictly through their controllers. This supports flexibility, ease of extension, and adherence to the Open-Closed Principle: new dashboards, alert interfaces, or user-facing views can be added as independent PAC agents without requiring modification of the existing structure.
+
+The Repository architecture complements PAC by providing a passive, centralized data store with consistent and uniform access mechanisms. All environmental readings, alert rules, alert histories, and account-related data are contained within the repository. This allows PAC agents to retrieve and update data without needing to coordinate with each other; hence, this passive data store ensures low coupling between subsystems. The repository also supports data integrity, scalability, and concurrency, all of which are required for real-time environmental monitoring. The combination of PAC and the Repository thus establishes a system with strong modularity, high cohesion in each interactive agent, and low coupling across subsystem boundaries.
+
+Within the main system controller, several high-level architectural groupings are defined as summarized in Table~\ref{tab:arch-overview}. These groupings reflect the interaction-oriented agents and the centralized repositories that support them.
+
+\begin{table}[H]
+\centering
+\caption{Overview of Architectural Groupings in SCEMAS}
+\label{tab:arch-overview}
+\begin{tabular}{|p{4cm}|p{6.5cm}|p{4cm}|}
+\hline
+\textbf{Grouping} & \textbf{Purpose} & \textbf{Architectural Style} \\
+\hline
+Alert & Store alert rules, alert history, and violation events & Repository \\
+\hline
+Account & Maintain user accounts, authentication data, and role permissions & Repository \\
+\hline
+Admin & Maintain administrative configurations and internal system records & Repository \\
+\hline
+% Interactive Agents & Handle user interactions, visual displays, and control logic for system features & PAC \\
+% \hline
+Sensor Data & Store sensor readings, environmental metrics, and related data & Repository \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Considered Design Alternatives} 
 \textbf{Model-View-Controller (MVC)} \\
@@ -975,7 +1010,7 @@ Forest Health Dashboard Controller \\
     \item 3.1:
 	\begin{itemize}
 		\item Identification and justification of the choice of overall architecture.
-		\item Consideration of eliminated design alternatives.
+		\item Considered design alternatives.
 		\item Structural architecture diagram.
 	\end{itemize}
 	\item 4. CRC Cards:
