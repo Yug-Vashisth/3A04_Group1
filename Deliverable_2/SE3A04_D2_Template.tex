@@ -117,17 +117,10 @@ In Section 2 of this document, an analysis class diagram is provided for SCEMAS.
 \label{sec:architectural_design}
 % Begin Section
 % This section should provide an overview of the overall architectural design of your application. Your overall architecture should show the division of the system into subsystems with high cohesion and low coupling.
-This section provides an overview of the overall architectural design of SCEMAS.
+This section provides an overview of the architectural design of SCEMAS.
 
 \subsection{System Architecture}
 \label{sub:system_architecture}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{./assets/d2_arch.drawio.png}
-    \caption{Structural Architecture Diagram for SCEMAS}
-    \label{fig:architecture-diagram}
-\end{figure}
-
 % Begin SubSection
 % \begin{itemize}
 % 	\item Identify and explain the overall architecture of your system
@@ -145,31 +138,38 @@ data backbone that stores all environmental telemetry, alert information, admini
 \noindent The PAC architecture was selected, as it separates an interactive system into a hierarchy of cooperating agents, each with its own presentation logic, abstraction 
 logic, and control component. This structure aligns well with SCEMAS, where multiple interactive components must operate independently while still coordinating at a higher level. PAC allows each component to maintain high cohesion, as each agent encapsulates its own interaction and domain logic. At the same time, it minimizes coupling between agents, as communication flows strictly through their controllers. This supports flexibility, ease of extension, and adherence to the Open-Closed Principle: new dashboards, alert interfaces, or user-facing views can be added as independent PAC agents without requiring modification of the existing structure. \\
 
-\noindent The Repository architecture complements PAC by providing a passive, centralized data store with consistent and uniform access mechanisms. All environmental readings, alert rules, alert histories, and account-related data are contained within the repository. This allows PAC agents to retrieve and update data without needing to coordinate with each other; hence, this passive data store ensures low coupling between subsystems. The repository also supports data integrity, scalability, and concurrency, all of which are required for real-time environmental monitoring. The combination of PAC and the Repository thus establishes a system with strong modularity, high cohesion in each interactive agent, and low coupling across subsystem boundaries. \\
+\noindent A potential drawback of PAC is the added architectural complexity when expanding a system with many agents, since each new interactive feature introduces one or more controllers. In SCEMAS, this issue is mitigated through the hierarchical organization of agents: new environmental dashboards can be added simply by introducing a corresponding environmental controller, without modifying the main dashboard controller or district controllers. Likewise, adding new districts only requires defining a new district-level controller, preserving modularity while preventing controller proliferation from impacting existing components. This structured hierarchy keeps PAC manageable even as SCEMAS expands. \\
 
-\noindent Within the main system controller, several high-level architectural groupings are defined as summarized in Table~\ref{tab:arch-overview}. These groupings reflect the interaction-oriented agents and the centralized repositories that support them.
+\noindent The Repository architecture complements PAC by providing a passive, centralized data store with consistent and uniform access mechanisms. All environmental readings, alert rules, alert histories, administrative records, and account-related data are contained within the repository. This allows PAC agents to retrieve and update data without needing to coordinate with each other; hence, this passive data store ensures low coupling between subsystems. The repository supports data integrity, scalability, and concurrent access, all of which are necessary for real-time environmental monitoring. While a centralized repository may be a single point of failure, SCEMAS mitigates this risk through redundancy strategies to ensure high availability and maintainability. \\
 
+\noindent The hybrid architecture establishes a system with strong modularity, high cohesion in each interactive agent, and low coupling across subsystem boundaries. Thus, the resulting architecture balances simplicity, reliability, and extensibility. The overarching architectural groupings are summarized in Table~\ref{tab:arch-overview}, where each represent the architectural styles that structure SCEMAS at a high level.
 
 \begin{table}[H]
-\centering
-\caption{Overview of Architectural Groupings in SCEMAS}
-\label{tab:arch-overview}
-\begin{tabular}{|p{4cm}|p{6.5cm}|p{4cm}|}
-\hline
-\textbf{Grouping} & \textbf{Purpose} & \textbf{Architectural Style} \\
-\hline
-Alert & Store alert rules, alert history, and violation events & Repository \\
-\hline
-Account & Maintain user accounts, authentication data, and role permissions & Repository \\
-\hline
-Admin & Maintain administrative configurations and internal system records & Repository \\
-\hline
-% Interactive Agents & Handle user interactions, visual displays, and control logic for system features & PAC \\
-% \hline
-Sensor Data & Store sensor readings, environmental metrics, and related data & Repository \\
-\hline
-\end{tabular}
+    \centering
+    \caption{Architectural Groupings in SCEMAS}
+    \label{tab:arch-overview}
+    \vspace{1mm}
+    \begin{tabular}{|p{4cm}|p{8cm}|p{3cm}|}
+    \hline 
+        \textbf{Grouping} & \textbf{Purpose} & \textbf{Architectural Style} \\
+    \hline
+        Interaction-Oriented Components 
+        & Handle system interactions, presentation behaviour, and local control logic across dashboards, alert interfaces, and account management views 
+        & PAC \\
+    \hline
+        Data-Centered Components 
+        & Store and manage centralized system data including sensor telemetry, alert rules and histories, administrative data, and account information 
+        & Repository \\
+    \hline
+    \end{tabular}
 \end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{./assets/d2_arch.drawio.png}
+    \caption{Structural Architecture Diagram for SCEMAS}
+    \label{fig:architecture-diagram}
+\end{figure}
 
 \subsubsection{Considered Design Alternatives} 
 \textbf{Model-View-Controller (MVC)} \\
@@ -417,7 +417,7 @@ The Public API subsystem provides controlled access to environmental data and al
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-      \multicolumn{2}{|l|}{\textbf{Class Name: Main Dashboard}} \\
+      \multicolumn{2}{|l|}{\textbf{Class Name: Main Dashboard (Boundary)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
@@ -455,7 +455,7 @@ The Public API subsystem provides controlled access to environmental data and al
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-      \multicolumn{2}{|l|}{\textbf{Class Name: API Documentation}} \\
+      \multicolumn{2}{|l|}{\textbf{Class Name: API Documentation (Boundary)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
@@ -468,11 +468,11 @@ The Public API subsystem provides controlled access to environmental data and al
 \end{table}
 \begin{table}[H]
     \centering
-    \caption{CRC Card for API Database}
+    \caption{CRC Card for API Database Entity}
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-      \multicolumn{2}{|l|}{\textbf{Class Name: API Database}} \\
+      \multicolumn{2}{|l|}{\textbf{Class Name: API Database (Entity)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
@@ -496,7 +496,7 @@ The Public API subsystem provides controlled access to environmental data and al
     \hline
         Knows Main Dashboard Controller & Main Dashboard \\
         Knows Admin Dashboard & Admin Dashboard \\
-        Knows Admin DB & Admin DB \\ 
+        Knows Admin DB & Admin DB \newline \\
     \hline
     \end{tabular}
 \end{table}   
@@ -506,28 +506,28 @@ The Public API subsystem provides controlled access to environmental data and al
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-      \multicolumn{2}{|l|}{\textbf{Class Name: Admin Dashboard}} \\
+      \multicolumn{2}{|l|}{\textbf{Class Name: Admin Dashboard (Boundary)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Admin Dashboard Controller & Admin Dashboard Controller \\
-        Responsible for displaying administrator action interface & \\
+        Responsible for displaying administrator action interface \newline & \\
     \hline
     \end{tabular}
 \end{table}  
 \begin{table}[H]
     \centering
-    \caption{CRC Card for Admin Database}
+    \caption{CRC Card for Admin Database Entity}
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-      \multicolumn{2}{|l|}{\textbf{Class Name: Admin Database}} \\
+      \multicolumn{2}{|l|}{\textbf{Class Name: Admin Database (Entity)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Admin Dashboard Controller & Admin Dashboard Controller \\
         Knows Admin privileges & \\
-        Knows Admin action log history & \\
+        Knows Admin action log history \newline & \\
     \hline
     \end{tabular}
 \end{table}
@@ -543,7 +543,7 @@ The Public API subsystem provides controlled access to environmental data and al
     \hline
         Knows City Wide Dashboard & City Wide Dashboard\\
         Knows Main Dashboard Controller & Main Dashboard Controller\\
-        Knows District Dashboard Controller & District Dashboard Controller \\
+        Knows District Dashboard Controller \newline & District Dashboard Controller \\
     \hline
     \end{tabular}
 \end{table}
@@ -553,7 +553,7 @@ The Public API subsystem provides controlled access to environmental data and al
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-      \multicolumn{2}{|l|}{\textbf{Class Name: City Dashboard}} \\
+      \multicolumn{2}{|l|}{\textbf{Class Name: City Dashboard (Boundary)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
@@ -581,7 +581,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Knows View Account \newline
         Knows Account Database \newline
         Knows Main Dashboard Controller \newline
-        Coordinates validation, persistence, and retrieval for account features
+        Coordinates validation, persistence, and retrieval for account features \newline
         &
         Create Account \newline
         Modify Account \newline
@@ -606,7 +606,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Handles interfacing for creating new accounts \newline
         Collects and validates registration parameters \newline
         Provides user feedback on password and policy compliance \newline
-        Sends the creation request to the Account Management Controller
+        Sends the creation request to the Account Management Controller \newline
         &
         Account Management Controller \\
     \hline
@@ -625,7 +625,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Handles interfacing for updating account details \newline
         Displays current account information \newline
         Validates profile and credential modifications \newline
-        Sends the modification request to the Account Management Controller
+        Sends the modification request to the Account Management Controller \newline
         &
         Account Management Controller \\
     \hline
@@ -644,7 +644,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Handles interfacing for user authentication \newline
         Collects and validates credentials \newline
         Manages error messaging for failed attempts \newline
-        Sends the authentication request to the Account Management Controller
+        Sends the authentication request to the Account Management Controller \newline
         &
         Account Management Controller \\
     \hline
@@ -663,7 +663,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Handles interfacing for configuring account preferences \newline
         Displays current settings \newline
         Validates and applies preference changes \newline
-        Sends the update request to the Account Management Controller
+        Sends the update request to the Account Management Controller \newline
         &
         Account Management Controller \\
     \hline
@@ -682,7 +682,7 @@ The Public API subsystem provides controlled access to environmental data and al
     \hline
         Handles interfacing for viewing account profile and status \newline
         Requests and renders account data \newline
-        Sends data fetch requests to the Account Management Controller
+        Sends data fetch requests to the Account Management Controller \newline
         &
         Account Management Controller \\
     \hline
@@ -701,7 +701,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Knows Account Management Controller \newline
         Handles overall account storage \newline
         Persists account records, credentials, and settings \newline
-        Supports retrieval, updates, and deletion of account data
+        Supports retrieval, updates, and deletion of account data \newline
         &
         Account Management Controller \\
     \hline
@@ -725,7 +725,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Knows Forest Health Dashboard Controller \newline
         Coordinates navigation within the district dashboard \newline
         Routes requests from the district dashboard to the correct environmental dashboard controller \newline
-        Aggregates district-level environmental information for presentation
+        Aggregates district-level environmental information for presentation \newline
         &
         City Wide Dashboard Controller \newline
         District Dashboard \newline
@@ -742,14 +742,14 @@ The Public API subsystem provides controlled access to environmental data and al
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-    \multicolumn{2}{|l|}{\textbf{Class Name: District Dashboard}} \\
+    \multicolumn{2}{|l|}{\textbf{Class Name: District Dashboard (Boundary)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows District Dashboard Controller \newline
         Displays district-level environmental information \newline
         Handles user selection of district environmental categories \newline
-        Sends user navigation requests to the District Dashboard Controller
+        Sends user navigation requests to the District Dashboard Controller \newline
         &
         District Dashboard Controller \\
     \hline
@@ -770,7 +770,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Knows Air Quality Database \newline
         Retrieves air quality data for the selected district \newline
         Processes air quality data for presentation \newline
-        Updates the Air Quality Dashboard with district-specific results
+        Updates the Air Quality Dashboard with district-specific results \newline
         &
         District Dashboard Controller \newline
         Air Quality Dashboard \newline
@@ -784,14 +784,14 @@ The Public API subsystem provides controlled access to environmental data and al
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-    \multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Dashboard}} \\
+    \multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Dashboard (Boundary)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Air Quality Dashboard Controller \newline
         Displays district air quality information \newline
         Handles user requests to view air quality metrics \newline
-        Presents processed air quality data to the user
+        Presents processed air quality data to the user \newline
         &
         Air Quality Dashboard Controller \\
     \hline
@@ -799,18 +799,18 @@ The Public API subsystem provides controlled access to environmental data and al
 \end{table}
 \begin{table}[H]
     \centering
-    \caption{CRC Card for Air Quality Database}
+    \caption{CRC Card for Air Quality Database Entity}
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-    \multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Database}} \\
+    \multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Database (Entity)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Air Quality Dashboard Controller \newline
         Stores district air quality data \newline
         Provides requested air quality records \newline
-        Maintains air quality measurement history
+        Maintains air quality measurement history \newline
         &
         Air Quality Dashboard Controller \\
     \hline
@@ -831,7 +831,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Knows Soil Quality Database \newline
         Retrieves soil quality data for the selected district \newline
         Processes soil quality data for presentation \newline
-        Updates the Soil Quality Dashboard with district-specific results
+        Updates the Soil Quality Dashboard with district-specific results \newline
         &
         District Dashboard Controller \newline
         Soil Quality Dashboard \newline
@@ -845,14 +845,14 @@ The Public API subsystem provides controlled access to environmental data and al
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-    \multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Dashboard}} \\
+    \multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Dashboard (Boundary)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Soil Quality Dashboard Controller \newline
         Displays district soil quality information \newline
         Handles user requests to view soil quality metrics \newline
-        Presents processed soil quality data to the user
+        Presents processed soil quality data to the user \newline
         &
         Soil Quality Dashboard Controller \\
     \hline
@@ -860,18 +860,18 @@ The Public API subsystem provides controlled access to environmental data and al
 \end{table}
 \begin{table}[H]
     \centering
-    \caption{CRC Card for Soil Quality Database}
+    \caption{CRC Card for Soil Quality Database Entity}
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-    \multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Database}} \\
+    \multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Database (Entity)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Soil Quality Dashboard Controller \newline
         Stores district soil quality data \newline
         Provides requested soil quality records \newline
-        Maintains soil quality measurement history
+        Maintains soil quality measurement history \newline
         &
         Soil Quality Dashboard Controller \\
     \hline
@@ -892,7 +892,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Knows Temperature Database \newline
         Retrieves temperature data for the selected district \newline
         Processes temperature data for presentation \newline
-        Updates the Temperature Dashboard with district-specific results
+        Updates the Temperature Dashboard with district-specific results \newline
         &
         District Dashboard Controller \newline
         Temperature Dashboard \newline
@@ -913,7 +913,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Knows Temperature Dashboard Controller \newline
         Displays district temperature information \newline
         Handles user requests to view temperature metrics \newline
-        Presents processed temperature data to the user
+        Presents processed temperature data to the user \newline
         &
         Temperature Dashboard Controller \\
     \hline
@@ -921,18 +921,18 @@ The Public API subsystem provides controlled access to environmental data and al
 \end{table}
 \begin{table}[H]
     \centering
-    \caption{CRC Card for Temperature Database}
+    \caption{CRC Card for Temperature Database Entity}
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-    \multicolumn{2}{|l|}{\textbf{Class Name: Temperature Database}} \\
+    \multicolumn{2}{|l|}{\textbf{Class Name: Temperature Database (Entity)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Temperature Dashboard Controller \newline
         Stores district temperature data \newline
         Provides requested temperature records \newline
-        Maintains temperature measurement history
+        Maintains temperature measurement history \newline
         &
         Temperature Dashboard Controller \\
     \hline
@@ -953,7 +953,7 @@ The Public API subsystem provides controlled access to environmental data and al
         Knows Forest Health Database \newline
         Retrieves forest health data for the selected district \newline
         Processes forest health data for presentation \newline
-        Updates the Forest Health Dashboard with district-specific results
+        Updates the Forest Health Dashboard with district-specific results \newline
         &
         District Dashboard Controller \newline
         Forest Health Dashboard \newline
@@ -967,14 +967,14 @@ The Public API subsystem provides controlled access to environmental data and al
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-    \multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Dashboard}} \\
+    \multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Dashboard (Boundary)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Forest Health Dashboard Controller \newline
         Displays district forest health information \newline
         Handles user requests to view forest health metrics \newline
-        Presents processed forest health data to the user
+        Presents processed forest health data to the user \newline
         &
         Forest Health Dashboard Controller \\
     \hline
@@ -982,18 +982,18 @@ The Public API subsystem provides controlled access to environmental data and al
     \end{table}
 \begin{table}[H]
     \centering
-    \caption{CRC Card for Forest Health Database}
+    \caption{CRC Card for Forest Health Database Entity}
     \vspace{1mm}
     \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
     \hline 
-    \multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Database}} \\
+    \multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Database (Entity)}} \\
     \hline
     \textbf{Responsibility:} & \textbf{Collaborators:} \\
     \hline
         Knows Forest Health Dashboard Controller \newline
         Stores district forest health data \newline
         Provides requested forest health records \newline
-        Maintains forest health measurement history
+        Maintains forest health measurement history \newline
         &
         Forest Health Dashboard Controller \\
     \hline
@@ -1048,21 +1048,23 @@ The Public API subsystem provides controlled access to environmental data and al
         \item API DB
         \item API Documentation
     \end{itemize}
-\end{itemize}
 
-\vspace{0.5cm}
+    \vspace{0.5cm}
     \centering
     \includegraphics[width=10cm]{./signatures/IMG_4568.jpg}
     \\\vspace{0.2cm}
     Date: March 8th, 2026 
-\vspace{0.5cm}
+    \vspace{0.5cm}
+\end{itemize}
+
 
 \noindent \textbf{Trisha Panchal}
 \begin{itemize}
+    \item Engaged in discussion of choice of architectures and subsystems.
     \item 3.1:
 	\begin{itemize}
 		\item Identification and justification of the choice of overall architecture.
-		\item Considered design alternatives.
+		\item Consideration and elimination of design alternatives.
 		\item Structural architecture diagram.
 	\end{itemize}
 	\item 4. CRC Cards:
@@ -1075,6 +1077,7 @@ The Public API subsystem provides controlled access to environmental data and al
 		\item View Account
 		\item Account Database
 	\end{itemize}
+    \item Formatting fixes to CRC cards.
 
     \vspace{0.5cm}
     \centering
@@ -1083,6 +1086,7 @@ The Public API subsystem provides controlled access to environmental data and al
     Date: March 8th, 2026
     \vspace{0.5cm}
 \end{itemize}
+
 
 \noindent \textbf{Yug Vashisth}
 \begin{itemize}
@@ -1104,13 +1108,15 @@ The Public API subsystem provides controlled access to environmental data and al
         \item Forest Health Dashboard
         \item Forest Health DB
     \end{itemize}
-\vspace{0.5cm}
-    \centering
-    \includegraphics[width=10cm]{./signatures/yug_sig.jpg}
-    \\\vspace{0.2cm}
-    Date: March 8th, 2026
-\vspace{0.5cm}	
+
+    \vspace{0.5cm}
+        \centering
+        \includegraphics[width=10cm]{./signatures/yug_sig.jpg}
+        \\\vspace{0.2cm}
+        Date: March 8th, 2026
+    \vspace{0.5cm}	
 \end{itemize}
+
 
 \noindent \textbf{Hamza Nadeem}
 \begin{itemize}
@@ -1124,14 +1130,15 @@ The Public API subsystem provides controlled access to environmental data and al
         \item City Wide Dashboard Controller
         \item City Wide Dashboard
     \end{itemize}
-\end{itemize}
 
-\vspace{0.5cm}
+    \vspace{0.5cm}
     \centering
     \includegraphics[width=5cm]{signatures/hamza_nadeem_signature.jpeg}
     \\\vspace{0.2cm}
     Date: March 8th, 2026
-\vspace{0.5cm}
+    \vspace{0.5cm} 
+\end{itemize}
+
 % End Section
 
 
