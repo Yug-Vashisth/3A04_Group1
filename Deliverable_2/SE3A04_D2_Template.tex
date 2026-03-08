@@ -74,7 +74,7 @@ This section should provide an brief overview of the entire document.
 \subsection{Purpose}
 \label{sub:purpose}
 % Begin SubSection
-State the purpose and intended audience for the document.\\\\
+% State the purpose and intended audience for the document.\\\\
 This document is intended to provide a high-level overview of the SCEMAS system architecture design as well as considerations for various subsystems that are a part of SCEMAS.\\
 The intended audience for this document is stakeholders of SCEMAS, including developers and testers. SCEMAS deliverable 1 would serve as a necessary document to aid in understanding this document.
 
@@ -84,7 +84,7 @@ The intended audience for this document is stakeholders of SCEMAS, including dev
 \subsection{System Description}
 \label{sub:system_description}
 % Begin SubSection
-Give a brief description of the system. This could be a paragraph or two to give some context to this document.\\\\
+% Give a brief description of the system. This could be a paragraph or two to give some context to this document.\\\\
 The SCEMAS system is designed to collect, process, analyze, and display environmental data from sensors placed throughout a city. Its main purpose is to serve as a monitoring system that evaluates and alerts users based on set environmental parameters. The system will evaluate sensor data against environmental level thresholds. When data exceeds thresholds, the system will send an alert for users to view and act on.\\
 The system will provide a private dashboard for city officials and a public API for public users.
 
@@ -93,13 +93,14 @@ The system will provide a private dashboard for city officials and a public API 
 \subsection{Overview}
 \label{sub:overview}
 % Begin SubSection
-Describe what the rest of the document contains and explain how the document is organised (e.g. "In Section 2, we discuss...in Section 3...").\\\\
+% Describe what the rest of the document contains and explain how the document is organised (e.g. "In Section 2, we discuss...in Section 3...").\\\\
 In Section 2 of this document, an analysis class diagram is provided for SCEMAS. In Section 3, the document covers the architectural design of the system, including architecture choices, justifications, a structural architecture diagram, and design alternatives that were considered. Finally, in Section 4, the document provides Class Responsibility Collaboration Cards that help further detail the connections of each class from the analysis class diagram from Section 2.
 
 % End SubSection
 
 % End Section
 
+\newpage
 \section{Analysis Class Diagram}
 \label{sec:analysis_class_diagram}
 % Begin Section
@@ -111,11 +112,12 @@ In Section 2 of this document, an analysis class diagram is provided for SCEMAS.
 \end{figure}
 % End Section
 
-
+\newpage
 \section{Architectural Design}
 \label{sec:architectural_design}
 % Begin Section
-This section should provide an overview of the overall architectural design of your application. Your overall architecture should show the division of the system into subsystems with high cohesion and low coupling.
+% This section should provide an overview of the overall architectural design of your application. Your overall architecture should show the division of the system into subsystems with high cohesion and low coupling.
+This section provides an overview of the overall architectural design of SCEMAS.
 
 \subsection{System Architecture}
 \label{sub:system_architecture}
@@ -127,13 +129,47 @@ This section should provide an overview of the overall architectural design of y
 \end{figure}
 
 % Begin SubSection
-\begin{itemize}
-	\item Identify and explain the overall architecture of your system
-	\item Be sure to clearly state the name of the architecture you used (this is the name of the architectural pattern, not the name of your system)
-	\item Provide the reasoning and justification of the choice of architecture
-	\item Provide a structural architecture diagram showing the relationship among the subsystems (if appropriate)
-	\item List any design alternatives you considered, but eliminated (and explain why you eliminated them)
-\end{itemize}
+% \begin{itemize}
+% 	\item Identify and explain the overall architecture of your system
+% 	\item Be sure to clearly state the name of the architecture you used (this is the name of the architectural pattern, not the name of your system)
+% 	\item Provide the reasoning and justification of the choice of architecture
+% 	\item Provide a structural architecture diagram showing the relationship among the subsystems (if appropriate)
+% 	\item List any design alternatives you considered, but eliminated (and explain why you eliminated them)
+% \end{itemize}
+
+\subsubsection{Choice of Architecture} 
+
+SCEMAS utilizes an Interaction-Oriented Software Architecture, specifically the Presentation-Abstraction-Control (PAC) architecture style, in combination with the 
+Data-Centered Repository architecture style. The PAC structure supports SCEMAS's interactive and interface-driven behaviour, while the Repository acts as the centralized 
+data backbone that stores all environmental telemetry, alert information, administrative data, and account records.
+
+The PAC architecture was selected, as it separates an interactive system into a hierarchy of cooperating agents, each with its own presentation logic, abstraction 
+logic, and control component. This structure aligns well with SCEMAS, where multiple interactive components must operate independently while still coordinating at a higher level. PAC allows each component to maintain high cohesion, as each agent encapsulates its own interaction and domain logic. At the same time, it minimizes coupling between agents, as communication flows strictly through their controllers. This supports flexibility, ease of extension, and adherence to the Open-Closed Principle: new dashboards, alert interfaces, or user-facing views can be added as independent PAC agents without requiring modification of the existing structure.
+
+The Repository architecture complements PAC by providing a passive, centralized data store with consistent and uniform access mechanisms. All environmental readings, alert rules, alert histories, and account-related data are contained within the repository. This allows PAC agents to retrieve and update data without needing to coordinate with each other; hence, this passive data store ensures low coupling between subsystems. The repository also supports data integrity, scalability, and concurrency, all of which are required for real-time environmental monitoring. The combination of PAC and the Repository thus establishes a system with strong modularity, high cohesion in each interactive agent, and low coupling across subsystem boundaries.
+
+Within the main system controller, several high-level architectural groupings are defined as summarized in Table~\ref{tab:arch-overview}. These groupings reflect the interaction-oriented agents and the centralized repositories that support them.
+
+\begin{table}[H]
+\centering
+\caption{Overview of Architectural Groupings in SCEMAS}
+\label{tab:arch-overview}
+\begin{tabular}{|p{4cm}|p{6.5cm}|p{4cm}|}
+\hline
+\textbf{Grouping} & \textbf{Purpose} & \textbf{Architectural Style} \\
+\hline
+Alert & Store alert rules, alert history, and violation events & Repository \\
+\hline
+Account & Maintain user accounts, authentication data, and role permissions & Repository \\
+\hline
+Admin & Maintain administrative configurations and internal system records & Repository \\
+\hline
+% Interactive Agents & Handle user interactions, visual displays, and control logic for system features & PAC \\
+% \hline
+Sensor Data & Store sensor readings, environmental metrics, and related data & Repository \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Considered Design Alternatives} 
 \textbf{Model-View-Controller (MVC)} \\
@@ -153,7 +189,7 @@ The Pipe-and-Filter and Process-Control architectural styles were not considered
 \subsection{Subsystems}
 \label{sub:subsystems}
 % Begin SubSection
-The system has been divided into three primary subsystems: 
+The system has been divided into four primary subsystems: 
 \begin{enumerate}
     \item Alert Management
     \item Account Management 
@@ -184,15 +220,16 @@ The Public API subsystem provides controlled access to environmental data and al
 \noindent This subsystem primarily communicates with the Alert Management and Repository subsystems. To satisfy client requests, it retrieves environmental and alert data from the Repositories. It also collects alert data generated by the Alert Management subsystem to ensure that alerts stay up to date when the public wants to view them. By separating how this data is accessed externally, with a separate subsystem, the architecture keeps internal system components loosely coupled with external users.
 % End SubSection
 % End Section
-	
+
+\newpage
 \section{Class Responsibility Collaboration (CRC) Cards}
 \label{sec:class_responsibility_collaboration_crc_cards}
 % Begin Section
-This section should contain all of your CRC cards.
+% This section should contain all of your CRC cards.
 
 \begin{itemize}
-	\item Provide a CRC Card for each identified class
-	\item Please use the format outlined in tutorial, i.e., 
+	% \item Provide a CRC Card for each identified class
+	% \item Please use the format outlined in tutorial, i.e., 
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
@@ -419,19 +456,6 @@ This section should contain all of your CRC cards.
 		\hline
 		\end{tabular}
 	\end{table}
-
-    \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Settings}} \\
-		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
     
     \begin{table}[H]
 		\centering
@@ -444,19 +468,6 @@ This section should contain all of your CRC cards.
         Knows Main Dashboard Controller & Main Dashboard \\
         Knows Admin Dashboard & Admin Dashboard \\
         Knows Admin DB & Admin DB \\ 
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
-
-    \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: View Account}} \\
-		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
@@ -508,22 +519,6 @@ This section should contain all of your CRC cards.
 		\hline
 		\end{tabular}
 	\end{table}
-    
-    
-
-    \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Management }} \\
-		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
-    
 
     \begin{table}[H]
 		\centering
@@ -540,25 +535,160 @@ This section should contain all of your CRC cards.
 		\end{tabular}
 	\end{table}
     
-    
-    \begin{table}[H]
+	\begin{table}[H]
 		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
+		\caption{CRC Card for Account Management Controller}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Create Account}} \\
+		\multicolumn{2}{|l|}{\textbf{Class Name: Account Management Controller}} \\
 		\hline
-        \textbf{Responsibility:} & \textbf{Collaborators:} \\
-        \hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+			Knows Create Account \newline
+			Knows Modify Account \newline
+			Knows Login \newline
+			Knows Account Settings \newline
+			Knows View Account \newline
+			Knows Account Database \newline
+			Knows Main Dashboard Controller \newline
+			Coordinates validation, persistence, and retrieval for account features
+			&
+			Create Account \newline
+			Modify Account \newline
+			Login \newline
+			Account Settings \newline
+			View Account \newline
+			Account Database \newline
+			Main Dashboard Controller \\
 		\vspace{1in} & \\
 		\hline
 		\end{tabular}
 	\end{table}
-    \begin{table}[H]
+
+	\begin{table}[H]
+		\centering
+		\caption{CRC Card for Creating an Account}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
+		\hline 
+		\multicolumn{2}{|l|}{\textbf{Class Name: Create Account (Boundary)}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+			Handles interfacing for creating new accounts \newline
+			Collects and validates registration parameters \newline
+			Provides user feedback on password and policy compliance \newline
+			Sends the creation request to the Account Management Controller
+			&
+			Account Management Controller \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{CRC Card for Modifying an Account}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
+		\hline 
+		\multicolumn{2}{|l|}{\textbf{Class Name: Modify Account (Boundary)}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+			Handles interfacing for updating account details \newline
+			Displays current account information \newline
+			Validates profile and credential modifications \newline
+			Sends the modification request to the Account Management Controller
+			&
+			Account Management Controller \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{CRC Card for Login}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
+		\hline 
+		\multicolumn{2}{|l|}{\textbf{Class Name: Login (Boundary)}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+			Handles interfacing for user authentication \newline
+			Collects and validates credentials \newline
+			Manages error messaging for failed attempts \newline
+			Sends the authentication request to the Account Management Controller
+			&
+			Account Management Controller \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{CRC Card for Account Settings}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
+		\hline 
+		\multicolumn{2}{|l|}{\textbf{Class Name: Account Settings (Boundary)}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+			Handles interfacing for configuring account preferences \newline
+			Displays current settings \newline
+			Validates and applies preference changes \newline
+			Sends the update request to the Account Management Controller
+			&
+			Account Management Controller \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{CRC Card for Viewing an Account}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
+		\hline 
+		\multicolumn{2}{|l|}{\textbf{Class Name: View Account (Boundary)}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+			Handles interfacing for viewing account profile and status \newline
+			Requests and renders account data \newline
+			Sends data fetch requests to the Account Management Controller
+			&
+			Account Management Controller \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\caption{CRC Card for Account Database Entity}
+		\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
+		\hline 
+		\multicolumn{2}{|l|}{\textbf{Class Name: Account Database (Entity)}} \\
+		\hline
+		\textbf{Responsibility:} & \textbf{Collaborators:} \\
+		\hline
+			Knows Account Management Controller \newline
+			Handles overall account storage \newline
+			Persists account records, credentials, and settings \newline
+			Supports retrieval, updates, and deletion of account data
+			&
+			Account Management Controller \\
+		\vspace{1in} & \\
+		\hline
+		\end{tabular}
+	\end{table}
+\begin{table}[H]	
 \centering
 \caption{CRC Card for District Dashboard Controller}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: District Dashboard Controller (Control)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: District Dashboard Controller}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -583,24 +713,11 @@ Forest Health Dashboard Controller \\
 \end{table}
     
     \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Account}} \\
-		\hline
-        \textbf{Responsibility:} & \textbf{Collaborators:} \\
-        \hline
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
-
-    \begin{table}[H]
 \centering
 \caption{CRC Card for District Dashboard}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: District Dashboard (Boundary)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: District Dashboard}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -615,24 +732,11 @@ District Dashboard Controller \\
 \end{table}
 
     \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Login }} \\
-		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
-
-    \begin{table}[H]
 \centering
 \caption{CRC Card for Air Quality Dashboard Controller}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Dashboard Controller (Control)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Dashboard Controller}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -650,26 +754,12 @@ Air Quality Database \\
 \end{tabular}
 \end{table}
     
-
-    \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Settings }} \\
-		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
-
     \begin{table}[H]
 \centering
 \caption{CRC Card for Air Quality Dashboard}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Dashboard (Boundary)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Dashboard}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -683,25 +773,12 @@ Air Quality Dashboard Controller \\
 \end{tabular}
 \end{table}
 
-    \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: View Account }} \\
-		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
-
    \begin{table}[H]
 \centering
 \caption{CRC Card for Air Quality Database}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Database (Entity)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Air Quality Database}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -716,24 +793,11 @@ Air Quality Dashboard Controller \\
 \end{table}
 
     \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Account Database }} \\
-		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
-
-    \begin{table}[H]
 \centering
 \caption{CRC Card for Soil Quality Dashboard Controller}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Dashboard Controller (Control)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Dashboard Controller}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -756,7 +820,7 @@ Soil Quality Database \\
 \caption{CRC Card for Soil Quality Dashboard}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Dashboard (Boundary)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Dashboard}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -774,7 +838,7 @@ Soil Quality Dashboard Controller \\
 \caption{CRC Card for Soil Quality Database}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Database (Entity)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Soil Quality Database}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -792,7 +856,7 @@ Soil Quality Dashboard Controller \\
 \caption{CRC Card for Temperature Dashboard Controller}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Temperature Dashboard Controller (Control)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Temperature Dashboard Controller}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -832,7 +896,7 @@ Temperature Dashboard Controller \\
 \caption{CRC Card for Temperature Database}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Temperature Database (Entity)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Temperature Database}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -850,7 +914,7 @@ Temperature Dashboard Controller \\
 \caption{CRC Card for Forest Health Dashboard Controller}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Dashboard Controller (Control)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Dashboard Controller}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -872,7 +936,7 @@ Forest Health Database \\
 \caption{CRC Card for Forest Health Dashboard}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Dashboard (Boundary)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Dashboard)}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -890,7 +954,7 @@ Forest Health Dashboard Controller \\
 \caption{CRC Card for Forest Health Database}
 \begin{tabular}{|p{7.5cm}|p{7.5cm}|}
 \hline 
-\multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Database (Entity)}} \\
+\multicolumn{2}{|l|}{\textbf{Class Name: Forest Health Database}} \\
 \hline
 \textbf{Responsibility:} & \textbf{Collaborators:} \\
 \hline
@@ -903,22 +967,11 @@ Forest Health Dashboard Controller \\
 \hline
 \end{tabular}
 \end{table}
-    \begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|}
-		\hline 
-		 \multicolumn{2}{|l|}{\textbf{Class Name: Modify Account}} \\
-		\hline
-		\textbf{Responsibility:} & \textbf{Collaborators:} \\
-		\hline
-		\vspace{1in} & \\
-		\hline
-		\end{tabular}
-	\end{table}
 	
 \end{itemize}
 % End Section
 
+\newpage
 \appendix
 \section{Division of Labour}
 \label{sec:division_of_labour}
@@ -973,7 +1026,29 @@ Forest Health Dashboard Controller \\
 
 \noindent \textbf{Trisha Panchal}
 \begin{itemize}
-    \item 
+    \item 3.1:
+	\begin{itemize}
+		\item Identification and justification of the choice of overall architecture.
+		\item Considered design alternatives.
+		\item Structural architecture diagram.
+	\end{itemize}
+	\item 4. CRC Cards:
+	\begin{itemize}
+		\item Account Management Controller
+		\item Create Account
+		\item Modify Account
+		\item Login
+		\item Account Settings
+		\item View Account
+		\item Account Database
+	\end{itemize}
+
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[width=10cm]{./signatures/trisha_d1_sign.jpg}
+    \\\vspace{0.2cm}
+    Date: March 8th, 2025 
+    \vspace{0.5cm}
 \end{itemize}
 
 \noindent \textbf{Yug Vashisth}
