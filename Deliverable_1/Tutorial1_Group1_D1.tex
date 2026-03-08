@@ -1603,6 +1603,7 @@ Third-party developers request and interpret environmental data from the public 
 	\textbf{Rationale:} City operators that are familiar with the system should be able to navigate the dashboard and acknowledge an alert, this shows the system is user-friendly and accessible. \textcolor{red}{https://www.forbes.com/councils/forbesagencycouncil/2020/04/07/designing-the-right-website-navigation/}
     \item A trained developer (someone that has 4+ years of experience developing) must be able to understand the API documentation within a 1 hour time frame.\\
 	\textbf{Rationale:} Developers that are willing to subscribe to APIs should be able to understand the documentation in the short(1-hour) time frame. If they are able to understand the documentation within this time it means that the documentation is written clearly and helps improve usability of the service.\textcolor{red}{https://den.dev/blog/horrible-api-documentation/}
+
 \end{enumerate}
 % End SubSubSection
 
@@ -1653,8 +1654,8 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:safety_critical_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-SC}1. ]
-	\item The system should ensure that alerts are posted in less than 5 seconds of the internal system finding a threshold broken.\\
-    \textbf{Rationale}: A rapid alert system allows operations to respond to any alerts within a timely manner, staging interventions or putting out city wide alerts where possible. 
+	\item The system should ensure that alerts are posted in less than 5 seconds of \textcolor{red}{a threshold violation being detected.}\\
+    \textbf{Rationale}: A rapid alert system allows operations to respond to any alerts within a timely manner, staging interventions or putting out city-wide alerts where possible.\textcolor{red}{[https://middleware.io/blog/real-time-alerts/]} 
 \end{enumerate}
 % End SubSubSection
 
@@ -1671,8 +1672,8 @@ Third-party developers request and interpret environmental data from the public 
 \label{ssub:reliability_and_availability_requirements}
 % Begin SubSubSection
 \begin{enumerate}[{PR-RA}1. ]
-	\item The database should have an up time of at least 99\%\\
-    \textbf{Rationale}: This allows any authentication requests to properly go through and avoids cases where users cannot use the system due to authentication requests.
+	\item \textcolor{red}{The SCEMAS system should have an uptime of at least 99\%}\\
+    \textbf{Rationale}: \textcolor{red}{It is necessary to have an uptime of 99\% to ensure that users have a reliable experience. Lower uptime can lead to a damaged reputation, poor user experience, and loss of trust with users. Therefore, it is important to avoid situations where the system is down for an extended period of time. [https://www.xurrent.com/blog/what-is-uptime#how-incidents-impact-uptime-and-system-reliability][https://www.fastcomet.com/blog/reasons-why-uptime-is-important#1-impact-on-users]}
     \item The system should ensure that alerts have a false positive rating of less than 1\%\\
     \textbf{Rationale}: A high false positive rating can lead to improper use of resources, impaired efficiency and a loss of trust of users \cite{vwo}. Its important to have a low false positive rate to avoid taking unnecessary measures to correct a false issue.
 \end{enumerate}
@@ -1685,7 +1686,7 @@ Third-party developers request and interpret environmental data from the public 
 	\item The System should not fail if one component of it fails.\\
     \textbf{Rationale}: This is to ensure that the system stays functional even if a sensor fails, meaning the system will continue to collect data from the other sensors.
     \item The system should detect and log any errors in under 5 seconds\\
-    \textbf{Rationale}: This is to ensure that all errors are properly logged as well as properly addressed within a timely manner.
+    \textbf{Rationale}: This is to ensure that all errors are properly logged as well as properly addressed within a timely manner \textcolor{red}{to help prevent system crashes and downtime.[https://fastercapital.com/content/Error-detection--Detecting-Errors--The-Key-Role-of-the-Error-Principle.html#Understanding-the-Importance-of-Error-Detection]}
 \end{enumerate}
 % End SubSubSection
 
