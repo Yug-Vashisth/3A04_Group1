@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  8 MAR 2026 12:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  8 MAR 2026 17:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -176,8 +176,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count286
 \l__pdf_internal_box=\box56
-)
-No file SE3A04_D2_Template.aux.
+) (./SE3A04_D2_Template.aux)
 \openout1 = `SE3A04_D2_Template.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
@@ -194,6 +193,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -269,18 +269,29 @@ Package pdftex.def Info: ./assets/analysis class.jpg  used on input line 109.
 
 
 [3 <./assets/analysis class.jpg>]
-<./assets/d2_arch_diagram.png, id=20, 996.72375pt x 684.5575pt>
-File: ./assets/d2_arch_diagram.png Graphic file (type png)
-<use ./assets/d2_arch_diagram.png>
-Package pdftex.def Info: ./assets/d2_arch_diagram.png  used on input line 126.
-(pdftex.def)             Requested size: 469.75502pt x 322.62993pt.
+<./assets/d2_arch.drawio.png, id=20, 954.56625pt x 643.40375pt>
+File: ./assets/d2_arch.drawio.png Graphic file (type png)
+<use ./assets/d2_arch.drawio.png>
+Package pdftex.def Info: ./assets/d2_arch.drawio.png  used on input line 126.
+(pdftex.def)             Requested size: 469.75502pt x 316.62541pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--144
+
+ []
 
 
-[4 <./assets/d2_arch_diagram.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 145--147
 
-LaTeX Warning: Reference `tab:arch-overview' on page 5 undefined on input line 151.
+ []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
+
+ []
+
+
+
+[4 <./assets/d2_arch.drawio.png>]
 Underfull \hbox (badness 1817) in paragraph at lines 163--163
 []\OT1/cmr/m/n/10 Maintain user ac-counts, au-then-ti-ca-tion
  []
@@ -344,105 +355,81 @@ Underfull \hbox (badness 10000) in paragraph at lines 218--219
 [12]
 
 [13]
-
-[14]
-
-[15]
-Underfull \hbox (badness 5231) in paragraph at lines 804--810
+Underfull \hbox (badness 5231) in paragraph at lines 829--835
 \OT1/cmr/m/n/10 Updates the Soil Qual-ity Dash-board with
  []
 
 
-Underfull \hbox (badness 6808) in paragraph at lines 863--869
+
+[14]
+Underfull \hbox (badness 6808) in paragraph at lines 890--896
 \OT1/cmr/m/n/10 Updates the Tem-per-a-ture Dash-board with
  []
 
 
 
-[16]
-Underfull \hbox (badness 2384) in paragraph at lines 921--927
+[15]
+Underfull \hbox (badness 2384) in paragraph at lines 951--957
 \OT1/cmr/m/n/10 Updates the For-est Health Dash-board with
  []
 
 
 
-[17]
-
-/Users/yugvashisth/3A04_Group1/Deliverable_2/SE3A04_D2_Template.tex:971: LaTeX Error: Something's wrong--perhaps a missing \item.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.971 \end{itemize}
-                   
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-
-[18]
-<./signatures/ben_bloomfield_signature.jpg, id=70, 1027.84pt x 320.19624pt>
+[16]
+<./signatures/ben_bloomfield_signature.jpg, id=64, 1027.84pt x 320.19624pt>
 File: ./signatures/ben_bloomfield_signature.jpg Graphic file (type jpg)
 <use ./signatures/ben_bloomfield_signature.jpg>
-Package pdftex.def Info: ./signatures/ben_bloomfield_signature.jpg  used on input line 996.
+Package pdftex.def Info: ./signatures/ben_bloomfield_signature.jpg  used on input line 1029.
 (pdftex.def)             Requested size: 284.52756pt x 88.63808pt.
-<./signatures/IMG_4568.jpg, id=71, 419.4069pt x 176.5797pt>
+<./signatures/IMG_4568.jpg, id=65, 419.4069pt x 176.5797pt>
 File: ./signatures/IMG_4568.jpg Graphic file (type jpg)
 <use ./signatures/IMG_4568.jpg>
-Package pdftex.def Info: ./signatures/IMG_4568.jpg  used on input line 1022.
+Package pdftex.def Info: ./signatures/IMG_4568.jpg  used on input line 1055.
 (pdftex.def)             Requested size: 284.52756pt x 119.80045pt.
 
 
-[19 <./signatures/ben_bloomfield_signature.jpg> <./signatures/IMG_4568.jpg>]
-<./signatures/trisha_d1_sign.jpg, id=76, 472.76625pt x 182.18062pt>
+[17 <./signatures/ben_bloomfield_signature.jpg>]
+<./signatures/trisha_d1_sign.jpg, id=69, 472.76625pt x 182.18062pt>
 File: ./signatures/trisha_d1_sign.jpg Graphic file (type jpg)
 <use ./signatures/trisha_d1_sign.jpg>
-Package pdftex.def Info: ./signatures/trisha_d1_sign.jpg  used on input line 1048.
+Package pdftex.def Info: ./signatures/trisha_d1_sign.jpg  used on input line 1081.
 (pdftex.def)             Requested size: 284.52756pt x 109.64557pt.
-<./signatures/yug_sig.jpg, id=77, 411.5375pt x 156.585pt>
+
+
+[18 <./signatures/IMG_4568.jpg> <./signatures/trisha_d1_sign.jpg>]
+<./signatures/yug_sig.jpg, id=73, 411.5375pt x 156.585pt>
 File: ./signatures/yug_sig.jpg Graphic file (type jpg)
 <use ./signatures/yug_sig.jpg>
-Package pdftex.def Info: ./signatures/yug_sig.jpg  used on input line 1076.
+Package pdftex.def Info: ./signatures/yug_sig.jpg  used on input line 1109.
 (pdftex.def)             Requested size: 284.52756pt x 108.25879pt.
+<signatures/hamza_nadeem_signature.jpeg, id=74, 893.3375pt x 898.35625pt>
+File: signatures/hamza_nadeem_signature.jpeg Graphic file (type jpg)
+<use signatures/hamza_nadeem_signature.jpeg>
+Package pdftex.def Info: signatures/hamza_nadeem_signature.jpeg  used on input line 1131.
+(pdftex.def)             Requested size: 142.26378pt x 143.05453pt.
 
 
-[20 <./signatures/trisha_d1_sign.jpg>]
-<./signatures/hamza_nadeem_signature.jpeg, id=81, 893.3375pt x 898.35625pt>
-File: ./signatures/hamza_nadeem_signature.jpeg Graphic file (type jpg)
-<use ./signatures/hamza_nadeem_signature.jpeg>
-Package pdftex.def Info: ./signatures/hamza_nadeem_signature.jpeg  used on input line 1098.
-(pdftex.def)             Requested size: 284.52756pt x 286.1228pt.
+[19 <./signatures/yug_sig.jpg> <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>]
 
-
-[21 <./signatures/yug_sig.jpg>]
-
-[22 <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>] (./SE3A04_D2_Template.aux)
+[20] (./SE3A04_D2_Template.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 3689 strings out of 473190
- 56300 string characters out of 5715801
- 461512 words of memory out of 5000000
- 26914 multiletter control sequences out of 15000+600000
+ 3692 strings out of 473190
+ 56360 string characters out of 5715801
+ 461836 words of memory out of 5000000
+ 26915 multiletter control sequences out of 15000+600000
  567381 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,65p,974b,328s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,10n,65p,974b,282s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on SE3A04_D2_Template.pdf (22 pages, 839231 bytes).
+Output written on SE3A04_D2_Template.pdf (20 pages, 741848 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
- 73 compressed objects within 1 object stream
+ 114 PDF objects out of 1000 (max. 8388607)
+ 69 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
