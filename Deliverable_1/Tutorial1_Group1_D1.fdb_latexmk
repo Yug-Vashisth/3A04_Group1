@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex Tutorial1_Group1_D1"] 1773025458.27649 "Tutorial1_Group1_D1.aux" "Tutorial1_Group1_D1.bbl" "Tutorial1_Group1_D1" 1773025459.74384 0
+["bibtex Tutorial1_Group1_D1"] 0 "Tutorial1_Group1_D1.aux" "Tutorial1_Group1_D1.bbl" "Tutorial1_Group1_D1" 1773026665.09088 -1
   "./references.bib" 1773004616.5221 10502 f42af4ac425026771b67ec233c2cd244 ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "Tutorial1_Group1_D1.aux" 1773025459.55875 14183 30daa2713ff18a49c4e51d3dd15efb9e "pdflatex"
+  "Tutorial1_Group1_D1.aux" 1773026664.92114 14183 782a153981836e4a8e74aa9c8faed914 "pdflatex"
   (generated)
   "Tutorial1_Group1_D1.bbl"
   "Tutorial1_Group1_D1.blg"
   (rewritten before read)
-["pdflatex"] 1773025459.10524 "/Users/yugvashisth/3A04_Group1/Deliverable_1/Tutorial1_Group1_D1.tex" "Tutorial1_Group1_D1.pdf" "Tutorial1_Group1_D1" 1773025459.74396 2
-  "/Users/yugvashisth/3A04_Group1/Deliverable_1/Tutorial1_Group1_D1.tex" 1773025458.04461 120664 558f65077e132d3bab34fb4d8d927b33 ""
+["pdflatex"] 1773026664.43675 "/Users/yugvashisth/3A04_Group1/Deliverable_1/Tutorial1_Group1_D1.tex" "Tutorial1_Group1_D1.pdf" "Tutorial1_Group1_D1" 1773026665.09102 2
+  "/Users/yugvashisth/3A04_Group1/Deliverable_1/Tutorial1_Group1_D1.tex" 1773026664.14452 120664 558f65077e132d3bab34fb4d8d927b33 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -78,12 +78,12 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1771022131 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "Tutorial1_Group1_D1.aux" 1773025459.55875 14183 30daa2713ff18a49c4e51d3dd15efb9e "pdflatex"
+  "Tutorial1_Group1_D1.aux" 1773026664.92114 14183 782a153981836e4a8e74aa9c8faed914 "pdflatex"
   "Tutorial1_Group1_D1.bbl" 1773025458.41647 12183 d01c50e049ea96fce71758d792bc51ee "bibtex Tutorial1_Group1_D1"
-  "Tutorial1_Group1_D1.tex" 1773025458.04461 120664 558f65077e132d3bab34fb4d8d927b33 ""
+  "Tutorial1_Group1_D1.tex" 1773026664.14452 120664 558f65077e132d3bab34fb4d8d927b33 ""
   "pictures/2.2state_diagram.png" 1772640980.30067 39488 092cc334e21873297a5436807e8e027a ""
   "pictures/F1Block_D.png" 1772640980.30099 99274 8314d6962597c93b29a2496d8b355f39 ""
-  "pictures/use_case.png" 1772941135.08208 53867 6f846be0923c146fd77a2de1c94eb1f4 ""
+  "pictures/use_case.png" 1773026648.99752 182096 7b1df5a2e2e888e80a1b9f0a7d13888d ""
   "signatures/IMG_4568.jpg" 0 -1 0 ""
   "signatures/ben_bloomfield_signature.jpg" 0 -1 0 ""
   "signatures/hamza_nadeem_signature.jpeg" 0 -1 0 ""

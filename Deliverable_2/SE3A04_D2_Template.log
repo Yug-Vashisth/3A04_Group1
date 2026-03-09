@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  8 MAR 2026 23:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  8 MAR 2026 23:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -303,11 +303,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 160--161
 []\OT1/cmr/m/n/10 Data-Centered Com-po-
  []
 
-<./assets/d2_arch.drawio.png, id=20, 954.56625pt x 643.40375pt>
-File: ./assets/d2_arch.drawio.png Graphic file (type png)
-<use ./assets/d2_arch.drawio.png>
-Package pdftex.def Info: ./assets/d2_arch.drawio.png  used on input line 169.
-(pdftex.def)             Requested size: 469.75502pt x 316.62541pt.
+<./assets/structural_diagram.png, id=20, 944.52875pt x 582.175pt>
+File: ./assets/structural_diagram.png Graphic file (type png)
+<use ./assets/structural_diagram.png>
+Package pdftex.def Info: ./assets/structural_diagram.png  used on input line 169.
+(pdftex.def)             Requested size: 469.75502pt x 289.54109pt.
 
 
 [4]
@@ -327,7 +327,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 182--184
 
 
 
-[5 <./assets/d2_arch.drawio.png>]
+[5 <./assets/structural_diagram.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 200--201
 
  []
@@ -420,9 +420,9 @@ Package pdftex.def Info: signatures/hamza_nadeem_signature.jpeg  used on input l
 (pdftex.def)             Requested size: 142.26378pt x 143.05453pt.
 
 
-[20 <./signatures/yug_sig.jpg>]
+[20 <./signatures/yug_sig.jpg> <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>]
 
-[21 <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>] (./SE3A04_D2_Template.aux)
+[21] (./SE3A04_D2_Template.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -430,14 +430,14 @@ L3 programming layer <2025-01-18>
  ) 
 Here is how much of TeX's memory you used:
  3692 strings out of 473190
- 56360 string characters out of 5715801
- 462836 words of memory out of 5000000
+ 56388 string characters out of 5715801
+ 462827 words of memory out of 5000000
  26915 multiletter control sequences out of 15000+600000
  567381 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,10n,65p,974b,282s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on SE3A04_D2_Template.pdf (21 pages, 743043 bytes).
+Output written on SE3A04_D2_Template.pdf (21 pages, 734770 bytes).
 PDF statistics:
  117 PDF objects out of 1000 (max. 8388607)
  71 compressed objects within 1 object stream
