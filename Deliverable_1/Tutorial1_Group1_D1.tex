@@ -139,6 +139,7 @@ Once data is stored, \textbf{SCEMAS} performs real-time aggregation to produce u
 \subsection{Product Functions}
 \label{sub:product_functions}
 % Begin SubSection
+\textcolor{red}{The SCEMAS system is divided into 5 working modules, each with its own functionalities. The Alert System module is responsible for handling all alert-related functionality, from defining alert rules to keeping track of the alert log. The User Module handles user account-related events. The Data Handling Module is responsible for handling any data received or transmitted by the system. The Private Dashboard module is responsible for displaying the dashboard for City officials. Lastly, the Public Dashboard Module is responsible for providing a public API for users to access.}
 \begin{longtable}{|p{3cm}|p{12cm}|}
 \hline
 \textbf{Module} & \textbf{Functions} \\
@@ -1596,13 +1597,13 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{UH-L}1. ]
 	\item Users shall be able to learn how to navigate the main dashboard and interpret key environmental metrics within 20 minutes of first use.\\
-	\textbf{Rationale:} Operators must quickly understand the core interface to respond to environmental events effectively. Limiting the learning time ensures the system is intuitive and reduces onboarding effort. \textcolor{red}{https://www.sciencedirect.com/topics/computer-science/usability-attribute}
+	\textbf{Rationale:} Operators must quickly understand the core interface to respond to environmental events effectively. Limiting the learning time ensures the system is intuitive and reduces onboarding effort. \textcolor{red}{\cite{UHL1}}
 	\item Users shall be able to configure personal preferences, such as measurement units, default dashboards, and theme settings, within 10 minutes of first use.\\
-	\textbf{Rationale:} Users should quickly learn how best to tailor the application to them. If they are able to personalize the system quickly it will make sure that the rest of their time using the system is more enjoyable. \textcolor{red}{https://insiderone.com/website-personalization/}
+	\textbf{Rationale:} Users should quickly learn how best to tailor the application to them. If they are able to personalize the system quickly it will make sure that the rest of their time using the system is more enjoyable. \textcolor{red}{\cite{UHL2}}
     \item A trained city operator (someone that has 10+ hours of education on the system) must be able to log into the dashboard and successfully acknowledge a critical environmental alert within 30 seconds of the alert appearing.\\
-	\textbf{Rationale:} City operators that are familiar with the system should be able to navigate the dashboard and acknowledge an alert, this shows the system is user-friendly and accessible. \textcolor{red}{https://www.forbes.com/councils/forbesagencycouncil/2020/04/07/designing-the-right-website-navigation/}
+	\textbf{Rationale:} City operators that are familiar with the system should be able to navigate the dashboard and acknowledge an alert, this shows the system is user-friendly and accessible. \textcolor{red}{\cite{UHL3}}
     \item A trained developer (someone that has 4+ years of experience developing) must be able to understand the API documentation within a 1 hour time frame.\\
-	\textbf{Rationale:} Developers that are willing to subscribe to APIs should be able to understand the documentation in the short(1-hour) time frame. If they are able to understand the documentation within this time it means that the documentation is written clearly and helps improve usability of the service.\textcolor{red}{https://den.dev/blog/horrible-api-documentation/}
+	\textbf{Rationale:} Developers that are willing to subscribe to APIs should be able to understand the documentation in the short(1-hour) time frame. If they are able to understand the documentation within this time it means that the documentation is written clearly and helps improve usability of the service. \textcolor{red}{\cite{UHL4}}
 
 \end{enumerate}
 % End SubSubSection
@@ -1655,7 +1656,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{PR-SC}1. ]
 	\item The system should ensure that alerts are posted in less than 5 seconds of \textcolor{red}{a threshold violation being detected.}\\
-    \textbf{Rationale}: A rapid alert system allows operations to respond to any alerts within a timely manner, staging interventions or putting out city-wide alerts where possible.\textcolor{red}{[https://middleware.io/blog/real-time-alerts/]} 
+    \textbf{Rationale}: A rapid alert system allows operations to respond to any alerts within a timely manner, staging interventions or putting out city-wide alerts where possible. \textcolor{red}{\cite{PRSC1}}
 \end{enumerate}
 % End SubSubSection
 
@@ -1673,7 +1674,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{PR-RA}1. ]
 	\item \textcolor{red}{The SCEMAS system should have an uptime of at least 99\%}\\
-    \textbf{Rationale}: \textcolor{red}{It is necessary to have an uptime of 99\% to ensure that users have a reliable experience. Lower uptime can lead to a damaged reputation, poor user experience, and loss of trust with users. Therefore, it is important to avoid situations where the system is down for an extended period of time. [https://www.xurrent.com/blog/what-is-uptime#how-incidents-impact-uptime-and-system-reliability][https://www.fastcomet.com/blog/reasons-why-uptime-is-important#1-impact-on-users]}
+    \textbf{Rationale}: \textcolor{red}{It is necessary to have an uptime of 99\% to ensure that users have a reliable experience. Lower uptime can lead to a damaged reputation, poor user experience, and loss of trust with users. Therefore, it is important to avoid situations where the system is down for an extended period of time. {\cite{PRRA1a}} {\cite{PRRA1b}}}
     \item The system should ensure that alerts have a false positive rating of less than 1\%\\
     \textbf{Rationale}: A high false positive rating can lead to improper use of resources, impaired efficiency and a loss of trust of users \cite{vwo}. Its important to have a low false positive rate to avoid taking unnecessary measures to correct a false issue.
 \end{enumerate}
@@ -1686,7 +1687,7 @@ Third-party developers request and interpret environmental data from the public 
 	\item The System should not fail if one component of it fails.\\
     \textbf{Rationale}: This is to ensure that the system stays functional even if a sensor fails, meaning the system will continue to collect data from the other sensors.
     \item The system should detect and log any errors in under 5 seconds\\
-    \textbf{Rationale}: This is to ensure that all errors are properly logged as well as properly addressed within a timely manner \textcolor{red}{to help prevent system crashes and downtime.[https://fastercapital.com/content/Error-detection--Detecting-Errors--The-Key-Role-of-the-Error-Principle.html#Understanding-the-Importance-of-Error-Detection]}
+    \textbf{Rationale}: This is to ensure that all errors are properly logged as well as properly addressed within a timely manner \textcolor{red}{\cite{PRRFT2}}.
 \end{enumerate}
 % End SubSubSection
 
@@ -1713,7 +1714,7 @@ Third-party developers request and interpret environmental data from the public 
 % Begin SubSubSection
 \begin{enumerate}[{PR-L}1. ]
 	\item The sensors should use sustainable materials that guarantee a lifespan of at least 2 years\\
-    \textbf{Rationale}: This is to ensure that each sensor can work optimally without the need to constantly replace them to ensure proper data collection.
+    \textbf{Rationale}: \textcolor{red}{Replacing a sensor can be costly and disruptive. It is important that each sensor preforms optimally for an extended period of time to avoid frequent replacements. Replacing a sensor can be costly and disruptive. {\cite{PRL1}}}
 \end{enumerate}
 % End SubSubSection
 
