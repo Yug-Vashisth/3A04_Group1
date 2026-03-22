@@ -12,6 +12,7 @@
 \usepackage{graphicx}
 \usepackage{extarrows}
 \usepackage{setspace}
+\usepackage{float}
 %------------------------------------------------------------------------------
 
 % Header and Footer
@@ -44,6 +45,7 @@
     \item Hamza Nadeem
 \end{itemize}
 
+\newpage
 \section{Introduction}
 \label{sec:introduction}
 % Begin Section
@@ -88,7 +90,48 @@ This section should provide a state chart for each controller class for your app
 \section{Sequence Diagrams}
 \label{sec:sequence_diagrams}
 % Begin Section
-This section should provide a sequence diagram for each use case of your application.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./Sequence_Diagrams/SE_Create_Alert_Rule.png}
+    \caption{Sequence diagram for creating a new alert rule}
+    \label{fig:analysis-class}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./Sequence_Diagrams/SE_Update_Alert_Rule.png}
+    \caption{Sequence diagram for updating an existing alert rule}
+    \label{fig:analysis-class}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./Sequence_Diagrams/SE_Remove_Alert_Rule.png}
+    \caption{Sequence diagram for removing/disabling an existing alert rule}
+    \label{fig:analysis-class}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./Sequence_Diagrams/SE_Rule_Violation_Detected.png}
+    \caption{Sequence diagram for detecting a rule violation}
+    \label{fig:analysis-class}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./Sequence_Diagrams/SE_Alert_Acknowledged.png}
+    \caption{Sequence diagram for acknowledging a rule violation}
+    \label{fig:analysis-class}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./Sequence_Diagrams/SE_Alert_Resolved.png}
+    \caption{Sequence diagram for resolving an alert rule violation}
+    \label{fig:analysis-class}
+\end{figure}
 % End Section
 
 \section{Detailed Class Diagram}
@@ -105,23 +148,74 @@ Include a Division of Labour sheet which indicates the contributions of each tea
 % End Section
 
 \newpage
-\section*{IMPORTANT NOTES}
+\appendix
+\section{Division of Labour}
+\label{sec:division_of_labour}
+% Begin Section
+
+\noindent \textbf{Benjamin Bloomfield} 
 \begin{itemize}
-	\item You do \underline{NOT} need to provide a text explanation of each diagram; the diagram should speak for itself
-	\item Please document any non-standard notations that you may have used
-	\begin{itemize}
-		\item \emph{Rule of Thumb}: if you feel there is any doubt surrounding the meaning of your notations, document them
-	\end{itemize}
-	\item Some diagrams may be difficult to fit into one page
-	\begin{itemize}
-		\item It is OK if the text is small but please ensure that it is readable when printed
-		\item If you need to break a diagram onto multiple pages, please adopt a system of doing so and throughly explain how it can be reconnected from one page to the next; if you are unsure about this, please ask me
-	\end{itemize}
-	\item Please submit the latest version of Deliverable 1 and Deliverable 2 with Deliverable 3
-	\begin{itemize}
-		\item They do not have to be a freshly printed versions; the latest marked versions are OK
-	\end{itemize}
-	\item If you do \underline{NOT} have a Division of Labour sheet, your deliverable will \underline{NOT} be marked
+    \item Sequence Diagrams 1-6
+	\item Document organization 
+
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[width=10cm]{./signatures/ben_bloomfield_signature.jpg}
+    \\\vspace{0.2cm}
+    Date: March 22nd, 2026
+    \vspace{0.5cm}
+\end{itemize}
+
+
+\noindent \textbf{Vikram Chandar}
+\begin{itemize}
+    \item 
+
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[width=10cm]{./signatures/IMG_4568.jpg}
+    \\\vspace{0.2cm}
+    Date: March 22nd, 2026 
+    \vspace{0.5cm}
+\end{itemize}
+
+
+\noindent \textbf{Trisha Panchal}
+\begin{itemize}
+    \item 
+    
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[width=10cm]{./signatures/trisha_d1_sign.jpg}
+    \\\vspace{0.2cm}
+    Date: March 22nd, 2026
+    \vspace{0.5cm}
+\end{itemize}
+
+
+\noindent \textbf{Yug Vashisth}
+\begin{itemize}
+    \item 
+
+    \vspace{0.5cm}
+        \centering
+        \includegraphics[width=10cm]{./signatures/yug_sig.jpg}
+        \\\vspace{0.2cm}
+        Date: March 22nd, 2026
+    \vspace{0.5cm}	
+\end{itemize}
+
+
+\noindent \textbf{Hamza Nadeem}
+\begin{itemize}
+    \item 
+
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[width=5cm]{signatures/hamza_nadeem_signature.jpeg}
+    \\\vspace{0.2cm}
+    Date: March 22nd, 2026
+    \vspace{0.5cm} 
 \end{itemize}
 
 
