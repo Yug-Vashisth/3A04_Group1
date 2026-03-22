@@ -1,0 +1,463 @@
+@startuml
+!$MAROON  = "#7A003C"
+!$GOLD    = "#FDBF57"
+!$GREY    = "#5E6A71"
+!$GOLD_BG = "#FEECCD"
+!$LIGHT_MAROON = "#AC1455"
+!$DARK_MAROON  = "#56002A"
+
+skinparam linetype ortho
+
+skinparam arrow {
+        Color         $MAROON
+}
+
+skinparam class {
+  BorderColor     $MAROON
+  BorderThickness 1
+  BackgroundColor $GOLD_BG
+}
+
+skinparam component {
+  BorderColor     $MAROON
+  BorderThickness 1
+  BackgroundColor $GOLD_BG
+}
+
+skinparam interface {
+  BorderColor     $MAROON
+  BorderThickness 1
+  BackgroundColor $MAROON
+}
+
+top to bottom direction
+
+enum AlertStatus {
+  ACTIVE
+  ACKNOWLEDGED
+  RESOLVED
+  DISABLED
+}
+
+enum Role {
+  OPERATOR
+  ADMIN
+  IT_SUPPORT
+  PUBLIC_USER
+  THIRD_PARTY_DEV
+}
+
+class TimeRange {
+  + from: DateTime
+  + to: DateTime
+}
+
+abstract class AccountManagement {
+  - passwordPolicy: String
+  - mfaEnabled: boolean
+  - defaultRole: Role
+
+  + createAccount(username: String,\n  password: String, email: String,\n  requestedRole: Role): Account
+  + modifyAccount(account: Account):\n  Account
+  + viewAccount(accountId: String):\n  Account
+  + updateSettings(accountId: String,\n  settings: Map): void
+  + login(username: String,\n  password: String): Account
+  + requestAccountModification(\n  request: AccountModificationRequest):\n  String
+  + approveAccountModification(\n  requestId: String, approver: Account):\n  void
+  + rejectAccountModification(\n  requestId: String, approver: Account,\n  comments: String): void
+}
+AccountManagement ..> Role
+
+abstract class AlertManagement {
+  - notificationChannel: String
+  - ruleEvaluationWindowMins: int
+
+  + createRule(rule: Rule): Rule
+  + modifyRule(rule: Rule): Rule
+  + removeRule(ruleId: String,\n  softDisable: boolean): void
+  + evaluateRules(window: TimeRange):\n  List<Violation>
+  + triggerAlert(rule: Rule,\n  details: Map): Alert
+  + updateStatus(alertId: String,\n  newStatus: AlertStatus, actor: Account,\n  note: String): void
+  + confirmViolation(v: Violation,\n  confirmedBy: Account, note: String):\n  void
+  + viewHistory(ruleId: String,\n  window: TimeRange): List<Violation>
+  + listActiveAlerts(): List<Alert>
+  + notifySubscribers(alertId: String):\n  boolean
+}
+AlertManagement ..> TimeRange
+AlertManagement ..> AlertStatus
+
+abstract class SCEMASBaseController {
+  - logger
+  - currentUser: Account
+  + requireAuth(role: Role): void
+  + handleError(message: String): void
+  + setCurrentUser(user): void
+}
+SCEMASBaseController ..> Role
+
+abstract class MainDashCtrl {
+  + show(): MainDashboard
+  + openCityWide(): void
+  + listActiveAlerts(): List<Alert>
+}
+
+abstract class AdminDashCtrl {
+  + show(): AdminDash
+  + reviewApiRequests():\n  List<APIAccessRequest>
+  + approveApiRequest(\n  requestId: String, rateLimitRps: int):\n  APICredential
+  + rejectApiRequest(requestId: String,\n  comments: String): void
+}
+AdminDashCtrl ..> TimeRange
+
+SCEMASBaseController <|-- MainDashCtrl
+SCEMASBaseController <|-- AdminDashCtrl
+
+interface "DistrictDashboardController" as IDistrictCtrl {
+  + show(districtId: String): DistrictDash
+  + loadData(districtId: String,\n  window: TimeRange): Object
+  + updateDashboard(data: Object): void
+}
+IDistrictCtrl ..> TimeRange
+
+interface "CityWideDashboardController" as ICityWideCtrl {
+  + show(): CityDash
+  + listDistricts(): List<String>
+  + setDistrictController(d): void
+}
+
+class MainDashCtrlImpl {
+  - accountManagement: AccountManagement
+  - alertManagement: AlertManagement
+  - apiController: APIController
+  + show(): MainDashboard
+  + openCityWide(): void
+  + listActiveAlerts(): List<Alert>
+}
+MainDashCtrl <|-- MainDashCtrlImpl
+SCEMASBaseController <|-- MainDashCtrlImpl
+
+class AdminDashCtrlImpl {
+  - adminDB: AdminDB
+  - accountManagement: AccountManagement
+  + show(): AdminDash
+  + reviewApiRequests():\n  List<APIAccessRequest>
+  + approveApiRequest(\n  requestId: String, rateLimitRps: int):\n  APICredential
+  + rejectApiRequest(requestId: String,\n  comments: String): void
+}
+AdminDashCtrl <|-- AdminDashCtrlImpl
+SCEMASBaseController  <|-- AdminDashCtrlImpl
+
+class CityWideCtrlImpl {
+  - districtController: IDistrictCtrl
+  + show(): CityDash
+  + listDistricts(): List<String>
+  + setDistrictController(d): void
+}
+ICityWideCtrl <|.. CityWideCtrlImpl
+SCEMASBaseController <|-- CityWideCtrlImpl
+
+class AirQualityCtrl {
+  - dashboard: AirQualityDash
+  + show(): AirQualityDash
+  + loadData(districtId: String,\n  window: TimeRange): Object
+  + processData(raw: Object): Object
+  + updateDashboard(data: Object): void
+}
+class SoilQualityCtrl {
+  - dashboard: SoilQualityDash
+  + show(): SoilQualityDash
+  + loadData(districtId: String,\n  window: TimeRange): Object
+  + processData(raw: Object): Object
+  + updateDashboard(data: Object): void
+}
+class TemperatureCtrl {
+  - dashboard: TemperatureDash
+  + show(): TemperatureDash
+  + loadData(districtId: String,\n  window: TimeRange): Object
+  + processData(raw: Object): Object
+  + updateDashboard(data: Object): void
+}
+class ForestHealthCtrl {
+  - dashboard: ForestHealthDash
+  + show(): ForestHealthDash
+  + loadData(districtId: String,\n  window: TimeRange): Object
+  + processData(raw: Object): Object
+  + updateDashboard(data: Object): void
+}
+
+IDistrictCtrl <|.. AirQualityCtrl
+IDistrictCtrl <|.. SoilQualityCtrl
+IDistrictCtrl <|.. TemperatureCtrl
+IDistrictCtrl <|.. ForestHealthCtrl
+
+SCEMASBaseController <|-- AirQualityCtrl
+SCEMASBaseController <|-- SoilQualityCtrl
+SCEMASBaseController <|-- TemperatureCtrl
+SCEMASBaseController <|-- ForestHealthCtrl
+
+class MainDashboard {
+  + id: String
+  + title: String
+  + render(): Object
+  + setData(data: Object): void
+}
+class AdminDash {
+  + id: String
+  + title: String
+  + render(): Object
+  + setData(data: Object): void
+}
+class CityDash {
+  + id: String
+  + title: String
+  + render(): Object
+  + setData(data: Object): void
+}
+class DistrictDash {
+  + id: String
+  + title: String
+  + render(): Object
+  + setData(data: Object): void
+}
+class AirQualityDash {
+  + id: String
+  + title: String
+  + render(): Object
+  + setData(data: Object): void
+}
+class SoilQualityDash {
+  + id: String
+  + title: String
+  + render(): Object
+  + setData(data: Object): void
+}
+class TemperatureDash {
+  + id: String
+  + title: String
+  + render(): Object
+  + setData(data: Object): void
+}
+class ForestHealthDash {
+  + id: String
+  + title: String
+  + render(): Object
+  + setData(data: Object): void
+}
+
+MainDashCtrlImpl  "1" *-  "1" MainDashboard
+AdminDashCtrlImpl "1" *-  "1" AdminDash
+CityWideCtrlImpl  "1" *-  "1" CityDash
+AirQualityCtrl    "1" *-  "1" AirQualityDash
+SoilQualityCtrl   "1" *-  "1" SoilQualityDash
+TemperatureCtrl   "1" *-  "1" TemperatureDash
+ForestHealthCtrl  "1" *-  "1" ForestHealthDash
+IDistrictCtrl -> DistrictDash
+
+CityWideCtrlImpl -> IDistrictCtrl
+MainDashCtrlImpl -> ICityWideCtrl
+
+class AccountService {
+  - db: AccountDB
+  + createAccount(username: String,\n  password: String, email: String,\n  requestedRole: Role): Account
+  + modifyAccount(account: Account):\n  Account
+  + viewAccount(accountId: String):\n  Account
+  + updateSettings(accountId: String,\n  settings: Map): void
+  + login(username: String,\n  password: String): Account
+  + requestAccountModification(\n  request: AccountModificationRequest):\n  String
+  + approveAccountModification(\n  requestId: String, approver: Account):\n  void
+  + rejectAccountModification(\n  requestId: String, approver: Account,\n  comments: String): void
+}
+AccountManagement <|-- AccountService
+
+class Account {
+  + id: String
+  + username: String
+  + email: String
+  + role: Role
+  + status: String
+  + settings: Map
+  + createdAt: DateTime
+  + lastLogin: DateTime
+}
+Account ..> Role
+
+class AccountModificationRequest {
+  + requestId: String
+  + requestorId: String
+  + requestedRole: Role
+  + reason: String
+  + status: String
+  + submittedAt: DateTime
+  + decidedAt: DateTime
+  + approverId: String
+}
+AccountModificationRequest ..> Role
+
+class AccountDB {
+  - uri: String
+  + save(a: Account): void
+  + update(a: Account): void
+  + findById(accountId: String): Account
+  + findByUsername(username: String):\n  Account
+  + saveModificationRequest(\n  r: AccountModificationRequest): void
+  + getPendingModificationRequests():\n  List<AccountModificationRequest>
+  + setModificationDecision(\n  requestId: String, approved: boolean,\n  approverId: String, comments: String):\n  void
+}
+
+AccountService "1" o-right- "1" AccountDB
+AccountDB      "1" o-  "0..*" Account
+AccountDB      "1" o-  "0..*" AccountModificationRequest
+
+AccountService -> Account
+MainDashCtrlImpl  -> AccountManagement
+AdminDashCtrlImpl -> AccountManagement
+
+class AlertService {
+  - alertDB: AlertDB
+  - alertHistory: AlertHistory
+  + createRule(rule: Rule): Rule
+  + modifyRule(rule: Rule): Rule
+  + removeRule(ruleId: String,\n  softDisable: boolean): void
+  + evaluateRules(window: TimeRange):\n  List<Violation>
+  + triggerAlert(rule: Rule,\n  details: Map): Alert
+  + updateStatus(alertId: String,\n  newStatus: AlertStatus, actor: Account,\n  note: String): void
+  + confirmViolation(v: Violation,\n  confirmedBy: Account, note: String):\n  void
+  + viewHistory(ruleId: String,\n  window: TimeRange): List<Violation>
+  + listActiveAlerts(): List<Alert>
+  + notifySubscribers(alertId: String):\n  boolean
+}
+AlertManagement <|-- AlertService
+
+class Alert {
+  + id: String
+  + status: AlertStatus
+  + message: String
+  + districtId: String
+  + createdAt: DateTime
+  + acknowledgedAt: DateTime
+  + resolvedAt: DateTime
+  + acknowledge(by: Account, note: String):\n  void
+  + resolve(by: Account, note: String):\n  void
+}
+Alert ..> AlertStatus
+
+class Rule {
+  + id: String
+  + name: String
+  + metric: String
+  + zone: String
+  + comparator: String
+  + threshold: String
+  + enabled: boolean
+  + severity: String
+  + createdAt: DateTime
+  + evaluate(data: Object): boolean
+}
+
+class Violation {
+  + id: String
+  + ruleId: String
+  + severity: String
+  + detectedAt: DateTime
+  + details: Map
+}
+
+class AlertDB {
+  - uri: String
+  + saveAlert(a: Alert): void
+  + updateAlert(a: Alert): void
+  + findAlert(alertId: String): Alert
+  + findAlertsByStatus(status: AlertStatus):\n  List<Alert>
+  + saveRule(r: Rule): void
+  + updateRule(r: Rule): void
+  + findRule(ruleId: String): Rule
+  + listRules(): List<Rule>
+}
+class AlertHistory {
+  + appendViolation(v: Violation): void
+  + listByRule(ruleId: String,\n  window: TimeRange): List<Violation>
+}
+
+Alert "0..*" -right- "1..*" Rule
+
+AlertService  "1" o-right- "1" AlertDB
+AlertService  "1" o-right- "1" AlertHistory
+AlertHistory  "1" o-  "0..*" Violation
+
+AlertService -> Rule
+AlertService -> Violation
+MainDashCtrlImpl -> AlertManagement
+
+class Scheduler {
+  - cron: String
+  - lastRun: DateTime
+  + schedule(cron: String): void
+  + run(): void
+}
+Scheduler ..> AlertManagement
+Scheduler ..> TimeRange
+
+class APIController {
+  - docs: APIDocumentation
+  - db: APIDB
+  - defaultRateLimitRps: int
+  + submitAccessRequest(\n  req: APIAccessRequest): String
+  + generateCredentials(\n  requestId: String, rateLimitRps: int):\n  APICredential
+  + revokeCredentials(clientId: String):\n  void
+  + listRoutes(): List<String>
+}
+
+class APIAccessRequest {
+  + requestId: String
+  + requesterId: String
+  + appName: String
+  + purpose: String
+  + org: String
+  + expectedRps: int
+  + endpoints: List<String>
+  + status: String
+  + submittedAt: DateTime
+  + decidedAt: DateTime
+  + reviewerId: String
+}
+
+class APICredential {
+  + clientId: String
+  + clientSecretHash: String
+  + rateLimitRps: int
+  + createdAt: DateTime
+  + active: boolean
+}
+
+class APIDocumentation {
+  + openApiSpec(): String
+  + docsHtml(): String
+}
+
+class APIDB {
+  - uri: String
+  + listEndpoints(): List<String>
+  + saveAccessRequest(r: APIAccessRequest):\n  void
+  + listPendingAccessRequests():\n  List<APIAccessRequest>
+  + saveCredential(c: APICredential): void
+  + revokeCredential(clientId: String):\n  void
+}
+
+APIController  "1" o-right- "1" APIDocumentation
+APIController  "1" o-right- "1" APIDB
+APIDB          "1" o-  "0..*" APICredential
+APIDB          "1" o-  "0..*" APIAccessRequest
+
+MainDashCtrlImpl  -right-> APIController
+AdminDashCtrlImpl -right-> APIController
+AdminDashCtrlImpl -right-> AdminDB
+
+class AdminDB {
+  - uri: String
+  + listAdminActions(window: TimeRange):\n  List<Object>
+  + listApiAccessRequests():\n  List<APIAccessRequest>
+  + saveApiDecision(requestId: String,\n  approved: boolean, approverId: String,\n  notes: String): void
+}
+AdminDB ..> TimeRange
+
+@enduml
