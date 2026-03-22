@@ -304,9 +304,9 @@ class AccountDB {
   + setModificationDecision(\n  requestId: String, approved: boolean,\n  approverId: String, comments: String):\n  void
 }
 
-AccountService "1" o-right- "1" AccountDB
-AccountDB      "1" o-  "0..*" Account
-AccountDB      "1" o-  "0..*" AccountModificationRequest
+AccountService "1" *-right- "1" AccountDB
+AccountDB      "1" *-  "0..*" Account
+AccountDB      "1" *-  "0..*" AccountModificationRequest
 
 AccountService -> Account
 MainDashCtrlImpl  -> AccountManagement
@@ -443,10 +443,10 @@ class APIDB {
   + revokeCredential(clientId: String):\n  void
 }
 
-APIController  "1" o-right- "1" APIDocumentation
-APIController  "1" o-right- "1" APIDB
-APIDB          "1" o-  "0..*" APICredential
-APIDB          "1" o-  "0..*" APIAccessRequest
+APIController  "1" *-right- "1" APIDocumentation
+APIController  "1" *-right- "1" APIDB
+APIDB          "1" *-  "0..*" APICredential
+APIDB          "1" *-  "0..*" APIAccessRequest
 
 MainDashCtrlImpl  -right-> APIController
 AdminDashCtrlImpl -right-> APIController
