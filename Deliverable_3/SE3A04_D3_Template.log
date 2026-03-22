@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  22 MAR 2026 15:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  22 MAR 2026 16:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -181,9 +181,6 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count286
 \l__pdf_internal_box=\box56
 ) (./SE3A04_D3_Template.aux
-
-LaTeX Warning: Label `fig:analysis-class' multiply defined.
-
 
 LaTeX Warning: Label `fig:analysis-class' multiply defined.
 
@@ -452,88 +449,80 @@ File: ./Sequence_Diagrams/SE_Alert_Acknowledged.png Graphic file (type png)
 <use ./Sequence_Diagrams/SE_Alert_Acknowledged.png>
 Package pdftex.def Info: ./Sequence_Diagrams/SE_Alert_Acknowledged.png  used on input line 201.
 (pdftex.def)             Requested size: 469.75502pt x 452.7978pt.
-<./Sequence_Diagrams/BE5.png, id=75, 569.12625pt x 538.01pt>
-File: ./Sequence_Diagrams/BE5.png Graphic file (type png)
-<use ./Sequence_Diagrams/BE5.png>
-Package pdftex.def Info: ./Sequence_Diagrams/BE5.png  used on input line 207.
-(pdftex.def)             Requested size: 469.75502pt x 444.09358pt.
-
-
-[16 <./Sequence_Diagrams/SE_Rule_Violation_Detected.png>]
-<./Sequence_Diagrams/SE_Alert_Resolved.png, id=81, 1168.365pt x 1359.0775pt>
+<./Sequence_Diagrams/SE_Alert_Resolved.png, id=75, 1168.365pt x 1359.0775pt>
 File: ./Sequence_Diagrams/SE_Alert_Resolved.png Graphic file (type png)
 <use ./Sequence_Diagrams/SE_Alert_Resolved.png>
-Package pdftex.def Info: ./Sequence_Diagrams/SE_Alert_Resolved.png  used on input line 213.
+Package pdftex.def Info: ./Sequence_Diagrams/SE_Alert_Resolved.png  used on input line 207.
 (pdftex.def)             Requested size: 469.75502pt x 546.44173pt.
 
 
-[17 <./Sequence_Diagrams/SE_Alert_Acknowledged.png>]
+[16 <./Sequence_Diagrams/SE_Rule_Violation_Detected.png>]
 
-[18 <./Sequence_Diagrams/BE5.png>]
-<./Sequence_Diagrams/BE7.png, id=90, 632.3625pt x 582.175pt>
+[17 <./Sequence_Diagrams/SE_Alert_Acknowledged.png>]
+<./Sequence_Diagrams/BE7.png, id=84, 632.3625pt x 582.175pt>
 File: ./Sequence_Diagrams/BE7.png Graphic file (type png)
 <use ./Sequence_Diagrams/BE7.png>
-Package pdftex.def Info: ./Sequence_Diagrams/BE7.png  used on input line 220.
+Package pdftex.def Info: ./Sequence_Diagrams/BE7.png  used on input line 214.
 (pdftex.def)             Requested size: 469.75502pt x 432.48169pt.
-<./Sequence_Diagrams/BE8.png, id=91, 618.31pt x 554.07pt>
+<./Sequence_Diagrams/BE8.png, id=86, 618.31pt x 554.07pt>
 File: ./Sequence_Diagrams/BE8.png Graphic file (type png)
 <use ./Sequence_Diagrams/BE8.png>
-Package pdftex.def Info: ./Sequence_Diagrams/BE8.png  used on input line 226.
+Package pdftex.def Info: ./Sequence_Diagrams/BE8.png  used on input line 220.
 (pdftex.def)             Requested size: 469.75502pt x 420.96231pt.
 
 
-[19 <./Sequence_Diagrams/SE_Alert_Resolved.png>]
-<./Sequence_Diagrams/BE9.png, id=97, 660.4675pt x 430.60875pt>
+[18 <./Sequence_Diagrams/SE_Alert_Resolved.png>]
+<./Sequence_Diagrams/BE9.png, id=91, 660.4675pt x 430.60875pt>
 File: ./Sequence_Diagrams/BE9.png Graphic file (type png)
 <use ./Sequence_Diagrams/BE9.png>
-Package pdftex.def Info: ./Sequence_Diagrams/BE9.png  used on input line 232.
+Package pdftex.def Info: ./Sequence_Diagrams/BE9.png  used on input line 226.
 (pdftex.def)             Requested size: 469.75502pt x 306.2797pt.
 
 
-[20 <./Sequence_Diagrams/BE7.png>]
-<./Sequence_Diagrams/BE10.png, id=102, 644.4075pt x 423.5825pt>
+[19 <./Sequence_Diagrams/BE7.png>]
+<./Sequence_Diagrams/BE10.png, id=97, 644.4075pt x 423.5825pt>
 File: ./Sequence_Diagrams/BE10.png Graphic file (type png)
 <use ./Sequence_Diagrams/BE10.png>
-Package pdftex.def Info: ./Sequence_Diagrams/BE10.png  used on input line 238.
+Package pdftex.def Info: ./Sequence_Diagrams/BE10.png  used on input line 232.
 (pdftex.def)             Requested size: 469.75502pt x 308.79254pt.
 
 
-[21 <./Sequence_Diagrams/BE8.png>]
+[20 <./Sequence_Diagrams/BE8.png>]
 
-[22 <./Sequence_Diagrams/BE9.png>]
+[21 <./Sequence_Diagrams/BE9.png>]
 
-[23 <./Sequence_Diagrams/BE10.png>]
-<./signatures/ben_bloomfield_signature.jpg, id=115, 1027.84pt x 320.19624pt>
+[22 <./Sequence_Diagrams/BE10.png>]
+<./signatures/ben_bloomfield_signature.jpg, id=110, 1027.84pt x 320.19624pt>
 File: ./signatures/ben_bloomfield_signature.jpg Graphic file (type jpg)
 <use ./signatures/ben_bloomfield_signature.jpg>
-Package pdftex.def Info: ./signatures/ben_bloomfield_signature.jpg  used on input line 271.
+Package pdftex.def Info: ./signatures/ben_bloomfield_signature.jpg  used on input line 265.
 (pdftex.def)             Requested size: 284.52756pt x 88.63808pt.
-<./signatures/IMG_4568.jpg, id=116, 419.4069pt x 176.5797pt>
+<./signatures/IMG_4568.jpg, id=111, 419.4069pt x 176.5797pt>
 File: ./signatures/IMG_4568.jpg Graphic file (type jpg)
 <use ./signatures/IMG_4568.jpg>
-Package pdftex.def Info: ./signatures/IMG_4568.jpg  used on input line 285.
+Package pdftex.def Info: ./signatures/IMG_4568.jpg  used on input line 279.
 (pdftex.def)             Requested size: 284.52756pt x 119.80045pt.
-<./signatures/trisha_d1_sign.jpg, id=117, 472.76625pt x 182.18062pt>
+<./signatures/trisha_d1_sign.jpg, id=112, 472.76625pt x 182.18062pt>
 File: ./signatures/trisha_d1_sign.jpg Graphic file (type jpg)
 <use ./signatures/trisha_d1_sign.jpg>
-Package pdftex.def Info: ./signatures/trisha_d1_sign.jpg  used on input line 298.
+Package pdftex.def Info: ./signatures/trisha_d1_sign.jpg  used on input line 292.
 (pdftex.def)             Requested size: 284.52756pt x 109.64557pt.
 
 
-[24 <./signatures/ben_bloomfield_signature.jpg> <./signatures/IMG_4568.jpg> <./signatures/trisha_d1_sign.jpg>]
-<./signatures/yug_sig.jpg, id=121, 411.5375pt x 156.585pt>
+[23 <./signatures/ben_bloomfield_signature.jpg> <./signatures/IMG_4568.jpg> <./signatures/trisha_d1_sign.jpg>]
+<./signatures/yug_sig.jpg, id=116, 411.5375pt x 156.585pt>
 File: ./signatures/yug_sig.jpg Graphic file (type jpg)
 <use ./signatures/yug_sig.jpg>
-Package pdftex.def Info: ./signatures/yug_sig.jpg  used on input line 310.
+Package pdftex.def Info: ./signatures/yug_sig.jpg  used on input line 304.
 (pdftex.def)             Requested size: 284.52756pt x 108.25879pt.
-<signatures/hamza_nadeem_signature.jpeg, id=122, 893.3375pt x 898.35625pt>
+<signatures/hamza_nadeem_signature.jpeg, id=117, 893.3375pt x 898.35625pt>
 File: signatures/hamza_nadeem_signature.jpeg Graphic file (type jpg)
 <use signatures/hamza_nadeem_signature.jpeg>
-Package pdftex.def Info: signatures/hamza_nadeem_signature.jpeg  used on input line 323.
+Package pdftex.def Info: signatures/hamza_nadeem_signature.jpeg  used on input line 317.
 (pdftex.def)             Requested size: 142.26378pt x 143.05453pt.
 
 
-[25 <./signatures/yug_sig.jpg> <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>] (./SE3A04_D3_Template.aux)
+[24 <./signatures/yug_sig.jpg> <./signatures/hamza_nadeem_signature.jpeg (PNG copy)>] (./SE3A04_D3_Template.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -544,18 +533,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3905 strings out of 473190
- 64062 string characters out of 5715801
+ 3898 strings out of 473190
+ 63825 string characters out of 5715801
  450524 words of memory out of 5000000
- 27123 multiletter control sequences out of 15000+600000
+ 27116 multiletter control sequences out of 15000+600000
  565336 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,6n,65p,281b,237s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on SE3A04_D3_Template.pdf (25 pages, 2180694 bytes).
+Output written on SE3A04_D3_Template.pdf (24 pages, 1985759 bytes).
 PDF statistics:
- 155 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 149 PDF objects out of 1000 (max. 8388607)
+ 74 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 136 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 131 words of extra memory for PDF output out of 10000 (max. 10000000)
 
