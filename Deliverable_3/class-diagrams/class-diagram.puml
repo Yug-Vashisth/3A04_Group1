@@ -58,7 +58,7 @@ abstract class AccountManagement {
   - defaultRole: Role
 
   + createAccount(username: String,\n  password: String, email: String,\n  requestedRole: Role): Account
-  + modifyAccount(account: Account):\n  Account
+  + modifyAccount(account: Account):\n  void
   + viewAccount(accountId: String):\n  Account
   + updateSettings(accountId: String,\n  settings: Map): void
   + login(username: String,\n  password: String): Account
@@ -259,7 +259,7 @@ MainDashCtrlImpl -> ICityWideCtrl
 class AccountService {
   - db: AccountDB
   + createAccount(username: String,\n  password: String, email: String,\n  requestedRole: Role): Account
-  + modifyAccount(account: Account):\n  Account
+  + modifyAccount(account: Account):\n  void
   + viewAccount(accountId: String):\n  Account
   + updateSettings(accountId: String,\n  settings: Map): void
   + login(username: String,\n  password: String): Account
@@ -420,7 +420,6 @@ class APIAccessRequest {
   + decidedAt: DateTime
   + reviewerId: String
 }
-
 class APICredential {
   + clientId: String
   + clientSecretHash: String
@@ -440,7 +439,6 @@ class APIDB {
   + saveAccessRequest(r: APIAccessRequest):\n  void
   + listPendingAccessRequests():\n  List<APIAccessRequest>
   + saveCredential(c: APICredential): void
-  + revokeCredential(clientId: String):\n  void
 }
 
 APIController  "1" *-right- "1" APIDocumentation
