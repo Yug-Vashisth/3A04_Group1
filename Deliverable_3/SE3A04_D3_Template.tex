@@ -24,7 +24,7 @@
 
 % Title Details
 %------------------------------------------------------------------------------
-\title{Deliverable \#3 Template}
+\title{Deliverable \#3}
 \author{SE 3A04: Software Design III -- Large System Design}
 \date{}                               
 %------------------------------------------------------------------------------
@@ -55,37 +55,26 @@ This section should provide an brief overview of the entire document.
 \subsection{Purpose}
 \label{sub:purpose}
 % Begin SubSection
-\begin{enumerate}[a)]
-	\item Delineate the purpose of the document\\
-    The purpose of this document is to provide further detail about the SCEMAS system, including State Charts for the Controller classes, Sequence Diagrams, and a detailed class diagram. A more detailed background of the SCEMAS system is provided in Deliverables 1 and 2.
-	\item Specify the intended audience for the document\\
+    The purpose of this document is to provide further detail about the SCEMAS system, including State Charts for the Controller classes, Sequence Diagrams, and a detailed class diagram. A more detailed background of the SCEMAS system is provided in Deliverables 1 and 2.\\
     The intended audience of this document is the stakeholders of SCEMAS, including developers, testers, and owners.
-\end{enumerate}
 % End SubSection
 
 \subsection{System Description}
 \label{sub:system_description}
 % Begin SubSection
-\begin{enumerate}[a)]
-	\item Give a brief description of the system. This could be a paragraph or two to give some context to this document. \\
     The SCEMAS system is designed to share IoT data of sensors distributed across the city, acting as a monitoring network for an environmental monitoring system. The IoT sensors collect data, evaluate that data against thresholds, and send alerts when a threshold violation is detected so users can take any action needed. A dashboard is provided for city officials, while a public API will be provided for other users. The system is built using the PAC architecture that separates the interactive aspect of the system into a hierarchy of cooperating agents, each with its own logic and control component, complemented by the Repository architecture, which provides a centralized data store with consistent and uniform access mechanisms. 
-\end{enumerate}
 % End SubSection
 
 \subsection{Overview}
 \label{sub:overview}
 % Begin SubSection
-\begin{enumerate}[a)]
-	\item Describe what the rest of the document contains\\
-    Section 2 contains State Charts for each controller class specified in the analysis class diagram from Deliverable 2. Section 3 contains Sequence Diagrams for each business event from Deliverable 1. Section 4 contains a detailed UML class diagram.
-	\item Explain how the document is organised \\
-    The document is organized in a manner where it begins by showing state charts for each controller class of the system to help establish system behaviour. It then shows sequence diagrams for each use case, and finally provides a detailed class diagram of our system.
-\end{enumerate}
+Section 2 contains State Charts for each controller class specified in the analysis class diagram from Deliverable 2. Section 3 contains Sequence Diagrams for each business event from Deliverable 1. Section 4 contains a detailed UML class diagram.
+The document is organized in a manner where it begins by showing state charts for each controller class of the system to help establish system behaviour. It then shows sequence diagrams for each use case, and finally provides a detailed class diagram of our system.
 
 % End SubSection
 
 % End Section
-
+\newpage
 \section{State Charts for Controller Classes}
 \label{sec:state_charts_for_controller_classes}
 % Begin Section
@@ -168,7 +157,7 @@ This section should provide a state chart for each controller class for your app
     \caption{State diagram for Admin Controller}
     \label{fig:analysis-class}
 \end{figure}
-
+\newpage
 \section{Sequence Diagrams}
 \label{sec:sequence_diagrams}
 % Begin Section
@@ -240,7 +229,7 @@ This section should provide a state chart for each controller class for your app
 \end{figure}
 
 %End Section
-
+\newpage
 \section{Detailed Class Diagram}
 \label{sec:detailed_class_diagram}
 % Begin Section
@@ -356,7 +345,8 @@ Include a Division of Labour sheet which indicates the contributions of each tea
     \item Section 4: Detailed Class Diagram
     \begin{itemize}
         \item Assisted in planning the class diagram
-        \item reviewed the class diagram
+        \item Reviewed the UML class diagram
+        \item Assisted in modifying and providing feedback for further revisions
     \end{itemize}
 
     \vspace{0.5cm}
