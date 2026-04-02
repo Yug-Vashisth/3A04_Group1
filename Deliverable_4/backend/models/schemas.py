@@ -23,6 +23,10 @@ class AlertStatus(str, Enum):
     resolved = "resolved"
     disabled = "disabled"
 
+class Severity(str, Enum):
+    info = "info"
+    warning = "warning"
+    critical = "critical"
 
 # Incoming sensor data (telemetry)
 class IncomingTelemetry(BaseModel):
@@ -56,6 +60,7 @@ class AlertRule(BaseModel):
     zone: Optional[str] = None  # default is none --> applies to all zones
     comparator: ComparatorType
     threshold: float
+    severity: Severity
     enabled: bool = True
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
@@ -81,6 +86,7 @@ class UpdateAlertRule(BaseModel):
     zone: Optional[str] = None
     comparator: Optional[ComparatorType] = None
     threshold: Optional[float] = None
+    sevirty: Optional[Severity] = None
     enabled: Optional[bool] = None
     status: Optional[AlertStatus] = None
 

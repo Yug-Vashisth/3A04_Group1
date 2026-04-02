@@ -61,6 +61,7 @@ async def trigger_alert(telemetry: IncomingTelemetry) -> list[Alert]:
                 unit=telemetry.unit,
                 threshold=alertRule["threshold"],
                 comparator=alertRule["comparator"],
+                severity=alertRule["severity"],
             )
             await db.alerts.insert_one(alert.model_dump())
  
@@ -76,6 +77,7 @@ async def trigger_alert(telemetry: IncomingTelemetry) -> list[Alert]:
                     "metric": telemetry.metric,
                     "value": telemetry.value,
                     "threshold": alertRule["threshold"],
+                    "severity": alertRule["severity"],
                 }
             )
             await db.audit_logs.insert_one(log.model_dump())
