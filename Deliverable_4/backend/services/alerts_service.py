@@ -28,7 +28,7 @@ def _serialize(document: dict) -> dict:
 async def trigger_alert(telemetry: IncomingTelemetry) -> list[Alert]:
     """
     Called by the MQTT listener for every incoming telemetry message.
-    Loads active rules, evaluates them, and creates Alert documents for violations.
+        --> Not implemented yet
     """
     db = get_db()
     triggeredAlerts = []
