@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import Optional
 from bson import ObjectId  # MongoDB uses _id as a special object (ObjectId)
-from ..models.schemas import AlertRule, CreateAlertRule, UpdateAlertRule, AuditLog
-from ..core.database import get_db  # gets the MongoDB connection
+from models.schemas import AlertRule, CreateAlertRule, UpdateAlertRule, AuditLog
+from core.database import get_db  # gets the MongoDB connection
 
 
 # Note: In MongoDB:

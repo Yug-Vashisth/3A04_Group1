@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Query
-from ..models.schemas import CreateAlertRule, UpdateAlertRule
-from ..services import alert_rules_service as alertRulesService
+from models.schemas import CreateAlertRule, UpdateAlertRule
+from services import alert_rules_service as alertRulesService
 
 # POST --> used for creating new things
 # GET --> used for reading data
