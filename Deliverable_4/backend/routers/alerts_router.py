@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
-from ..models.schemas import AcknowledgeAlert, ResolveAlert
-from ..services import alert_service as alertsService
+from models.schemas import AcknowledgeAlert, ResolveAlert
+from services import alerts_service as alertsService
 
 router = APIRouter(prefix="/api/alerts", tags=["Alerts"])
 

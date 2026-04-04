@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
-from ..models.schemas import Alert, AcknowledgeAlert, ResolveAlert, IncomingTelemetry, AuditLog
-from ..core.database import get_db
+from models.schemas import Alert, AcknowledgeAlert, ResolveAlert, IncomingTelemetry, AuditLog
+from core.database import get_db
  
  
 METRIC_UNITS = {
