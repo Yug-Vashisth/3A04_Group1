@@ -7,6 +7,10 @@ class Settings(BaseSettings):
     # will have more stuff for MQTT later ??
     OLLAMA_URL: str = ""
     
+    JWT_SECRET_KEY: str = "ahahahhhahhahahhahhah"
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRE_MINUTES: int = 30
+ 
     class Config:
         env_file = ".env"
  

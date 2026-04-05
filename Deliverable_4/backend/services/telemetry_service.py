@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional
-from ..models.schemas import TelemetryRecord, IncomingTelemetry
-from ..core.database import get_db
+from models.schemas import IncomingTelemetry
+from core.database import get_db
 
 
 def _serialize(document: dict) -> dict:
