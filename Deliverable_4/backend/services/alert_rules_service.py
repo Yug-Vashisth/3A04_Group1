@@ -106,7 +106,7 @@ async def delete_alert_rule(rule_id: str, actor: str = "admin") -> bool:
     )
     await db.audit_logs.insert_one(log.model_dump())  
 
-    return _serialize(deletedAlertRule)
+    return True
 
 
 async def disable_alert_rule(rule_id: str, actor: str = "admin") -> Optional[dict]:

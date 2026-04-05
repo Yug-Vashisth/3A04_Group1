@@ -1,0 +1,26 @@
+# Virtual Environments
+venv311/
+.venv/
+.env
+
+# Cache
+**/__pycache__/
+*.py[cod]
+
+# Packaging 
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+
+# OS files
+.DS_Store
+Thumbs.db
