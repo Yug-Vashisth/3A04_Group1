@@ -99,11 +99,12 @@ export default function SCEMASDashboard() {
   const [zones, setZones] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // alerts tab: selected alert + logs
+  // alerts tab
   const [selectedAlertId, setSelectedAlertId] = useState(null);
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [alertLogs, setAlertLogs] = useState([]);
   const [alertFilter, setAlertFilter] = useState("");
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
 
   // operator (set by Login)
   const operatorId = localStorage.getItem("email");
@@ -147,7 +148,7 @@ export default function SCEMASDashboard() {
     const interval = setInterval(fetchAll, 10000);
     return () => clearInterval(interval);
   }, []);
- 
+
   useEffect(() => {
     if (activeTab === "alerts") {
       loadAlerts(alertFilter);
@@ -189,6 +190,26 @@ export default function SCEMASDashboard() {
     } catch (err) {
       console.error("Failed to load alerts:", err);
     }
+  }
+
+    async function acknowledgeAlert(alertId) {
+    await fetch(`${API}/api/alerts/${alertId}/acknowledge`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ operator_id: operatorId }),
+    });
+
+    await loadAlerts(alertFilter);
+  }
+
+  async function resolveAlert(alertId) {
+    await fetch(`${API}/api/alerts/${alertId}/resolve`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ operator_id: operatorId }),
+    });
+
+    await loadAlerts(alertFilter);
   }
 
   async function acknowledgeSelectedAlert() {
@@ -406,10 +427,17 @@ export default function SCEMASDashboard() {
         {/* ── Alerts Tab ── */}
         {activeTab === "alerts" && (
           <div style={{ animation: "fadeIn 0.2s ease" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 420px", gap: 12 }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: showAdminPanel ? "1fr 360px" : "1fr",
+                gap: 12,
+              }}
+            >
 
               {/* ALERT LIST */}
               <div className="card" style={{ overflow: "hidden" }}>
+                {/* Header */}
                 <div style={{ padding: "16px 20px", borderBottom: "1px solid #1c2330" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 14 }}>
@@ -426,116 +454,118 @@ export default function SCEMASDashboard() {
                           {s === "" ? "All" : s}
                         </button>
                       ))}
+
+                      {/* ADMIN TOGGLE */}
+                      <button
+                        className="tab"
+                        onClick={() => setShowAdminPanel(v => !v)}
+                      >
+                        Admin
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "6px 80px 1fr 90px 100px 70px", padding: "7px 14px", fontSize: 10, color: "#374151" }}>
+
+                {/* Column Labels */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "6px 80px 1fr 90px 100px 70px 90px",
+                    padding: "7px 14px",
+                    fontSize: 10,
+                    color: "#374151",
+                  }}
+                >
                   <div />
                   <div>Time · ID</div>
                   <div>Message</div>
                   <div>District</div>
                   <div>Sensor</div>
                   <div>Status</div>
+                  <div /> {/* actions */}
                 </div>
 
+                {/* ALERT ROWS */}
                 {alerts.map((a, i) => (
                   <div
                     key={a.id}
-                    onClick={() => {
-                      setSelectedAlertId(a.id);
-                      fetchAlertDetails(a.id);
-                      fetchAlertLogs(a.id);
-                    }}
                     style={{
-                      cursor: "pointer",
-                      background: selectedAlertId === a.id ? "#111827" : "transparent"
+                      display: "grid",
+                      gridTemplateColumns: "1fr 90px",
+                      alignItems: "center",
+                      background: "transparent",
                     }}
                   >
                     <AlertRow alert={a} idx={i} />
+
+                    {/* INLINE ACTIONS */}
+                    <div style={{ textAlign: "right", paddingRight: 12 }}>
+                      {a.status === "active" && (
+                        <button
+                          onClick={() => acknowledgeAlert(a.id)}
+                          style={{
+                            padding: "4px 10px",
+                            background: "#f59e0b20",
+                            border: "1px solid #f59e0b55",
+                            color: "#f59e0b",
+                            borderRadius: 4,
+                            fontSize: 10,
+                            cursor: "pointer",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Ack
+                        </button>
+                      )}
+
+                      {a.status === "acknowledged" && (
+                        <button
+                          onClick={() => resolveAlert(a.id)}
+                          style={{
+                            padding: "4px 10px",
+                            background: "#22c55e20",
+                            border: "1px solid #22c55e55",
+                            color: "#22c55e",
+                            borderRadius: 4,
+                            fontSize: 10,
+                            cursor: "pointer",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Resolve
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
 
-              {/* ALERT DETAILS */}
-              <div className="card" style={{ padding: 16 }}>
-                {!selectedAlert ? (
-                  <div style={{ color: "#4b5563", fontSize: 12 }}>
-                    Select an alert to view details
+              {/* ADMIN SIDE PANEL */}
+              {showAdminPanel && (
+                <div className="card" style={{ padding: 16 }}>
+                  <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 14, marginBottom: 10 }}>
+                    Create Alert Rule
                   </div>
-                ) : (
-                  <>
-                    <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 16 }}>
-                      {selectedAlert.rule_name}
-                    </div>
 
-                    <div style={{ fontSize: 12, margin: "8px 0" }}>
-                      Value: <b>{selectedAlert.value} {selectedAlert.unit}</b><br />
-                      Threshold: <b>{selectedAlert.threshold}</b>
-                    </div>
+                  <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 12 }}>
+                    Admin-only configuration
+                  </div>
 
-                    {selectedAlert.status === "active" && (
-                      <button
-                        onClick={acknowledgeSelectedAlert}
-                        style={{
-                          padding: "6px 14px",
-                          background: "#f59e0b20",
-                          border: "1px solid #f59e0b55",
-                          color: "#f59e0b",
-                          borderRadius: 4,
-                          cursor: "pointer",
-                          fontSize: 11,
-                          fontWeight: 600,
-                          letterSpacing: 0.8,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Acknowledge Alert
-                      </button>
-                    )}
-
-                    {selectedAlert.status === "acknowledged" && (
-                      <button
-                        onClick={resolveSelectedAlert}
-                        style={{
-                          padding: "6px 14px",
-                          background: "#22c55e20",
-                          border: "1px solid #22c55e55",
-                          color: "#22c55e",
-                          borderRadius: 4,
-                          cursor: "pointer",
-                          fontSize: 11,
-                          fontWeight: 600,
-                          letterSpacing: 0.8,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Resolve Alert
-                      </button>
-                    )}
-
-                    <hr style={{ margin: "16px 0", borderColor: "#1c2330" }} />
-
-                    <div style={{ fontSize: 11, color: "#9ca3af" }}>
-                      ACTIVITY LOG
-                    </div>
-
-                    {alertLogs.length === 0 ? (
-                      <div style={{ fontSize: 11, color: "#4b5563" }}>
-                        No activity yet
-                      </div>
-                    ) : (
-                      alertLogs.map(log => (
-                        <div key={log.log_id} style={{ fontSize: 11 }}>
-                          {log.action} · {log.actor}<br />
-                          <span style={{ color: "#4b5563" }}>
-                            {new Date(log.timestamp).toLocaleString()}
-                          </span>
-                        </div>
-                      ))
-                    )}
-                  </>
-                )}
-              </div>
+                  <button
+                    style={{
+                      padding: "6px 10px",
+                      background: "#1d4ed8",
+                      border: "none",
+                      borderRadius: 4,
+                      color: "#fff",
+                      fontSize: 11,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Create New Rule
+                  </button>
+                </div>
+              )}
 
             </div>
           </div>
