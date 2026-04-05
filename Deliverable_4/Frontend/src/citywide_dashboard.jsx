@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import "./App.css";
+
 
 // ─── Mock Data ───────────────────────────────────────────────────────────────
 // Used mock data for now, need to change when we meet tdy
@@ -139,6 +141,14 @@ export default function SCEMASDashboard() {
   const [alerts] = useState(generateAlerts);
   const [selectedTrend, setSelectedTrend] = useState("Air Quality");
   const [pulse, setPulse] = useState(false);
+  const [envResult, setEnvResult] = useState(null);
+  const [envInputs, setEnvInputs] = useState({
+    aqi: "",
+    soil_moisture: "",
+    ndvi: "",
+    temperature: "",
+  });
+  const [envLoading, setEnvLoading] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -238,12 +248,17 @@ export default function SCEMASDashboard() {
           </div>
 
           <nav style={{ display: "flex", gap: 4, marginLeft: 16 }}>
-            {["overview", "alerts", "districts", "trends"].map((tab) => (
+            {["overview", "alerts", "districts", "trends", "analysis"].map((tab) => (
               <button
                 key={tab}
                 className={`tab ${activeTab === tab ? "active" : ""}`}
                 onClick={() => setActiveTab(tab)}
-                style={{ color: activeTab === tab ? "#93c5fd" : "#6b7280", background: "none" }}
+                style={{
+                  color: activeTab === tab ? "#93c5fd" : "#6b7280",
+                  background: "none",
+                  whiteSpace: "nowrap", 
+                  padding: "6px 10px",  
+                }}
               >
                 {tab}
               </button>
@@ -773,6 +788,129 @@ export default function SCEMASDashboard() {
             </div>
           </div>
         )}
+
+         {/* ── Environmental Analysis Tab ── */}
+        {activeTab === "analysis" && (
+          <div style={{ animation: "fadeIn 0.2s ease" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: 12,
+              }}
+            >
+              <div className="card" style={{ padding: 20 }}>
+                {/* Header */}
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, color: "#f3f4f6", marginBottom: 12 }}>
+                  Environmental Analysis
+                </div>
+
+                {/* Input grid */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
+                  {[
+                    { label: "AQI", key: "aqi", type: "number" },
+                    { label: "Soil Moisture", key: "soil_moisture", type: "number" },
+                    { label: "NDVI", key: "ndvi", type: "number" },
+                    { label: "Temperature", key: "temperature", type: "number" },
+                  ].map(({ label, key, type }) => (
+                    <div key={key} style={{ display: "flex", flexDirection: "column" }}>
+                      <label style={{ fontSize: 12, color: "#4b5563", marginBottom: 4 }}>{label} *</label>
+                      <input
+                        type={type}
+                        value={envInputs[key]}
+                        onChange={(e) =>
+                          setEnvInputs({ ...envInputs, [key]: e.target.value })
+                        }
+                        style={{
+                          padding: 6,
+                          borderRadius: 4,
+                          border: "1px solid #4b5563",
+                          background: "#0a0f16",
+                          color: "#f3f4f6",
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Get Rating button */}
+                <button
+                  onClick={async () => {
+                    try {
+                      const query = new URLSearchParams(envInputs).toString();
+
+                      setEnvLoading(true);    
+                      setEnvResult(null);      
+
+                      const res = await fetch(`http://127.0.0.1:8000/api/disaster/rating?${query}`);
+                      const data = await res.json();
+                      setEnvResult(data.answer);
+                    } catch (err) {
+                      console.error(err);
+                      setEnvResult("Error fetching data");
+                    } finally {
+                      setEnvLoading(false); // stop loading
+                    }
+                  }}
+                  style={{
+                    padding: "8px 12px",
+                    background: "#1d4ed8",
+                    color: "#f3f4f6",
+                    border: "none",
+                    borderRadius: 4,
+                    cursor: "pointer",
+                    width: 150,
+                  }}
+                >
+                  Get Rating
+                </button>
+
+                {/* Response card */}
+                <div
+  style={{
+    marginTop: 16,
+    padding: 16,
+    borderRadius: 6,
+    background: "#111827",
+    color: "#f3f4f6",
+    fontSize: 12,
+    minHeight: 80,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  {envLoading ? (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+      {/* Spinner */}
+      <div
+        style={{
+          width: 24,
+          height: 24,
+          border: "3px solid #1c2330",
+          borderTop: "3px solid #3b82f6",
+          borderRadius: "50%",
+          animation: "spin 0.8s linear infinite",
+        }}
+      />
+      <div style={{ fontSize: 11, color: "#6b7280" }}>
+        Analyzing environment...
+      </div>
+    </div>
+  ) : envResult ? (
+    <div style={{ whiteSpace: "pre-wrap", width: "100%" }}>
+      {envResult}
+    </div>
+  ) : (
+    <div style={{ color: "#374151", fontSize: 11 }}>
+    </div>
+  )}
+</div>
+              </div>
+            </div>
+          </div>
+        )}           
+
       </main>
     </div>
   );
