@@ -148,7 +148,16 @@ export default function SCEMASDashboard() {
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [alertLogs, setAlertLogs] = useState([]);
   const [alertFilter, setAlertFilter] = useState("");
-  const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [showAdminPanel, setShowAdminPanel] = useState(false);  
+  const [ruleForm, setRuleForm] = useState({
+    name: "",
+    metric: "air_quality",
+    comparator: "gt",
+    threshold: "",
+    severity: "warning",
+    zone: "",
+  });
+  const [alertRules, setAlertRules] = useState([]);
 
   // operator (set by Login)
   const operatorId = localStorage.getItem("email");
@@ -281,6 +290,90 @@ export default function SCEMASDashboard() {
     await fetchAlertDetails(selectedAlertId);
     await loadAlerts(alertFilter);
   }
+
+  async function createRule() {
+    const payload = {
+      ...ruleForm,
+      threshold: Number(ruleForm.threshold),
+    };
+
+    const res = await fetch(`${API}/api/alert-rules`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      // later: show validation errors
+      return;
+    }
+
+    // rule created and ACTIVE
+    setRuleForm({
+      name: "",
+      metric: "air_quality",
+      comparator: "gt",
+      threshold: "",
+      severity: "warning",
+      zone: "",
+    });
+
+    // refresh rules list (next step)
+    loadAlertRules();
+  }
+
+  async function loadAlertRules() {
+    try {
+      const res = await fetch(`${API}/api/alert-rules`);
+      const data = await res.json();
+      setAlertRules(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Failed to load alert rules:", err);
+    }
+  }
+
+  async function disableRule(ruleId) {
+    try {
+      const res = await fetch(`${API}/api/alert-rules/${ruleId}/disable`, {
+        method: "PATCH",
+      });
+
+      if (!res.ok) throw new Error("Failed to disable rule");
+
+      // refresh rules list
+      loadAlertRules();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function deleteRule(ruleId) {
+    const confirmed = window.confirm(
+      "Are you sure you want to permanently delete this alert rule?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`${API}/api/alert-rules/${ruleId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) throw new Error("Failed to delete rule");
+
+      // remove immediately
+      setAlertRules(prev =>
+        prev.filter(rule => rule.rule_id !== ruleId)
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (showAdminPanel) {
+      loadAlertRules();
+    }
+  }, [showAdminPanel]);
 
   // fetch telemetry for selected trend from DB
   useEffect(() => {
@@ -474,20 +567,171 @@ export default function SCEMASDashboard() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: showAdminPanel ? "1fr 360px" : "1fr",
+                gridTemplateColumns: showAdminPanel ? "360px 1fr" : "1fr",
                 gap: 12,
               }}
             >
+              {/* ADMIN SIDE PANEL */}
+              {showAdminPanel && (
+                <div className="card" style={{ padding: 16 }}>
+                  <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 14, marginBottom: 10 }}>
+                    Create Alert Rule
+                  </div>
+                  
+                  <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 12 }}>
+                    Admin-only configuration
+                  </div>
+
+                  {/* create rule form */}
+                  <div className="card" style={{ padding: 16 }}>
+                    <div style={{ fontFamily: "'Syne'", fontSize: 14, marginBottom: 12 }}>
+                      Create Alert Rule
+                    </div>
+
+                    <input
+                      placeholder="Rule name"
+                      value={ruleForm.name}
+                      onChange={e => setRuleForm({ ...ruleForm, name: e.target.value })}
+                    />
+
+                    <select
+                      value={ruleForm.metric}
+                      onChange={e => setRuleForm({ ...ruleForm, metric: e.target.value })}
+                    >
+                      <option value="air_quality">Air Quality</option>
+                      <option value="temperature">Temperature</option>
+                      <option value="soil_quality">Soil Quality</option>
+                      <option value="forest_health">Forest Health</option>
+                    </select>
+
+                    <select
+                      value={ruleForm.comparator}
+                      onChange={e => setRuleForm({ ...ruleForm, comparator: e.target.value })}
+                    >
+                      <option value="gt">Greater than</option>
+                      <option value="lt">Less than</option>
+                    </select>
+
+                    <input
+                      type="number"
+                      placeholder="Threshold"
+                      value={ruleForm.threshold}
+                      onChange={e => setRuleForm({ ...ruleForm, threshold: e.target.value })}
+                    />
+
+                    <select
+                      value={ruleForm.severity}
+                      onChange={e => setRuleForm({ ...ruleForm, severity: e.target.value })}
+                    >
+                      <option value="warning">Warning</option>
+                      <option value="critical">Critical</option>
+                    </select>
+
+                    <button onClick={createRule}>
+                      Create Rule
+                    </button>
+                  </div>
+
+                  {/* existing rules */}
+                  <div style={{ marginTop: 16 }}>
+                    <div style={{ fontSize: 11, color: "#9ca3af", marginBottom: 8 }}>
+                      EXISTING ALERT RULES
+                    </div>
+
+                    {alertRules.length === 0 ? (
+                      <div style={{ fontSize: 11, color: "#4b5563" }}>
+                        No alert rules defined.
+                      </div>
+                    ) : (
+                      alertRules.map(rule => (
+                        <div
+                          key={rule.rule_id}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "8px 10px",
+                            borderRadius: 4,
+                            background: "#111827",
+                            marginBottom: 6,
+                            fontSize: 11,
+                          }}
+                        >
+                          {/* RULE INFO */}
+                          <div>
+                            <div style={{ color: "#e5e7eb", fontWeight: 600 }}>
+                              {rule.name}
+                            </div>
+
+                            <div style={{ color: "#6b7280", fontSize: 10 }}>
+                              {rule.metric} {rule.comparator} {rule.threshold}
+                            </div>
+
+                            {!rule.enabled && (
+                              <div style={{ fontSize: 10, color: "#f59e0b" }}>
+                                Disabled
+                              </div>
+                            )}
+                          </div>
+
+                          {/* ACTIONS */}
+                          <div style={{ display: "flex", gap: 6 }}>
+                            {rule.enabled && (
+                              <button
+                                className="tab"
+                                onClick={() => disableRule(rule.rule_id)}
+                              >
+                                Disable
+                              </button>
+                            )}
+
+                            <button
+                              className="tab"
+                              onClick={() => deleteRule(rule.rule_id)}
+                              style={{ color: "#ef4444" }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                </div>
+              )}
 
               {/* ALERT LIST */}
               <div className="card" style={{ overflow: "hidden" }}>
                 {/* Header */}
                 <div style={{ padding: "16px 20px", borderBottom: "1px solid #1c2330" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 14 }}>
-                      ALL ALERTS
-                    </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    {/* LEFT: Title + Manage */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 14 }}>
+                        ALL ALERTS
+                      </span>
 
+                      {/* MANAGE TOGGLE */}
+                      <button
+                        className={`tab ${showAdminPanel ? "active" : ""}`}
+                        onClick={() => setShowAdminPanel(v => !v)}
+                        style={{
+                          color: showAdminPanel ? "#93c5fd" : "#6b7280",
+                          borderColor: showAdminPanel ? "#2d3f55" : "transparent",
+                        }}
+                      >
+                        MANAGE
+                      </button>
+                    </div>
+
+                    {/* RIGHT: FILTERS */}
                     <div style={{ display: "flex", gap: 6 }}>
                       {["", "active", "acknowledged", "resolved"].map(s => (
                         <button
@@ -495,17 +739,9 @@ export default function SCEMASDashboard() {
                           className={`tab ${alertFilter === s ? "active" : ""}`}
                           onClick={() => setAlertFilter(s)}
                         >
-                          {s === "" ? "All" : s}
+                          {s === "" ? "ALL" : s}
                         </button>
                       ))}
-
-                      {/* ADMIN TOGGLE */}
-                      <button
-                        className="tab"
-                        onClick={() => setShowAdminPanel(v => !v)}
-                      >
-                        Admin
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -623,34 +859,6 @@ export default function SCEMASDashboard() {
                 </div>
                 ))}
               </div>
-
-              {/* ADMIN SIDE PANEL */}
-              {showAdminPanel && (
-                <div className="card" style={{ padding: 16 }}>
-                  <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 14, marginBottom: 10 }}>
-                    Create Alert Rule
-                  </div>
-
-                  <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 12 }}>
-                    Admin-only configuration
-                  </div>
-
-                  <button
-                    style={{
-                      padding: "6px 10px",
-                      background: "#1d4ed8",
-                      border: "none",
-                      borderRadius: 4,
-                      color: "#fff",
-                      fontSize: 11,
-                      cursor: "pointer",
-                    }}
-                  >
-                    Create New Rule
-                  </button>
-                </div>
-              )}
-
             </div>
           </div>
         )}
