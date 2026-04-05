@@ -140,3 +140,15 @@ class AuditLog(BaseModel):
                 "timestamp": "2026-03-29 22:21:14.203730"
             }
         }
+    
+    class MetricType(str, Enum):
+        air_quality = "air_quality"
+        soil_quality = "soil_quality"
+        temperature = "temperature"
+        forest_health = "forest_health"
+
+    class EnvPredictor(BaseModel):
+        air_quality: float
+        soil_quality: float
+        temperature: float
+        forest_health: float          
