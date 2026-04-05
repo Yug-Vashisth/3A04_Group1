@@ -80,7 +80,24 @@ function AlertRow({ alert, idx }) {
       </span>
       <span style={{ color: "#6b7280" }}>{alert.district}</span>
       <span style={{ color: "#6b7280" }}>{alert.sensor}</span>
-      <span style={{ padding: "2px 7px", borderRadius: 3, background: s.bg, color: s.color, fontSize: 10, fontWeight: 600, letterSpacing: 0.8, textAlign: "center" }}>
+      <span
+        style={{
+          display: "inline-flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minWidth: 84,
+          height: 22,
+          padding: "0 8px",
+          borderRadius: 4,
+          background: s.bg,
+          color: s.color,
+          fontSize: 10,
+          fontWeight: 600,
+          letterSpacing: 0.6,
+          textTransform: "uppercase",
+          whiteSpace: "nowrap",
+        }}
+      >
         {s.label}
       </span>
     </div>
@@ -470,7 +487,7 @@ export default function SCEMASDashboard() {
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "6px 80px 1fr 90px 100px 70px 90px",
+                    gridTemplateColumns: "6px 80px 1fr 90px 100px 96px 96px",
                     padding: "7px 14px",
                     fontSize: 10,
                     color: "#374151",
@@ -498,45 +515,64 @@ export default function SCEMASDashboard() {
                   >
                     <AlertRow alert={a} idx={i} />
 
-                    {/* INLINE ACTIONS */}
-                    <div style={{ textAlign: "right", paddingRight: 12 }}>
-                      {a.status === "active" && (
-                        <button
-                          onClick={() => acknowledgeAlert(a.id)}
-                          style={{
-                            padding: "4px 10px",
-                            background: "#f59e0b20",
-                            border: "1px solid #f59e0b55",
-                            color: "#f59e0b",
-                            borderRadius: 4,
-                            fontSize: 10,
-                            cursor: "pointer",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          Ack
-                        </button>
-                      )}
+                  {/* INLINE ACTIONS */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center", // ← match status pill centering
+                    }}
+                  >
+                    {a.status === "active" && (
+                      <button
+                        onClick={() => acknowledgeAlert(a.id)}
+                        style={{
+                          display: "inline-flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          minWidth: 84,     // ← SAME as status pill
+                          height: 22,       // ← SAME as status pill
+                          padding: "0 8px",
+                          borderRadius: 4,
+                          background: "transparent",
+                          border: "1px solid #f59e0b55",
+                          color: "#f59e0b",
+                          fontSize: 10,
+                          fontWeight: 600,
+                          letterSpacing: 0.6,
+                          textTransform: "uppercase",
+                          cursor: "pointer",
+                        }}
+                      >
+                        ACKNOWLEDGE
+                      </button>
+                    )}
 
-                      {a.status === "acknowledged" && (
-                        <button
-                          onClick={() => resolveAlert(a.id)}
-                          style={{
-                            padding: "4px 10px",
-                            background: "#22c55e20",
-                            border: "1px solid #22c55e55",
-                            color: "#22c55e",
-                            borderRadius: 4,
-                            fontSize: 10,
-                            cursor: "pointer",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          Resolve
-                        </button>
-                      )}
-                    </div>
+                    {a.status === "acknowledged" && (
+                      <button
+                        onClick={() => resolveAlert(a.id)}
+                        style={{
+                          display: "inline-flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          minWidth: 84,     // ← SAME as status pill
+                          height: 22,       // ← SAME as status pill
+                          padding: "0 8px",
+                          borderRadius: 4,
+                          background: "transparent",
+                          border: "1px solid #22c55e55",
+                          color: "#22c55e",
+                          fontSize: 10,
+                          fontWeight: 600,
+                          letterSpacing: 0.6,
+                          textTransform: "uppercase",
+                          cursor: "pointer",
+                        }}
+                      >
+                        RESOLVE
+                      </button>
+                    )}
                   </div>
+                </div>
                 ))}
               </div>
 
