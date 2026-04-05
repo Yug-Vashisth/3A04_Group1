@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Query
 import requests
+import json
 
 disaster_router = APIRouter(prefix="/api/disaster", tags=["Env Rating"])
 
@@ -7,7 +8,7 @@ disaster_router = APIRouter(prefix="/api/disaster", tags=["Env Rating"])
 @disaster_router.get("/rating")
 async def get_environmental_rating(aqi: float, soil_moisture: float, ndvi: float, temperature: float):
     OLLAMA_URL = "http://localhost:11434/api/generate"
-    input = """
+    input = f"""
     You are an environmental risk assessment model.
 
     Your task is to estimate the probability of a natural disaster (e.g., wildfire, drought, or ecosystem collapse) based on environmental inputs.
@@ -35,16 +36,31 @@ async def get_environmental_rating(aqi: float, soil_moisture: float, ndvi: float
     * Multiple high-risk factors together → significantly increase probability
 
     OUTPUT FORMAT (STRICT — MUST FOLLOW EXACTLY):
-    {
-    "probability": number (0 to 1, rounded to 2 decimal places),
-    "risk_level": "Low" | "Moderate" | "High",
-    "explanation": "Clear, concise explanation referencing the input factors and why they increase or decrease risk"
-    }
+
+    Write a plain English paragraph describing the environmental risk.
+
+    DO NOT:
+    - Do not use JSON
+    - Do not use curly braces 
+    - Do not use key-value pairs
+    - Do not use bullet points
+    - Do not use markdown
+    - Do not wrap the answer in code blocks
+    - Do not include labels like "Probability:", "Risk:", etc.
+
+    ONLY:
+    - Write 2–4 complete sentences in natural language
+    - Everything must be in one continuous paragraph
+
+    If you output anything other than plain text, the response is invalid.
+
+    
+
 
     CONSTRAINTS:
 
     * Return ONLY valid JSON
-    * No extra text before or after JSON
+    * No extra text, new line characters before or after JSON
     * Explanation must be 2–4 sentences max
     * Be deterministic and consistent
 
@@ -63,21 +79,8 @@ async def get_environmental_rating(aqi: float, soil_moisture: float, ndvi: float
             "stream": False
         }
     )
-    print(response.json()["response"])
-    return {"answer": response.json()["response"]}
-
-def test():
-    OLLAMA_URL = "http://localhost:11434/api/generate"
-    response = requests.post(
-        OLLAMA_URL,
-        json={
-            "model": "phi3",
-            "prompt": "What is 3+3",
-            "stream": False
-        }
-    )
-    print(response.json()["response"])
-    return {"answer": response.json()["response"]}
     
-if __name__ == "__main__":
-    test()
+    # Grab the text response
+    text_answer = response.json().get("response", "")
+    return {"answer": text_answer}
+
