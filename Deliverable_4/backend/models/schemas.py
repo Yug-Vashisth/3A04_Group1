@@ -68,7 +68,7 @@ class AlertRule(BaseModel):
     # enables flexibility with field names 
     class Config:
         populate_by_name = True
-        
+
 class CreateAlertRule(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
     description: Optional[str] = None
@@ -101,7 +101,7 @@ class Alert(BaseModel):
     unit: str
     comparator: ComparatorType
     threshold: float
-    status: AlertStatus.active
+    status: AlertStatus = AlertStatus.active
     triggered_at: datetime = Field(default_factory=datetime.now)
     acknowledged_at: Optional[datetime] = None
     acknowledged_by: Optional[str] = None
