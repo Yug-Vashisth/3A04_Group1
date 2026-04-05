@@ -74,9 +74,36 @@ function AlertRow({ alert, idx }) {
     <div style={{ display: "grid", gridTemplateColumns: "6px 80px 1fr 90px 100px 70px", alignItems: "center", gap: "0 12px", padding: "8px 14px", background: idx % 2 === 0 ? "rgba(255,255,255,0.018)" : "transparent", borderLeft: `3px solid ${sevColor}`, fontSize: 12, fontFamily: "'DM Mono', monospace" }}>
       <div />
       <span style={{ color: "#9ca3af", letterSpacing: 0.5 }}>{alert.time} — {alert.id?.slice(0, 8)}</span>
-      <span style={{ color: "#e5e7eb" }}>
-        <span style={{ color: sevColor, marginRight: 6 }}>[{alert.type}]</span>
-        {alert.message}
+      <span
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 4,
+          color: "#e5e7eb",
+          textAlign: "left",
+        }}
+      >
+        <span
+          style={{
+            color: sevColor,
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: 0.6,
+            textTransform: "uppercase",
+          }}
+        >
+          [{alert.type}]
+        </span>
+        <span
+          style={{
+            fontSize: 12,
+            color: "#9ca3af",
+            lineHeight: 1.35,
+          }}
+        >
+          {alert.message}
+        </span>
       </span>
       <span style={{ color: "#6b7280" }}>{alert.district}</span>
       <span style={{ color: "#6b7280" }}>{alert.sensor}</span>
@@ -519,53 +546,74 @@ export default function SCEMASDashboard() {
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "center", // ← match status pill centering
+                      justifyContent: "center",
                     }}
                   >
                     {a.status === "active" && (
                       <button
                         onClick={() => acknowledgeAlert(a.id)}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = "#f59e0b";
+                          e.currentTarget.style.borderColor = "#f59e0b55";
+                          e.currentTarget.style.background = "#f59e0b12";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = "#9ca3af";
+                          e.currentTarget.style.borderColor = "#374151";
+                          e.currentTarget.style.background = "transparent";
+                        }}
                         style={{
                           display: "inline-flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          minWidth: 84,     // ← SAME as status pill
-                          height: 22,       // ← SAME as status pill
+                          minWidth: 84,
+                          height: 22,
                           padding: "0 8px",
                           borderRadius: 4,
                           background: "transparent",
-                          border: "1px solid #f59e0b55",
-                          color: "#f59e0b",
+                          border: "1px solid #374151",
+                          color: "#9ca3af",
                           fontSize: 10,
                           fontWeight: 600,
                           letterSpacing: 0.6,
                           textTransform: "uppercase",
                           cursor: "pointer",
+                          transition: "all 0.15s ease",
                         }}
                       >
                         ACKNOWLEDGE
                       </button>
                     )}
-
                     {a.status === "acknowledged" && (
                       <button
                         onClick={() => resolveAlert(a.id)}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = "#22c55e";
+                          e.currentTarget.style.borderColor = "#22c55e55";
+                          e.currentTarget.style.background = "#22c55e12";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = "#9ca3af";
+                          e.currentTarget.style.borderColor = "#374151";
+                          e.currentTarget.style.background = "transparent";
+                        }}
                         style={{
                           display: "inline-flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          minWidth: 84,     // ← SAME as status pill
-                          height: 22,       // ← SAME as status pill
+                          minWidth: 84,
+                          height: 22,
                           padding: "0 8px",
                           borderRadius: 4,
                           background: "transparent",
-                          border: "1px solid #22c55e55",
-                          color: "#22c55e",
+                          border: "1px solid #374151",
+                          color: "#9ca3af",
                           fontSize: 10,
                           fontWeight: 600,
                           letterSpacing: 0.6,
                           textTransform: "uppercase",
                           cursor: "pointer",
+                          transition: "all 0.15s ease",
                         }}
                       >
                         RESOLVE
