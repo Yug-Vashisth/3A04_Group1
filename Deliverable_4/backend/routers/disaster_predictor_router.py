@@ -1,13 +1,14 @@
 from fastapi import APIRouter, HTTPException, Query
 import requests
 import json
+from core.config import settings
 
 disaster_router = APIRouter(prefix="/api/disaster", tags=["Env Rating"])
 
 
 @disaster_router.get("/rating")
 async def get_environmental_rating(aqi: float, soil_moisture: float, ndvi: float, temperature: float):
-    OLLAMA_URL = "http://localhost:11434/api/generate"
+    OLLAMA_URL = settings.OLLAMA_URL
     input = f"""
     You are an environmental risk assessment model.
 
