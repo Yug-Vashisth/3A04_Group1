@@ -85,7 +85,10 @@ export default function SCEMASDashboard() {
   const [zones, setZones] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // analysis tab (unchanged from teammate's code)
+  // trend data from DB
+  const [trendPoints, setTrendPoints] = useState({});
+
+  // analysis tab
   const [envResult, setEnvResult] = useState(null);
   const [envInputs, setEnvInputs] = useState({ aqi: "", soil_moisture: "", ndvi: "", temperature: "" });
   const [envLoading, setEnvLoading] = useState(false);
@@ -122,8 +125,31 @@ export default function SCEMASDashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const trendData = TRENDS[selectedTrend];
+  // fetch telemetry for selected trend from DB
+  useEffect(() => {
+    const fetchTrend = async () => {
+      try {
+        const metricKey = SENSOR_METRICS.find(m => m.label === selectedTrend)?.key;
+        if (!metricKey) return;
+        const res = await fetch(`${API}/api/telemetry/?metric=${metricKey}&hours=24`);
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 1) {
+          setTrendPoints(prev => ({ ...prev, [selectedTrend]: data.map(d => d.value) }));
+        }
+      } catch (err) {
+        console.error("Trend fetch failed:", err);
+      }
+    };
+    fetchTrend();
+  }, [selectedTrend]);
+
+  // use real DB data if available, otherwise fall back to simulated
+  const trendData = (trendPoints[selectedTrend] && trendPoints[selectedTrend].length > 1)
+    ? trendPoints[selectedTrend]
+    : TRENDS[selectedTrend];
+
   const trendColor = SENSOR_METRICS.find((m) => m.label === selectedTrend)?.color ?? "#60a5fa";
+  const isRealTrendData = !!(trendPoints[selectedTrend] && trendPoints[selectedTrend].length > 1);
   const activeAlerts = alerts.filter((a) => a.status === "ACTIVE");
   const criticalCount = alerts.filter((a) => a.severity === "critical" && a.status === "ACTIVE").length;
 
@@ -186,7 +212,6 @@ export default function SCEMASDashboard() {
         {/* ── Overview Tab ── */}
         {activeTab === "overview" && (
           <div style={{ animation: "fadeIn 0.2s ease" }}>
-            {/* Live Stats Strip */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 20 }}>
               {liveStats.map((s) => (
                 <div key={s.label} className="card" style={{ padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -200,7 +225,6 @@ export default function SCEMASDashboard() {
               ))}
             </div>
 
-            {/* Sensor Metric Cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 20 }}>
               {SENSOR_METRICS.map((m) => {
                 const barData = TRENDS[m.label].slice(-8);
@@ -225,7 +249,6 @@ export default function SCEMASDashboard() {
               })}
             </div>
 
-            {/* Alerts + Zone Health */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 12 }}>
               <div className="card" style={{ overflow: "hidden" }}>
                 <div style={{ padding: "12px 18px", borderBottom: "1px solid #1c2330", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -248,7 +271,6 @@ export default function SCEMASDashboard() {
                 )}
               </div>
 
-              {/* Zone Health */}
               <div className="card" style={{ overflow: "hidden" }}>
                 <div style={{ padding: "12px 18px", borderBottom: "1px solid #1c2330", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 13, color: "#e5e7eb", letterSpacing: 0.5 }}>ZONE HEALTH</span>
@@ -367,7 +389,12 @@ export default function SCEMASDashboard() {
             <div className="card" style={{ padding: 24 }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
                 <div>
-                  <div style={{ color: "#4b5563", fontSize: 10, letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>24-HOUR TREND</div>
+                  <div style={{ color: "#4b5563", fontSize: 10, letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>
+                    24-HOUR TREND
+                    <span style={{ marginLeft: 8, color: isRealTrendData ? "#22c55e" : "#374151" }}>
+                      {isRealTrendData ? "● LIVE" : "● SIMULATED"}
+                    </span>
+                  </div>
                   <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 20, color: trendColor }}>{selectedTrend}</div>
                 </div>
                 <div style={{ textAlign: "right" }}>
@@ -401,7 +428,10 @@ export default function SCEMASDashboard() {
                 })()}
               </svg>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#374151" }}>
-                {TREND_HOURS.map((h) => <span key={h}>{h}:00</span>)}
+                {isRealTrendData
+                  ? trendData.map((_, i) => <span key={i}>{i}</span>)
+                  : TREND_HOURS.map((h) => <span key={h}>{h}:00</span>)
+                }
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginTop: 20, paddingTop: 20, borderTop: "1px solid #1c2330" }}>
                 {[
