@@ -11,6 +11,12 @@ class MetricType(str, Enum):
     temperature = "temperature"
     forest_health = "forest_health"
 
+class EnvPredictor(BaseModel):
+        air_quality: float
+        soil_quality: float
+        temperature: float
+        forest_health: float  
+
 class ComparatorType(str, Enum):
     gt = "gt"
     lt = "lt"
@@ -85,7 +91,7 @@ class UpdateAlertRule(BaseModel):
     zone: Optional[str] = None
     comparator: Optional[ComparatorType] = None
     threshold: Optional[float] = None
-    sevirty: Optional[Severity] = None
+    severity: Optional[Severity] = None
     enabled: Optional[bool] = None
     status: Optional[AlertStatus] = None
 
@@ -140,14 +146,3 @@ class AuditLog(BaseModel):
             }
         }
     
-    class MetricType(str, Enum):
-        air_quality = "air_quality"
-        soil_quality = "soil_quality"
-        temperature = "temperature"
-        forest_health = "forest_health"
-
-    class EnvPredictor(BaseModel):
-        air_quality: float
-        soil_quality: float
-        temperature: float
-        forest_health: float          
