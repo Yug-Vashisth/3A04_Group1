@@ -27,15 +27,21 @@ function mapAlert(a) {
   return {
     ...a,
     id: a.alert_id,
-    type: (a.metric || "").replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
-    severity: a.severity || "warning",
-    message: `${(a.metric || "").replace(/_/g, " ")} value ${a.value} ${a.unit} crossed threshold ${a.threshold}`,
+    status: (a.status || "active").toLowerCase(),
+    severity: (a.severity || "warning").toLowerCase(),
+    type: (a.metric || "")
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, c => c.toUpperCase()),
+    message: `${a.metric} value ${a.value} ${a.unit} crossed threshold ${a.threshold}`,
     time: a.triggered_at
-      ? new Date(a.triggered_at).toLocaleTimeString("en-CA", { hour: "2-digit", minute: "2-digit", hour12: false })
+      ? new Date(a.triggered_at).toLocaleTimeString("en-CA", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
       : "--:--",
     district: a.zone || "Unknown",
     sensor: a.sensor_id || "N/A",
-    status: (a.status || "active").toUpperCase(),
   };
 }
 
@@ -54,8 +60,16 @@ function MiniBar({ data, color }) {
 // ─── AlertRow ─────────────────────────────────────────────────────────────────
 function AlertRow({ alert, idx }) {
   const sevColor = { critical: "#ef4444", warning: "#f59e0b", info: "#60a5fa" }[alert.severity] || "#6b7280";
-  const statusBg = { ACTIVE: "#ef444418", ACKNOWLEDGED: "#f59e0b18", RESOLVED: "#22c55e18" }[alert.status] || "#ffffff10";
-  const statusColor = { ACTIVE: "#ef4444", ACKNOWLEDGED: "#f59e0b", RESOLVED: "#22c55e" }[alert.status] || "#6b7280";
+  const STATUS_STYLE = {
+    active: { bg: "#ef444418", color: "#ef4444", label: "ACTIVE" },
+    acknowledged: { bg: "#f59e0b18", color: "#f59e0b", label: "ACKNOWLEDGED" },
+    resolved: { bg: "#22c55e18", color: "#22c55e", label: "RESOLVED" },
+  };
+  const s = STATUS_STYLE[alert.status] || {
+    bg: "#ffffff10",
+    color: "#6b7280",
+    label: alert.status,
+  };
   return (
     <div style={{ display: "grid", gridTemplateColumns: "6px 80px 1fr 90px 100px 70px", alignItems: "center", gap: "0 12px", padding: "8px 14px", background: idx % 2 === 0 ? "rgba(255,255,255,0.018)" : "transparent", borderLeft: `3px solid ${sevColor}`, fontSize: 12, fontFamily: "'DM Mono', monospace" }}>
       <div />
@@ -66,8 +80,8 @@ function AlertRow({ alert, idx }) {
       </span>
       <span style={{ color: "#6b7280" }}>{alert.district}</span>
       <span style={{ color: "#6b7280" }}>{alert.sensor}</span>
-      <span style={{ padding: "2px 7px", borderRadius: 3, background: statusBg, color: statusColor, fontSize: 10, fontWeight: 600, letterSpacing: 0.8, textAlign: "center" }}>
-        {alert.status}
+      <span style={{ padding: "2px 7px", borderRadius: 3, background: s.bg, color: s.color, fontSize: 10, fontWeight: 600, letterSpacing: 0.8, textAlign: "center" }}>
+        {s.label}
       </span>
     </div>
   );
@@ -84,6 +98,15 @@ export default function SCEMASDashboard() {
   const [alertStats, setAlertStats] = useState({ active: 0, acknowledged: 0, resolved: 0, total: 0 });
   const [zones, setZones] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // alerts tab: selected alert + logs
+  const [selectedAlertId, setSelectedAlertId] = useState(null);
+  const [selectedAlert, setSelectedAlert] = useState(null);
+  const [alertLogs, setAlertLogs] = useState([]);
+  const [alertFilter, setAlertFilter] = useState("");
+
+  // operator (set by Login)
+  const operatorId = localStorage.getItem("email");
 
   // trend data from DB
   const [trendPoints, setTrendPoints] = useState({});
@@ -124,6 +147,75 @@ export default function SCEMASDashboard() {
     const interval = setInterval(fetchAll, 10000);
     return () => clearInterval(interval);
   }, []);
+ 
+  useEffect(() => {
+    if (activeTab === "alerts") {
+      loadAlerts(alertFilter);
+    }
+  }, [activeTab, alertFilter]);
+
+  // ── Alert details & actions (backend-authoritative) ──  
+  async function fetchAlertDetails(alertId) {
+    try {
+      const res = await fetch(`${API}/api/alerts/${alertId}`);
+      const data = await res.json();
+
+      // normalize backend alert to the same shape used by AlertRow
+      setSelectedAlert(mapAlert(data));
+    } catch (err) {
+      console.error("Failed to fetch alert details:", err);
+      setSelectedAlert(null);
+    }
+  }
+
+  async function fetchAlertLogs(alertId) {
+    try {
+      const res = await fetch(`${API}/api/audit-logs?entity_id=${alertId}`);
+      setAlertLogs(await res.json());
+    } catch {
+      setAlertLogs([]);
+    }
+  }
+
+  async function loadAlerts(filter = "") {
+    try {
+      const url = filter
+        ? `${API}/api/alerts?status=${filter}`
+        : `${API}/api/alerts`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      setAlerts(Array.isArray(data) ? data.map(mapAlert) : []);
+    } catch (err) {
+      console.error("Failed to load alerts:", err);
+    }
+  }
+
+  async function acknowledgeSelectedAlert() {
+    if (!selectedAlertId) return;
+
+    await fetch(`${API}/api/alerts/${selectedAlertId}/acknowledge`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ operator_id: operatorId }),
+    });
+
+    await fetchAlertDetails(selectedAlertId);
+    await loadAlerts(alertFilter);
+  }
+
+  async function resolveSelectedAlert() {
+    if (!selectedAlertId) return;
+
+    await fetch(`${API}/api/alerts/${selectedAlertId}/resolve`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ operator_id: operatorId }),
+    });
+
+    await fetchAlertDetails(selectedAlertId);
+    await loadAlerts(alertFilter);
+  }
 
   // fetch telemetry for selected trend from DB
   useEffect(() => {
@@ -150,8 +242,11 @@ export default function SCEMASDashboard() {
 
   const trendColor = SENSOR_METRICS.find((m) => m.label === selectedTrend)?.color ?? "#60a5fa";
   const isRealTrendData = !!(trendPoints[selectedTrend] && trendPoints[selectedTrend].length > 1);
-  const activeAlerts = alerts.filter((a) => a.status === "ACTIVE");
-  const criticalCount = alerts.filter((a) => a.severity === "critical" && a.status === "ACTIVE").length;
+
+  const activeAlerts = alerts.filter((a) => a.status === "active");
+  const criticalCount = alerts.filter(
+    (a) => a.severity === "critical" && a.status === "active"
+  ).length;
 
   const liveStats = [
     { label: "Active Alerts", value: String(alertStats.active), sub: `${criticalCount} critical`, ok: alertStats.active === 0 },
@@ -311,25 +406,137 @@ export default function SCEMASDashboard() {
         {/* ── Alerts Tab ── */}
         {activeTab === "alerts" && (
           <div style={{ animation: "fadeIn 0.2s ease" }}>
-            <div className="card" style={{ overflow: "hidden" }}>
-              <div style={{ padding: "16px 20px", borderBottom: "1px solid #1c2330", display: "flex", gap: 16, alignItems: "center" }}>
-                <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 14, color: "#e5e7eb" }}>ALL ALERTS</span>
-                {["ACTIVE", "ACKNOWLEDGED", "RESOLVED"].map((s) => {
-                  const c = { ACTIVE: "#ef4444", ACKNOWLEDGED: "#f59e0b", RESOLVED: "#22c55e" }[s];
-                  const count = alerts.filter((a) => a.status === s).length;
-                  return <span key={s} style={{ fontSize: 10, color: c, padding: "2px 8px", border: `1px solid ${c}40`, borderRadius: 3 }}>{s} · {count}</span>;
-                })}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 420px", gap: 12 }}>
+
+              {/* ALERT LIST */}
+              <div className="card" style={{ overflow: "hidden" }}>
+                <div style={{ padding: "16px 20px", borderBottom: "1px solid #1c2330" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 14 }}>
+                      ALL ALERTS
+                    </span>
+
+                    <div style={{ display: "flex", gap: 6 }}>
+                      {["", "active", "acknowledged", "resolved"].map(s => (
+                        <button
+                          key={s || "all"}
+                          className={`tab ${alertFilter === s ? "active" : ""}`}
+                          onClick={() => setAlertFilter(s)}
+                        >
+                          {s === "" ? "All" : s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "6px 80px 1fr 90px 100px 70px", padding: "7px 14px", fontSize: 10, color: "#374151" }}>
+                  <div />
+                  <div>Time · ID</div>
+                  <div>Message</div>
+                  <div>District</div>
+                  <div>Sensor</div>
+                  <div>Status</div>
+                </div>
+
+                {alerts.map((a, i) => (
+                  <div
+                    key={a.id}
+                    onClick={() => {
+                      setSelectedAlertId(a.id);
+                      fetchAlertDetails(a.id);
+                      fetchAlertLogs(a.id);
+                    }}
+                    style={{
+                      cursor: "pointer",
+                      background: selectedAlertId === a.id ? "#111827" : "transparent"
+                    }}
+                  >
+                    <AlertRow alert={a} idx={i} />
+                  </div>
+                ))}
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "6px 80px 1fr 90px 100px 70px", gap: "0 12px", padding: "7px 14px", borderBottom: "1px solid #161c25", fontSize: 10, color: "#374151", letterSpacing: 1, textTransform: "uppercase" }}>
-                <div /><div>Time · ID</div><div>Message</div><div>District</div><div>Sensor</div><div>Status</div>
+
+              {/* ALERT DETAILS */}
+              <div className="card" style={{ padding: 16 }}>
+                {!selectedAlert ? (
+                  <div style={{ color: "#4b5563", fontSize: 12 }}>
+                    Select an alert to view details
+                  </div>
+                ) : (
+                  <>
+                    <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 16 }}>
+                      {selectedAlert.rule_name}
+                    </div>
+
+                    <div style={{ fontSize: 12, margin: "8px 0" }}>
+                      Value: <b>{selectedAlert.value} {selectedAlert.unit}</b><br />
+                      Threshold: <b>{selectedAlert.threshold}</b>
+                    </div>
+
+                    {selectedAlert.status === "active" && (
+                      <button
+                        onClick={acknowledgeSelectedAlert}
+                        style={{
+                          padding: "6px 14px",
+                          background: "#f59e0b20",
+                          border: "1px solid #f59e0b55",
+                          color: "#f59e0b",
+                          borderRadius: 4,
+                          cursor: "pointer",
+                          fontSize: 11,
+                          fontWeight: 600,
+                          letterSpacing: 0.8,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Acknowledge Alert
+                      </button>
+                    )}
+
+                    {selectedAlert.status === "acknowledged" && (
+                      <button
+                        onClick={resolveSelectedAlert}
+                        style={{
+                          padding: "6px 14px",
+                          background: "#22c55e20",
+                          border: "1px solid #22c55e55",
+                          color: "#22c55e",
+                          borderRadius: 4,
+                          cursor: "pointer",
+                          fontSize: 11,
+                          fontWeight: 600,
+                          letterSpacing: 0.8,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Resolve Alert
+                      </button>
+                    )}
+
+                    <hr style={{ margin: "16px 0", borderColor: "#1c2330" }} />
+
+                    <div style={{ fontSize: 11, color: "#9ca3af" }}>
+                      ACTIVITY LOG
+                    </div>
+
+                    {alertLogs.length === 0 ? (
+                      <div style={{ fontSize: 11, color: "#4b5563" }}>
+                        No activity yet
+                      </div>
+                    ) : (
+                      alertLogs.map(log => (
+                        <div key={log.log_id} style={{ fontSize: 11 }}>
+                          {log.action} · {log.actor}<br />
+                          <span style={{ color: "#4b5563" }}>
+                            {new Date(log.timestamp).toLocaleString()}
+                          </span>
+                        </div>
+                      ))
+                    )}
+                  </>
+                )}
               </div>
-              {loading ? (
-                <div style={{ padding: 20, color: "#4b5563" }}>Loading...</div>
-              ) : alerts.length === 0 ? (
-                <div style={{ padding: 20, color: "#4b5563" }}>No alerts in database yet.</div>
-              ) : (
-                alerts.map((a, i) => <AlertRow key={a.id || i} alert={a} idx={i} />)
-              )}
+
             </div>
           </div>
         )}
