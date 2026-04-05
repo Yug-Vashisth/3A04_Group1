@@ -6,3 +6,4 @@ app = FastAPI()
 # include your router
 app.include_router(disaster_predictor_router.disaster_router)
 app.include_router(alert_rules_router.router)
+app.include_router(alerts_router.router)
