@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from typing import Optional
-from ..core.database import get_db
+from core.database import get_db
 
 
 def _serialize(document: dict) -> dict:

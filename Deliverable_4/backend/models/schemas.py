@@ -68,16 +68,15 @@ class AlertRule(BaseModel):
     # enables flexibility with field names 
     class Config:
         populate_by_name = True
-
+        
 class CreateAlertRule(BaseModel):
-    # when creating an alert rule, all the following fields must be provided
     name: str = Field(..., min_length=1, max_length=100)
     description: Optional[str] = None
     metric: MetricType
     zone: Optional[str] = None          
     comparator: ComparatorType
     threshold: float
-
+    severity: Severity 
 class UpdateAlertRule(BaseModel):
     # when modifying an alert rule, any of the following fields may be changed
     name: Optional[str] = Field(None, min_length=1, max_length=100)

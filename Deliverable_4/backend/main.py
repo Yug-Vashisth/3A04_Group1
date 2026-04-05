@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import disaster_predictor_router, alert_rules_router, alerts_router, auth_router
+from routers import disaster_predictor_router, alert_rules_router, alerts_router, auth_router, zone_router, telemetry_router
 from fastapi.middleware.cors import CORSMiddleware
 from core.database import connect_db, close_db
 
@@ -26,3 +26,13 @@ app.include_router(disaster_predictor_router.disaster_router)
 app.include_router(alert_rules_router.router)
 app.include_router(alerts_router.router)
 app.include_router(auth_router.router)
+app.include_router(telemetry_router.router)
+app.include_router(zone_router.router)
+
+
+@app.get("/test-db")
+async def test_db():
+    from core.database import get_db
+    db = get_db()
+    await db.command("ping")
+    return {"status": "MongoDB connection successful"}
