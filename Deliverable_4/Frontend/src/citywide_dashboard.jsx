@@ -1111,10 +1111,10 @@ export default function SCEMASDashboard() {
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
                   {[
-                    { label: "AQI", key: "aqi", type: "number" },
-                    { label: "Soil Moisture", key: "soil_moisture", type: "number" },
-                    { label: "NDVI", key: "ndvi", type: "number" },
-                    { label: "Temperature", key: "temperature", type: "number" },
+                    { label: "Air Quality(AQI)", key: "aqi", type: "number" },
+                    { label: "Soil Quality(pH)", key: "soil_moisture", type: "number" },
+                    { label: "Forest Health(defoliation rate)", key: "ndvi", type: "number" },
+                    { label: "Temperature(Celsius)", key: "temperature", type: "number" },
                   ].map(({ label, key, type }) => (
                     <div key={key} style={{ display: "flex", flexDirection: "column" }}>
                       <label style={{ fontSize: 12, color: "#4b5563", marginBottom: 4 }}>{label} *</label>
