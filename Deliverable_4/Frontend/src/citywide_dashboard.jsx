@@ -132,6 +132,7 @@ function AlertRow({ alert, idx }) {
 }
 
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
+
 export default function SCEMASDashboard() {
   const [time, setTime] = useState(new Date());
   const [activeTab, setActiveTab] = useState("overview");
@@ -161,6 +162,7 @@ export default function SCEMASDashboard() {
 
   // operator (set by Login)
   const operatorId = localStorage.getItem("email");
+  const role = localStorage.getItem("role");
 
   // trend data from DB
   const [trendPoints, setTrendPoints] = useState({});
@@ -839,7 +841,7 @@ export default function SCEMASDashboard() {
                       </span>
 
                       {/* MANAGE TOGGLE */}
-                      <button
+                      {role === "admin" && (<button
                         className={`tab ${showAdminPanel ? "active" : ""}`}
                         onClick={() => setShowAdminPanel(v => !v)}
                         style={{
@@ -848,7 +850,7 @@ export default function SCEMASDashboard() {
                         }}
                       >
                         MANAGE
-                      </button>
+                      </button>)}
                     </div>
 
                     {/* RIGHT: FILTERS */}
