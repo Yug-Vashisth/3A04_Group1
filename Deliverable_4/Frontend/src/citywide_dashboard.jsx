@@ -1080,9 +1080,9 @@ export default function SCEMASDashboard() {
               </svg>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#374151" }}>
                 {isRealTrendData
-                  ? trendData.map((_, i) => <span key={i}>{i}</span>)
-                  : TREND_HOURS.map((h) => <span key={h}>{h}:00</span>)
-                }
+  ? trendData.map((_, i) => <span key={i}>{String(i * (24 / trendData.length)).padStart(2, '0')}:00</span>)
+  : TREND_HOURS.map((h) => <span key={h}>{h}:00</span>)
+}
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginTop: 20, paddingTop: 20, borderTop: "1px solid #1c2330" }}>
                 {[
