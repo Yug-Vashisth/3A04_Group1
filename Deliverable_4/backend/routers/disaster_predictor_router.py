@@ -16,9 +16,9 @@ async def get_environmental_rating(aqi: float, soil_moisture: float, ndvi: float
 
     INPUT:
 
-    * AQI: {aqi}
-    * Soil Moisture: {soil_moisture}
-    * NDVI (Vegetation Health): {ndvi}
+    * Air Quality(AQI): {aqi}
+    * Soil Quality(pH): {soil_moisture}
+    * Forest Health(defoliation rate): {ndvi}
     * Temperature (°C): {temperature}
 
     INSTRUCTIONS:

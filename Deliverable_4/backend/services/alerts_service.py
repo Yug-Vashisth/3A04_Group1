@@ -229,9 +229,9 @@ async def update_alerts():
         
         docs = await db.telemetry.aggregate(pipeline).to_list()
         print(f"{metric} {comparator} {threshold}")
-        print(docs)
         if docs:
             latest_doc = docs[0]
+            print(latest_doc)
             timestamp = latest_doc["timestamp"]
             print(f"latest:{timestamp} ")
             alertExists = await db.audit_logs.find_one({"action": "ALERT_TRIGGERED",
