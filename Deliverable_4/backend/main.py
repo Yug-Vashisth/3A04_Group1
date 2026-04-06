@@ -39,21 +39,21 @@ app.include_router(auth_router.router)
 app.include_router(telemetry_router.router)
 app.include_router(zone_router.router)
 
-# async def periodic_update_alerts():
-#     while True:
-#         try:
-#             # call your function directly
-#             await alertsService.update_alerts()
-#             print("update_alerts ran successfully")
-#         except Exception as e:
-#             print("Error in update_alerts:", e)
+async def periodic_update_alerts():
+    while True:
+        try:
+            # call your function directly
+            await alertsService.update_alerts()
+            print("update_alerts ran successfully")
+        except Exception as e:
+            print("Error in update_alerts:", e)
 
-#         await asyncio.sleep(5)  # run every 5 seconds
+        await asyncio.sleep(5)  # run every 5 seconds
 
-# @app.on_event("startup")
-# async def startup_event():
-#     # launch the periodic task in the background
-#     asyncio.create_task(periodic_update_alerts())
+@app.on_event("startup")
+async def startup_event():
+    # launch the periodic task in the background
+    asyncio.create_task(periodic_update_alerts())
 
 @app.get("/test-db")
 async def test_db():
