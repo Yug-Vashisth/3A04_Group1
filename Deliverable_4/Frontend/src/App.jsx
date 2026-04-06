@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Login from './login'
+import Login from './Login'
 import Dashboard from './citywide_dashboard'
 import AlertManagement from "./AlertManagement";
 import AlertRules from "./AlertRules";

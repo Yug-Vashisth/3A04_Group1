@@ -27,15 +27,21 @@ function mapAlert(a) {
   return {
     ...a,
     id: a.alert_id,
-    type: (a.metric || "").replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
-    severity: a.severity || "warning",
-    message: `${(a.metric || "").replace(/_/g, " ")} value ${a.value} ${a.unit} crossed threshold ${a.threshold}`,
+    status: (a.status || "active").toLowerCase(),
+    severity: (a.severity || "warning").toLowerCase(),
+    type: (a.metric || "")
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, c => c.toUpperCase()),
+    message: `${a.metric} value ${a.value} ${a.unit} crossed threshold ${a.threshold}`,
     time: a.triggered_at
-      ? new Date(a.triggered_at).toLocaleTimeString("en-CA", { hour: "2-digit", minute: "2-digit", hour12: false })
+      ? new Date(a.triggered_at).toLocaleTimeString("en-CA", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
       : "--:--",
     district: a.zone || "Unknown",
     sensor: a.sensor_id || "N/A",
-    status: (a.status || "active").toUpperCase(),
   };
 }
 
@@ -54,20 +60,72 @@ function MiniBar({ data, color }) {
 // ─── AlertRow ─────────────────────────────────────────────────────────────────
 function AlertRow({ alert, idx }) {
   const sevColor = { critical: "#ef4444", warning: "#f59e0b", info: "#60a5fa" }[alert.severity] || "#6b7280";
-  const statusBg = { ACTIVE: "#ef444418", ACKNOWLEDGED: "#f59e0b18", RESOLVED: "#22c55e18" }[alert.status] || "#ffffff10";
-  const statusColor = { ACTIVE: "#ef4444", ACKNOWLEDGED: "#f59e0b", RESOLVED: "#22c55e" }[alert.status] || "#6b7280";
+  const STATUS_STYLE = {
+    active: { bg: "#ef444418", color: "#ef4444", label: "ACTIVE" },
+    acknowledged: { bg: "#f59e0b18", color: "#f59e0b", label: "ACKNOWLEDGED" },
+    resolved: { bg: "#22c55e18", color: "#22c55e", label: "RESOLVED" },
+  };
+  const s = STATUS_STYLE[alert.status] || {
+    bg: "#ffffff10",
+    color: "#6b7280",
+    label: alert.status,
+  };
   return (
     <div style={{ display: "grid", gridTemplateColumns: "6px 80px 1fr 90px 100px 70px", alignItems: "center", gap: "0 12px", padding: "8px 14px", background: idx % 2 === 0 ? "rgba(255,255,255,0.018)" : "transparent", borderLeft: `3px solid ${sevColor}`, fontSize: 12, fontFamily: "'DM Mono', monospace" }}>
       <div />
       <span style={{ color: "#9ca3af", letterSpacing: 0.5 }}>{alert.time} — {alert.id?.slice(0, 8)}</span>
-      <span style={{ color: "#e5e7eb" }}>
-        <span style={{ color: sevColor, marginRight: 6 }}>[{alert.type}]</span>
-        {alert.message}
+      <span
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 4,
+          color: "#e5e7eb",
+          textAlign: "left",
+        }}
+      >
+        <span
+          style={{
+            color: sevColor,
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: 0.6,
+            textTransform: "uppercase",
+          }}
+        >
+          [{alert.type}]
+        </span>
+        <span
+          style={{
+            fontSize: 12,
+            color: "#9ca3af",
+            lineHeight: 1.35,
+          }}
+        >
+          {alert.message}
+        </span>
       </span>
       <span style={{ color: "#6b7280" }}>{alert.district}</span>
       <span style={{ color: "#6b7280" }}>{alert.sensor}</span>
-      <span style={{ padding: "2px 7px", borderRadius: 3, background: statusBg, color: statusColor, fontSize: 10, fontWeight: 600, letterSpacing: 0.8, textAlign: "center" }}>
-        {alert.status}
+      <span
+        style={{
+          display: "inline-flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minWidth: 84,
+          height: 22,
+          padding: "0 8px",
+          borderRadius: 4,
+          background: s.bg,
+          color: s.color,
+          fontSize: 10,
+          fontWeight: 600,
+          letterSpacing: 0.6,
+          textTransform: "uppercase",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {s.label}
       </span>
     </div>
   );
@@ -85,6 +143,25 @@ export default function SCEMASDashboard() {
   const [zones, setZones] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // alerts tab
+  const [selectedAlertId, setSelectedAlertId] = useState(null);
+  const [selectedAlert, setSelectedAlert] = useState(null);
+  const [alertLogs, setAlertLogs] = useState([]);
+  const [alertFilter, setAlertFilter] = useState("");
+  const [showAdminPanel, setShowAdminPanel] = useState(false);  
+  const [ruleForm, setRuleForm] = useState({
+    name: "",
+    metric: "air_quality",
+    comparator: "gt",
+    threshold: "",
+    severity: "warning",
+    zone: "",
+  });
+  const [alertRules, setAlertRules] = useState([]);
+
+  // operator (set by Login)
+  const operatorId = localStorage.getItem("email");
+
   // trend data from DB
   const [trendPoints, setTrendPoints] = useState({});
 
@@ -92,6 +169,22 @@ export default function SCEMASDashboard() {
   const [envResult, setEnvResult] = useState(null);
   const [envInputs, setEnvInputs] = useState({ aqi: "", soil_moisture: "", ndvi: "", temperature: "" });
   const [envLoading, setEnvLoading] = useState(false);
+
+  const inputStyle = {
+    marginTop: 4,
+    width: "100%",
+    padding: "6px 8px",
+    borderRadius: 4,
+    border: "1px solid #1c2330",
+    background: "#0a0f16",
+    color: "#e5e7eb",
+    fontSize: 11,
+  };
+
+  const selectStyle = {
+    ...inputStyle,
+    cursor: "pointer",
+  };
 
   // clock
   useEffect(() => {
@@ -125,6 +218,179 @@ export default function SCEMASDashboard() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (activeTab === "alerts") {
+      loadAlerts(alertFilter);
+    }
+  }, [activeTab, alertFilter]);
+
+  // ── Alert details & actions (backend-authoritative) ──  
+  async function fetchAlertDetails(alertId) {
+    try {
+      const res = await fetch(`${API}/api/alerts/${alertId}`);
+      const data = await res.json();
+
+      // normalize backend alert to the same shape used by AlertRow
+      setSelectedAlert(mapAlert(data));
+    } catch (err) {
+      console.error("Failed to fetch alert details:", err);
+      setSelectedAlert(null);
+    }
+  }
+
+  async function fetchAlertLogs(alertId) {
+    try {
+      const res = await fetch(`${API}/api/audit-logs?entity_id=${alertId}`);
+      setAlertLogs(await res.json());
+    } catch {
+      setAlertLogs([]);
+    }
+  }
+
+  async function loadAlerts(filter = "") {
+    try {
+      const url = filter
+        ? `${API}/api/alerts?status=${filter}`
+        : `${API}/api/alerts`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      setAlerts(Array.isArray(data) ? data.map(mapAlert) : []);
+    } catch (err) {
+      console.error("Failed to load alerts:", err);
+    }
+  }
+
+    async function acknowledgeAlert(alertId) {
+    await fetch(`${API}/api/alerts/${alertId}/acknowledge`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ operator_id: operatorId }),
+    });
+
+    await loadAlerts(alertFilter);
+  }
+
+  async function resolveAlert(alertId) {
+    await fetch(`${API}/api/alerts/${alertId}/resolve`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ operator_id: operatorId }),
+    });
+
+    await loadAlerts(alertFilter);
+  }
+
+  async function acknowledgeSelectedAlert() {
+    if (!selectedAlertId) return;
+
+    await fetch(`${API}/api/alerts/${selectedAlertId}/acknowledge`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ operator_id: operatorId }),
+    });
+
+    await fetchAlertDetails(selectedAlertId);
+    await loadAlerts(alertFilter);
+  }
+
+  async function resolveSelectedAlert() {
+    if (!selectedAlertId) return;
+
+    await fetch(`${API}/api/alerts/${selectedAlertId}/resolve`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ operator_id: operatorId }),
+    });
+
+    await fetchAlertDetails(selectedAlertId);
+    await loadAlerts(alertFilter);
+  }
+
+  async function createRule() {
+    const payload = {
+      ...ruleForm,
+      threshold: Number(ruleForm.threshold),
+    };
+
+    const res = await fetch(`${API}/api/alert-rules`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      // later: show validation errors
+      return;
+    }
+
+    // rule created and ACTIVE
+    setRuleForm({
+      name: "",
+      metric: "air_quality",
+      comparator: "gt",
+      threshold: "",
+      severity: "warning",
+      zone: "",
+    });
+
+    // refresh rules list (next step)
+    loadAlertRules();
+  }
+
+  async function loadAlertRules() {
+    try {
+      const res = await fetch(`${API}/api/alert-rules`);
+      const data = await res.json();
+      setAlertRules(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Failed to load alert rules:", err);
+    }
+  }
+
+  async function disableRule(ruleId) {
+    try {
+      const res = await fetch(`${API}/api/alert-rules/${ruleId}/disable`, {
+        method: "PATCH",
+      });
+
+      if (!res.ok) throw new Error("Failed to disable rule");
+
+      // refresh rules list
+      loadAlertRules();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function deleteRule(rule) {
+    const confirmed = window.confirm(
+      `Are you sure you want to permanently delete the alert rule "${rule.name}"?`
+    );
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`${API}/api/alert-rules/${rule.rule_id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) throw new Error("Failed to delete rule");
+
+      // remove immediately from UI
+      setAlertRules(prev =>
+        prev.filter(r => r.rule_id !== rule.rule_id)
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (showAdminPanel) {
+      loadAlertRules();
+    }
+  }, [showAdminPanel]);
+
   // fetch telemetry for selected trend from DB
   useEffect(() => {
     const fetchTrend = async () => {
@@ -150,8 +416,11 @@ export default function SCEMASDashboard() {
 
   const trendColor = SENSOR_METRICS.find((m) => m.label === selectedTrend)?.color ?? "#60a5fa";
   const isRealTrendData = !!(trendPoints[selectedTrend] && trendPoints[selectedTrend].length > 1);
-  const activeAlerts = alerts.filter((a) => a.status === "ACTIVE");
-  const criticalCount = alerts.filter((a) => a.severity === "critical" && a.status === "ACTIVE").length;
+
+  const activeAlerts = alerts.filter((a) => a.status === "active");
+  const criticalCount = alerts.filter(
+    (a) => a.severity === "critical" && a.status === "active"
+  ).length;
 
   const liveStats = [
     { label: "Active Alerts", value: String(alertStats.active), sub: `${criticalCount} critical`, ok: alertStats.active === 0 },
@@ -311,25 +580,405 @@ export default function SCEMASDashboard() {
         {/* ── Alerts Tab ── */}
         {activeTab === "alerts" && (
           <div style={{ animation: "fadeIn 0.2s ease" }}>
-            <div className="card" style={{ overflow: "hidden" }}>
-              <div style={{ padding: "16px 20px", borderBottom: "1px solid #1c2330", display: "flex", gap: 16, alignItems: "center" }}>
-                <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 14, color: "#e5e7eb" }}>ALL ALERTS</span>
-                {["ACTIVE", "ACKNOWLEDGED", "RESOLVED"].map((s) => {
-                  const c = { ACTIVE: "#ef4444", ACKNOWLEDGED: "#f59e0b", RESOLVED: "#22c55e" }[s];
-                  const count = alerts.filter((a) => a.status === s).length;
-                  return <span key={s} style={{ fontSize: 10, color: c, padding: "2px 8px", border: `1px solid ${c}40`, borderRadius: 3 }}>{s} · {count}</span>;
-                })}
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "6px 80px 1fr 90px 100px 70px", gap: "0 12px", padding: "7px 14px", borderBottom: "1px solid #161c25", fontSize: 10, color: "#374151", letterSpacing: 1, textTransform: "uppercase" }}>
-                <div /><div>Time · ID</div><div>Message</div><div>District</div><div>Sensor</div><div>Status</div>
-              </div>
-              {loading ? (
-                <div style={{ padding: 20, color: "#4b5563" }}>Loading...</div>
-              ) : alerts.length === 0 ? (
-                <div style={{ padding: 20, color: "#4b5563" }}>No alerts in database yet.</div>
-              ) : (
-                alerts.map((a, i) => <AlertRow key={a.id || i} alert={a} idx={i} />)
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: showAdminPanel ? "360px 1fr" : "1fr",
+                gap: 12,
+              }}
+            >
+              {/* ADMIN SIDE PANEL */}
+              {showAdminPanel && (
+                <div className="card" style={{ padding: 16 }}>
+                  {/* create rule form */}
+                  <div className="card" style={{ padding: 16 }}>
+                    <div
+                      style={{
+                        fontFamily: "'Syne', sans-serif",
+                        fontSize: 14,
+                        color: "#e5e7eb",
+                        marginBottom: 12,
+                      }}
+                    >
+                      CREATE ALERT RULE
+                    </div>
+
+                    {/* Rule name */}
+                    <div style={{ marginBottom: 10 }}>
+                      <label style={{ fontSize: 10, color: "#6b7280" }}>
+                        Rule name
+                      </label>
+                      <input
+                        value={ruleForm.name}
+                        onChange={e => setRuleForm({ ...ruleForm, name: e.target.value })}
+                        placeholder="e.g. High AQI – Downtown"
+                        style={{
+                          marginTop: 4,
+                          width: "100%",
+                          padding: "6px 8px",
+                          borderRadius: 4,
+                          border: "1px solid #1c2330",
+                          background: "#0a0f16",
+                          color: "#e5e7eb",
+                          fontSize: 11,
+                        }}
+                      />
+                    </div>
+
+                    {/* Metric + comparator */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 10 }}>
+                      <div>
+                        <label style={{ fontSize: 10, color: "#6b7280" }}>Metric</label>
+                        <select
+                          value={ruleForm.metric}
+                          onChange={e => setRuleForm({ ...ruleForm, metric: e.target.value })}
+                          style={selectStyle}
+                        >
+                          <option value="air_quality">Air Quality</option>
+                          <option value="temperature">Temperature</option>
+                          <option value="soil_quality">Soil Quality</option>
+                          <option value="forest_health">Forest Health</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: 10, color: "#6b7280" }}>Condition</label>
+                        <select
+                          value={ruleForm.comparator}
+                          onChange={e => setRuleForm({ ...ruleForm, comparator: e.target.value })}
+                          style={selectStyle}
+                        >
+                          <option value="gt">Greater than</option>
+                          <option value="lt">Less than</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Threshold + severity */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
+                      <div>
+                        <label style={{ fontSize: 10, color: "#6b7280" }}>Threshold</label>
+                        <input
+                          type="number"
+                          value={ruleForm.threshold}
+                          onChange={e => setRuleForm({ ...ruleForm, threshold: e.target.value })}
+                          style={{
+                            ...inputStyle,
+                            textAlign: "right",
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: 10, color: "#6b7280" }}>Severity</label>
+                        <select
+                          value={ruleForm.severity}
+                          onChange={e => setRuleForm({ ...ruleForm, severity: e.target.value })}
+                          style={selectStyle}
+                        >
+                          <option value="warning">Warning</option>
+                          <option value="critical">Critical</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Submit */}
+                    <button
+                      onClick={createRule}
+                      style={{
+                        width: "100%",
+                        padding: "8px 10px",
+                        borderRadius: 4,
+                        border: "1px solid #1d4ed8",
+                        background: "#1d4ed8",
+                        color: "#f3f4f6",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        letterSpacing: 0.6,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Create Rule
+                    </button>
+                  </div>
+
+                  {/* existing rules */}
+                  <div style={{ marginTop: 16 }}>
+                    <div
+                      style={{
+                        fontFamily: "'Syne', sans-serif",
+                        fontSize: 14,
+                        color: "#e5e7eb",
+                        marginBottom: 12,
+                      }}
+                    >
+                      EXISTING ALERT RULES
+                    </div>
+
+                    {alertRules.length === 0 ? (
+                      <div style={{ fontSize: 11, color: "#4b5563" }}>
+                        No alert rules defined.
+                      </div>
+                    ) : (
+                      alertRules.map(rule => (
+                        <div
+                          key={rule.rule_id}
+                          style={{
+                            padding: "10px 12px",
+                            borderRadius: 6,
+                            background: "#0a0f16",
+                            border: "1px solid #1c2330",
+                            marginBottom: 8,
+                            fontSize: 11,
+                            display: "grid",
+                            gridTemplateColumns: "1fr auto",
+                            gap: 12,
+                          }}
+                        >
+                        {/* RULE INFO */}
+                          <div>
+                            {/* SEVERITY */}
+                            <div style={{ marginBottom: 4 }}>
+                              <span
+                                style={{
+                                  padding: "2px 8px",
+                                  fontSize: 10,
+                                  borderRadius: 4,
+                                  background:
+                                    rule.severity === "critical"
+                                      ? "#ef444420"
+                                      : "#f59e0b20",
+                                  color:
+                                    rule.severity === "critical"
+                                      ? "#ef4444"
+                                      : "#f59e0b",
+                                  fontWeight: 700,
+                                  letterSpacing: 0.8,
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                {rule.severity}
+                              </span>
+                            </div>
+
+                            {/* RULE NAME */}
+                            <div
+                              style={{
+                                color: "#e5e7eb",
+                                fontWeight: 600,
+                                fontSize: 13,
+                                marginBottom: 2,
+                              }}
+                            >
+                              {rule.name}
+                            </div>
+
+                            {/* CONDITION */}
+                            <div style={{ color: "#6b7280", fontSize: 10 }}>
+                              {rule.metric} {rule.comparator} {rule.threshold}
+                            </div>
+
+                            {!rule.enabled && (
+                              <div style={{ fontSize: 10, color: "#f59e0b", marginTop: 2 }}>
+                                Disabled
+                              </div>
+                            )}
+                          </div>
+
+
+                          {/* ACTIONS */}
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: 6,
+                              alignItems: "flex-end",
+                            }}
+                          >
+                            {rule.enabled && (
+                              <button
+                                className="tab"
+                                onClick={() => disableRule(rule.rule_id)}
+                              >
+                                Disable
+                              </button>
+                            )}
+
+                            <button
+                              className="tab"
+                              onClick={() => deleteRule(rule)}
+                              style={{ color: "#ef4444" }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                </div>
               )}
+
+              {/* ALERT LIST */}
+              <div className="card" style={{ overflow: "hidden" }}>
+                {/* Header */}
+                <div style={{ padding: "16px 20px", borderBottom: "1px solid #1c2330" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    {/* LEFT: Title + Manage */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 14 }}>
+                        ALL ALERTS
+                      </span>
+
+                      {/* MANAGE TOGGLE */}
+                      <button
+                        className={`tab ${showAdminPanel ? "active" : ""}`}
+                        onClick={() => setShowAdminPanel(v => !v)}
+                        style={{
+                          color: showAdminPanel ? "#93c5fd" : "#6b7280",
+                          borderColor: showAdminPanel ? "#2d3f55" : "transparent",
+                        }}
+                      >
+                        MANAGE
+                      </button>
+                    </div>
+
+                    {/* RIGHT: FILTERS */}
+                    <div style={{ display: "flex", gap: 6 }}>
+                      {["", "active", "acknowledged", "resolved"].map(s => (
+                        <button
+                          key={s || "all"}
+                          className={`tab ${alertFilter === s ? "active" : ""}`}
+                          onClick={() => setAlertFilter(s)}
+                        >
+                          {s === "" ? "ALL" : s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Column Labels */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "6px 80px 1fr 90px 100px 96px 96px",
+                    padding: "7px 14px",
+                    fontSize: 10,
+                    color: "#374151",
+                  }}
+                >
+                  <div />
+                  <div>Time · ID</div>
+                  <div>Message</div>
+                  <div>District</div>
+                  <div>Sensor</div>
+                  <div>Status</div>
+                  <div /> {/* actions */}
+                </div>
+
+                {/* ALERT ROWS */}
+                {alerts.map((a, i) => (
+                  <div
+                    key={a.id}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 90px",
+                      alignItems: "center",
+                      background: "transparent",
+                    }}
+                  >
+                    <AlertRow alert={a} idx={i} />
+
+                  {/* INLINE ACTIONS */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {a.status === "active" && (
+                      <button
+                        onClick={() => acknowledgeAlert(a.id)}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = "#f59e0b";
+                          e.currentTarget.style.borderColor = "#f59e0b55";
+                          e.currentTarget.style.background = "#f59e0b12";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = "#9ca3af";
+                          e.currentTarget.style.borderColor = "#374151";
+                          e.currentTarget.style.background = "transparent";
+                        }}
+                        style={{
+                          display: "inline-flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          minWidth: 84,
+                          height: 22,
+                          padding: "0 8px",
+                          borderRadius: 4,
+                          background: "transparent",
+                          border: "1px solid #374151",
+                          color: "#9ca3af",
+                          fontSize: 10,
+                          fontWeight: 600,
+                          letterSpacing: 0.6,
+                          textTransform: "uppercase",
+                          cursor: "pointer",
+                          transition: "all 0.15s ease",
+                        }}
+                      >
+                        ACKNOWLEDGE
+                      </button>
+                    )}
+                    {a.status === "acknowledged" && (
+                      <button
+                        onClick={() => resolveAlert(a.id)}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = "#22c55e";
+                          e.currentTarget.style.borderColor = "#22c55e55";
+                          e.currentTarget.style.background = "#22c55e12";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = "#9ca3af";
+                          e.currentTarget.style.borderColor = "#374151";
+                          e.currentTarget.style.background = "transparent";
+                        }}
+                        style={{
+                          display: "inline-flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          minWidth: 84,
+                          height: 22,
+                          padding: "0 8px",
+                          borderRadius: 4,
+                          background: "transparent",
+                          border: "1px solid #374151",
+                          color: "#9ca3af",
+                          fontSize: 10,
+                          fontWeight: 600,
+                          letterSpacing: 0.6,
+                          textTransform: "uppercase",
+                          cursor: "pointer",
+                          transition: "all 0.15s ease",
+                        }}
+                      >
+                        RESOLVE
+                      </button>
+                    )}
+                  </div>
+                </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
