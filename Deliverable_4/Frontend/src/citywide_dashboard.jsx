@@ -170,6 +170,22 @@ export default function SCEMASDashboard() {
   const [envInputs, setEnvInputs] = useState({ aqi: "", soil_moisture: "", ndvi: "", temperature: "" });
   const [envLoading, setEnvLoading] = useState(false);
 
+  const inputStyle = {
+    marginTop: 4,
+    width: "100%",
+    padding: "6px 8px",
+    borderRadius: 4,
+    border: "1px solid #1c2330",
+    background: "#0a0f16",
+    color: "#e5e7eb",
+    fontSize: 11,
+  };
+
+  const selectStyle = {
+    ...inputStyle,
+    cursor: "pointer",
+  };
+
   // clock
   useEffect(() => {
     const t = setInterval(() => setTime(new Date()), 1000);
@@ -347,22 +363,22 @@ export default function SCEMASDashboard() {
     }
   }
 
-  async function deleteRule(ruleId) {
+  async function deleteRule(rule) {
     const confirmed = window.confirm(
-      "Are you sure you want to permanently delete this alert rule?"
+      `Are you sure you want to permanently delete the alert rule "${rule.name}"?`
     );
     if (!confirmed) return;
 
     try {
-      const res = await fetch(`${API}/api/alert-rules/${ruleId}`, {
+      const res = await fetch(`${API}/api/alert-rules/${rule.rule_id}`, {
         method: "DELETE",
       });
 
       if (!res.ok) throw new Error("Failed to delete rule");
 
-      // remove immediately
+      // remove immediately from UI
       setAlertRules(prev =>
-        prev.filter(rule => rule.rule_id !== ruleId)
+        prev.filter(r => r.rule_id !== rule.rule_id)
       );
     } catch (err) {
       console.error(err);
@@ -574,67 +590,129 @@ export default function SCEMASDashboard() {
               {/* ADMIN SIDE PANEL */}
               {showAdminPanel && (
                 <div className="card" style={{ padding: 16 }}>
-                  <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 14, marginBottom: 10 }}>
-                    Create Alert Rule
-                  </div>
-                  
-                  <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 12 }}>
-                    Admin-only configuration
-                  </div>
-
                   {/* create rule form */}
                   <div className="card" style={{ padding: 16 }}>
-                    <div style={{ fontFamily: "'Syne'", fontSize: 14, marginBottom: 12 }}>
-                      Create Alert Rule
+                    <div
+                      style={{
+                        fontFamily: "'Syne', sans-serif",
+                        fontSize: 14,
+                        color: "#e5e7eb",
+                        marginBottom: 12,
+                      }}
+                    >
+                      CREATE ALERT RULE
                     </div>
 
-                    <input
-                      placeholder="Rule name"
-                      value={ruleForm.name}
-                      onChange={e => setRuleForm({ ...ruleForm, name: e.target.value })}
-                    />
+                    {/* Rule name */}
+                    <div style={{ marginBottom: 10 }}>
+                      <label style={{ fontSize: 10, color: "#6b7280" }}>
+                        Rule name
+                      </label>
+                      <input
+                        value={ruleForm.name}
+                        onChange={e => setRuleForm({ ...ruleForm, name: e.target.value })}
+                        placeholder="e.g. High AQI – Downtown"
+                        style={{
+                          marginTop: 4,
+                          width: "100%",
+                          padding: "6px 8px",
+                          borderRadius: 4,
+                          border: "1px solid #1c2330",
+                          background: "#0a0f16",
+                          color: "#e5e7eb",
+                          fontSize: 11,
+                        }}
+                      />
+                    </div>
 
-                    <select
-                      value={ruleForm.metric}
-                      onChange={e => setRuleForm({ ...ruleForm, metric: e.target.value })}
+                    {/* Metric + comparator */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 10 }}>
+                      <div>
+                        <label style={{ fontSize: 10, color: "#6b7280" }}>Metric</label>
+                        <select
+                          value={ruleForm.metric}
+                          onChange={e => setRuleForm({ ...ruleForm, metric: e.target.value })}
+                          style={selectStyle}
+                        >
+                          <option value="air_quality">Air Quality</option>
+                          <option value="temperature">Temperature</option>
+                          <option value="soil_quality">Soil Quality</option>
+                          <option value="forest_health">Forest Health</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: 10, color: "#6b7280" }}>Condition</label>
+                        <select
+                          value={ruleForm.comparator}
+                          onChange={e => setRuleForm({ ...ruleForm, comparator: e.target.value })}
+                          style={selectStyle}
+                        >
+                          <option value="gt">Greater than</option>
+                          <option value="lt">Less than</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Threshold + severity */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
+                      <div>
+                        <label style={{ fontSize: 10, color: "#6b7280" }}>Threshold</label>
+                        <input
+                          type="number"
+                          value={ruleForm.threshold}
+                          onChange={e => setRuleForm({ ...ruleForm, threshold: e.target.value })}
+                          style={{
+                            ...inputStyle,
+                            textAlign: "right",
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: 10, color: "#6b7280" }}>Severity</label>
+                        <select
+                          value={ruleForm.severity}
+                          onChange={e => setRuleForm({ ...ruleForm, severity: e.target.value })}
+                          style={selectStyle}
+                        >
+                          <option value="warning">Warning</option>
+                          <option value="critical">Critical</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Submit */}
+                    <button
+                      onClick={createRule}
+                      style={{
+                        width: "100%",
+                        padding: "8px 10px",
+                        borderRadius: 4,
+                        border: "1px solid #1d4ed8",
+                        background: "#1d4ed8",
+                        color: "#f3f4f6",
+                        fontSize: 11,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        letterSpacing: 0.6,
+                        textTransform: "uppercase",
+                      }}
                     >
-                      <option value="air_quality">Air Quality</option>
-                      <option value="temperature">Temperature</option>
-                      <option value="soil_quality">Soil Quality</option>
-                      <option value="forest_health">Forest Health</option>
-                    </select>
-
-                    <select
-                      value={ruleForm.comparator}
-                      onChange={e => setRuleForm({ ...ruleForm, comparator: e.target.value })}
-                    >
-                      <option value="gt">Greater than</option>
-                      <option value="lt">Less than</option>
-                    </select>
-
-                    <input
-                      type="number"
-                      placeholder="Threshold"
-                      value={ruleForm.threshold}
-                      onChange={e => setRuleForm({ ...ruleForm, threshold: e.target.value })}
-                    />
-
-                    <select
-                      value={ruleForm.severity}
-                      onChange={e => setRuleForm({ ...ruleForm, severity: e.target.value })}
-                    >
-                      <option value="warning">Warning</option>
-                      <option value="critical">Critical</option>
-                    </select>
-
-                    <button onClick={createRule}>
                       Create Rule
                     </button>
                   </div>
 
                   {/* existing rules */}
                   <div style={{ marginTop: 16 }}>
-                    <div style={{ fontSize: 11, color: "#9ca3af", marginBottom: 8 }}>
+                    <div
+                      style={{
+                        fontFamily: "'Syne', sans-serif",
+                        fontSize: 14,
+                        color: "#e5e7eb",
+                        marginBottom: 12,
+                      }}
+                    >
                       EXISTING ALERT RULES
                     </div>
 
@@ -647,35 +725,77 @@ export default function SCEMASDashboard() {
                         <div
                           key={rule.rule_id}
                           style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "8px 10px",
-                            borderRadius: 4,
-                            background: "#111827",
-                            marginBottom: 6,
+                            padding: "10px 12px",
+                            borderRadius: 6,
+                            background: "#0a0f16",
+                            border: "1px solid #1c2330",
+                            marginBottom: 8,
                             fontSize: 11,
+                            display: "grid",
+                            gridTemplateColumns: "1fr auto",
+                            gap: 12,
                           }}
                         >
-                          {/* RULE INFO */}
+                        {/* RULE INFO */}
                           <div>
-                            <div style={{ color: "#e5e7eb", fontWeight: 600 }}>
+                            {/* SEVERITY */}
+                            <div style={{ marginBottom: 4 }}>
+                              <span
+                                style={{
+                                  padding: "2px 8px",
+                                  fontSize: 10,
+                                  borderRadius: 4,
+                                  background:
+                                    rule.severity === "critical"
+                                      ? "#ef444420"
+                                      : "#f59e0b20",
+                                  color:
+                                    rule.severity === "critical"
+                                      ? "#ef4444"
+                                      : "#f59e0b",
+                                  fontWeight: 700,
+                                  letterSpacing: 0.8,
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                {rule.severity}
+                              </span>
+                            </div>
+
+                            {/* RULE NAME */}
+                            <div
+                              style={{
+                                color: "#e5e7eb",
+                                fontWeight: 600,
+                                fontSize: 13,
+                                marginBottom: 2,
+                              }}
+                            >
                               {rule.name}
                             </div>
 
+                            {/* CONDITION */}
                             <div style={{ color: "#6b7280", fontSize: 10 }}>
                               {rule.metric} {rule.comparator} {rule.threshold}
                             </div>
 
                             {!rule.enabled && (
-                              <div style={{ fontSize: 10, color: "#f59e0b" }}>
+                              <div style={{ fontSize: 10, color: "#f59e0b", marginTop: 2 }}>
                                 Disabled
                               </div>
                             )}
                           </div>
 
+
                           {/* ACTIONS */}
-                          <div style={{ display: "flex", gap: 6 }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: 6,
+                              alignItems: "flex-end",
+                            }}
+                          >
                             {rule.enabled && (
                               <button
                                 className="tab"
@@ -687,7 +807,7 @@ export default function SCEMASDashboard() {
 
                             <button
                               className="tab"
-                              onClick={() => deleteRule(rule.rule_id)}
+                              onClick={() => deleteRule(rule)}
                               style={{ color: "#ef4444" }}
                             >
                               Delete
