@@ -136,3 +136,4 @@ async def disable_alert_rule(rule_id: str, actor: str = "admin") -> Optional[dic
     await db.audit_logs.insert_one(log.model_dump())
 
     return _serialize(disabledAlertRule)
+

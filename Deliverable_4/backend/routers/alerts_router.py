@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 from models.schemas import AcknowledgeAlert, ResolveAlert
 from services import alerts_service as alertsService
+from services import alert_rules_service as alertRulesService
+import requests
 
 router = APIRouter(prefix="/api/alerts", tags=["Alerts"])
 
@@ -15,8 +17,12 @@ async def list_alerts(status: Optional[str] = Query(None, pattern="^(active|ackn
 @router.get("/stats")
 async def alert_stats():
     alertStats = await alertsService.get_alert_stats()
-    return alertStats
+    return alertStats   
 
+@router.get("/updatealerts")
+async def update_alert():
+    triggeredAlert = await alertsService.update_alerts()
+    return triggeredAlert
 
 @router.get("/{alert_id}")
 async def get_alert(alert_id: str):
@@ -40,3 +46,4 @@ async def resolve_alert(alert_id: str, data: ResolveAlert):
     if resolvedAlert is None:
         raise HTTPException(status_code=404, detail="Alert not found or not yet acknowledged")
     return resolvedAlert
+

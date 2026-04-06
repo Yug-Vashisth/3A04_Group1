@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Optional
 from models.schemas import Alert, AcknowledgeAlert, ResolveAlert, IncomingTelemetry, AuditLog
 from core.database import get_db
+from services import alert_rules_service as alertRulesService
  
  
 METRIC_UNITS = {
@@ -74,7 +75,8 @@ async def trigger_alert(telemetry: IncomingTelemetry) -> list[Alert]:
                     "value": telemetry.value,
                     "threshold": alertRule["threshold"],
                     "severity": alertRule["severity"],
-                }
+                },
+                timestamp= telemetry.timestamp
             )
             await db.audit_logs.insert_one(log.model_dump())
             
@@ -198,3 +200,56 @@ async def get_alert_stats() -> dict:
         "resolved": resolvedAlertCount,
         "total": total,
     }
+
+async def update_alerts():
+    db = get_db()
+    alertRules = await alertRulesService.get_alert_rules(enabled_only=True)
+
+    comparator_map = {
+        "gt": "$gt",
+        "lt": "$lt",
+        "gte": "$gte",
+        "lte": "$lte",
+    }
+    results = []
+
+    for c in alertRules:
+        metric = c.get("metric")
+        comparator = c.get("comparator")
+        threshold = c.get("threshold")
+
+        mongo_op = comparator_map.get(comparator)
+        
+        pipeline = [
+            {"$match": {"metric": metric}},
+            {"$sort": {"timestamp": -1}},   # latest first
+            {"$match": {"value": {mongo_op: threshold}}}
+        ]
+
+        
+        docs = await db.telemetry.aggregate(pipeline).to_list()
+        print(f"{metric} {comparator} {threshold}")
+        print(docs)
+        if docs:
+            latest_doc = docs[0]
+            timestamp = latest_doc["timestamp"]
+            print(f"latest:{timestamp} ")
+            alertExists = await db.audit_logs.find_one({"action": "ALERT_TRIGGERED",
+                                                        "timestamp":timestamp
+                                                        })
+            if alertExists:
+                print("Alert exists")
+            if not alertExists:
+                telemetry_data = IncomingTelemetry(
+                    sensor_id=latest_doc["sensor_id"],
+                    metric=latest_doc["metric"],
+                    zone=latest_doc["zone"],
+                    value=latest_doc["value"],
+                    unit=latest_doc["unit"],
+                    timestamp=latest_doc["timestamp"]  
+                )
+                print("Triggering alert")
+                triggered_alerts = await trigger_alert(telemetry_data)
+                results.append(f"{metric} {comparator} {threshold}")
+            
+    return results
